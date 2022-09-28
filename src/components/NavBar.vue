@@ -1,48 +1,45 @@
 <template>
   <nav>
-    <!--
-    <div class="d-inline-flex flex-xl-column pa-5 mt-5 secondary text--info">
-     <h1>FitPal</h1>
-      <div><v-btn flat class="secondary">Click</v-btn></div>
-      <div><v-btn flat>Click</v-btn></div>
-      <div><v-btn flat>Click</v-btn></div>
-      <div><v-btn flat>Click</v-btn></div>
-    </div>
-    -->
-    <v-navigation-drawer app class="black">
-      <v-toolbar-title>FitPal</v-toolbar-title>
+    <v-app>
+    <v-navigation-drawer app class="secondary">
+      <v-toolbar-title>
+        <v-img :aspect-ratio="16/9"
+               :width="width" src="@/assets/fitPal-logo.png"></v-img>
+      </v-toolbar-title>
      <div align="center">
-       <v-btn plain>
+       <v-btn plain class="white--text">
          <v-icon left>
+           mdi-home
          </v-icon>
          Home
        </v-btn>
      </div>
       <div align="center">
-        <v-btn plain>
+        <v-btn plain class="white--text">
           <v-icon left>
+            mdi-book-open-variant
           </v-icon>
           Routines
         </v-btn>
       </div>
       <div align="center">
-        <v-btn plain>
+        <v-btn plain class="white--text">
           <v-icon left>
+            mdi-account-multiple
           </v-icon>
           Trainers
         </v-btn>
       </div>
       <div align="center">
-        <v-btn plain>
+        <v-btn plain class="white--text">
           <v-icon left>
+            mdi-cog
           </v-icon>
           Settings
         </v-btn>
       </div>
     </v-navigation-drawer>
-    <v-toolbar vertical flat app>
-      <v-toolbar-title>FitPal</v-toolbar-title>
-    </v-toolbar>
+    </v-app>
   </nav>
 </template>
 
