@@ -1,6 +1,6 @@
 <template>
-    <div class-"trainers">
-        <h1>trainers<h1>
+    <div class="settings">
+        <h1>settings</h1>
 
 
     </div>

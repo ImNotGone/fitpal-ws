@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import FPHome from './views/FPHome.vue'
 import MyRoutines from './views/MyRoutines.vue'
 import ExpRoutines from './views/ExpRoutines.vue'
-import Trainers from './views/Trainers.vue'
-import Settings from './views/Settings.vue'
+import FPTrainers from './views/FPTrainers.vue'
+import FPSettings from './views/FPSettings.vue'
 
 Vue.use(Router)
 
@@ -15,7 +15,7 @@ export default new Router({
         {
             path: '/',
             name: 'home',
-            component: Home
+            component: FPHome
         },
         {
             path: '/my-routines',
@@ -30,12 +30,12 @@ export default new Router({
         {
             path: '/trainers',
             name: 'trainers',
-            component: Trainers
+            component: FPTrainers
         },
         {
             path: '/settings',
             name: 'settings',
-            component: Settings
+            component: FPSettings
         }
     ]
 })
