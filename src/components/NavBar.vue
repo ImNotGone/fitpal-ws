@@ -4,8 +4,9 @@
     <v-navigation-drawer app class="secondary">
       <v-toolbar-title>
         <v-img :aspect-ratio="16/9"
-               :width="width" src="@/assets/fitPal-logo.png"></v-img>
+                src="@/assets/fitPal-logo.png"></v-img>
       </v-toolbar-title>
+
      <div align="center">
        <v-btn plain class="white--text">
          <v-icon left>
@@ -14,14 +15,29 @@
          Home
        </v-btn>
      </div>
+
       <div align="center">
-        <v-btn plain class="white--text">
-          <v-icon left>
-            mdi-book-open-variant
-          </v-icon>
-          Routines
-        </v-btn>
+        <v-menu  :offset-y="offset">
+          <template v-slot:activator="{ on, attrs }">
+          <v-btn plain slot="activator" class="white--text" v-bind="attrs"
+                 v-on="on">
+            <v-icon left>
+              mdi-book-open-variant
+            </v-icon>
+            <span>Routines</span>
+          </v-btn>
+          </template>
+          <v-list>
+            <v-list-item
+                v-for="(item, index) in items"
+                :key="index"
+            >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </div>
+
       <div align="center">
         <v-btn plain class="white--text">
           <v-icon left>
@@ -30,6 +46,7 @@
           Trainers
         </v-btn>
       </div>
+
       <div align="center">
         <v-btn plain class="white--text">
           <v-icon left>
@@ -38,6 +55,7 @@
           Settings
         </v-btn>
       </div>
+
     </v-navigation-drawer>
     </v-app>
   </nav>
@@ -45,7 +63,14 @@
 
 <script>
 export default {
-  name: "NavBar"
+  data: () => ({
+    items: [
+      { title: 'My Routines' },
+      { title: 'Explore Routines' },
+    ],
+    offset: true,
+  }),
+  name: "NavBar",
 }
 </script>
 
