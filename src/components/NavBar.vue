@@ -6,9 +6,8 @@
         <v-img :aspect-ratio="16/9"
                 src="@/assets/fitPal-logo.png"></v-img>
       </v-toolbar-title>
-
      <div align="center">
-       <v-btn plain class="white--text">
+       <v-btn x-large plain class="white--text">
          <v-icon left>
            mdi-home
          </v-icon>
@@ -17,29 +16,33 @@
      </div>
 
       <div align="center">
-        <v-menu  :offset-y="offset">
-          <template v-slot:activator="{ on, attrs }">
-          <v-btn plain slot="activator" class="white--text" v-bind="attrs"
-                 v-on="on">
-            <v-icon left>
-              mdi-book-open-variant
-            </v-icon>
-            <span>Routines</span>
-          </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-                v-for="(item, index) in items"
-                :key="index"
-            >
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+        <v-btn x-large plain class="white--text" @click="expand = !expand">
+          <v-icon left>
+            mdi-book-open-variant
+          </v-icon>
+          <span>Routines</span>
+          <v-icon right>
+            mdi-chevron-down
+          </v-icon>
+        </v-btn>
+        <v-expand-transition>
+          <v-card class="secondary"
+              v-show="expand"
+              height="70"
+              width="180"
+          >
+            <v-btn plain color="white">
+              <span>My Routines</span>
+            </v-btn>
+            <v-btn plain color="white">
+              <span>Explore Routines</span>
+            </v-btn>
+          </v-card>
+        </v-expand-transition>
       </div>
 
       <div align="center">
-        <v-btn plain class="white--text">
+        <v-btn x-large plain class="white--text">
           <v-icon left>
             mdi-account-multiple
           </v-icon>
@@ -48,14 +51,13 @@
       </div>
 
       <div align="center">
-        <v-btn plain class="white--text">
+        <v-btn x-large plain class="white--text">
           <v-icon left>
             mdi-cog
           </v-icon>
           Settings
         </v-btn>
       </div>
-
     </v-navigation-drawer>
     </v-app>
   </nav>
@@ -64,11 +66,11 @@
 <script>
 export default {
   data: () => ({
+    expand: false,
     items: [
       { title: 'My Routines' },
       { title: 'Explore Routines' },
     ],
-    offset: true,
   }),
   name: "NavBar",
 }
