@@ -1,6 +1,17 @@
 <template>
   <nav>
-    <v-app>
+    <v-toolbar flat app>
+        <v-toolbar-title class="headline text-uppercase black--text">
+            <span class="font-weight-medium">Fit</span>
+            <span class="font-weight-black orange--text">Pal</span>
+        </v-toolbar-title>
+        <v-spacer/>
+        <v-btn flat color="grey">
+            <span>Sign Out</span>
+            <v-icon right>mdi-exit-to-app</v-icon>
+        </v-btn>
+    </v-toolbar>
+
     <v-navigation-drawer app class="menus secondary">
       <v-toolbar-title class="mb-5">
         <v-img :aspect-ratio="16/9" src="@/assets/fitpal-logo.svg"></v-img>
@@ -26,9 +37,7 @@
          <v-icon left>{{menu.icon}}</v-icon>
          <span>{{menu.title}}</span>
        </v-btn>
-
     </v-navigation-drawer>
-    </v-app>
   </nav>
 </template>
 
