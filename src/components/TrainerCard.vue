@@ -3,7 +3,7 @@
 <!-- The third row holds the trainers description -->
 
 <template>
-  <v-card class="mx-auto" min-width="500" max-width="500">
+  <v-card class="mx-auto">
     <!-- First row -->
     <v-card-title class="grey darken-3 white--text">
       <v-avatar size="100" class="mr-3">

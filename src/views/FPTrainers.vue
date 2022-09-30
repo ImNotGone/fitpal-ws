@@ -10,111 +10,46 @@
 
     <!-- Recent Trainers -->
     <!-- Title -->
-    <v-row class="mx-5 pa-5">
-      <v-col>
-        <h3 class="display-1">Recent Trainers</h3>
-      </v-col>
-
-      <v-spacer></v-spacer>
-
-      <!-- Scroll button -->
-      <!-- Centered -->
-      <v-col cols="auto">
-        <v-btn icon class="mx-5" color="white">
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
-        <v-btn icon class="mx-5" color="white">
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
+    <h3 class="display-1 pa-5">Recent Trainers</h3>
 
     <!-- Trainers -->
     <!-- Horizontal scrollable row -->
-    <!-- Spacing between cards -->
-    <v-row class="mx-5">
-      <v-col cols="12">
-        <v-row class="mx-5 flex-nowrap" align="center" justify="center">
-          <v-col v-for="trainer in recentTrainers" :key="trainer.id" cols="auto">
-            <TrainerCard :profilePicture="trainer.profilePicture" :trainerName="trainer.name"
-                         :trainerDescription="trainer.description" :routineAmount="trainer.routineAmount"
-                         :rating="trainer.rating" :reviewAmount="trainer.reviewAmount" :showDescription="false"/>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+    <v-slide-group class="slider" dark>
+      <v-slide-item class="item" v-for="trainer in recentTrainers" :key="trainer.id">
+        <TrainerCard :profilePicture="trainer.profilePicture" :trainerName="trainer.name"
+                     :trainerDescription="trainer.description" :routineAmount="trainer.routineAmount"
+                     :rating="trainer.rating" :reviewAmount="trainer.reviewAmount" :showDescription="false"/>
+      </v-slide-item>
+    </v-slide-group>
 
     <!-- Followed Trainers -->
     <!-- Title -->
-    <v-row class="mx-5 pa-5">
-      <v-col>
-        <h3 class="display-1">Followed Trainers</h3>
-      </v-col>
+    <h3 class="display-1 pa-5">Followed Trainers</h3>
 
-      <v-spacer></v-spacer>
-
-      <!-- Scroll button -->
-      <!-- Centered -->
-      <v-col cols="auto">
-        <v-btn icon class="mx-5" color="white">
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
-        <v-btn icon class="mx-5" color="white">
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
 
     <!-- Trainers -->
     <!-- Horizontal scrollable row -->
-    <!-- Spacing between cards -->
-    <v-row class="mx-5">
-      <v-col cols="12">
-        <v-row class="mx-5 flex-nowrap" align="center" justify="center">
-          <v-col v-for="trainer in recentTrainers" :key="trainer.id" cols="auto">
-            <TrainerCard :profilePicture="trainer.profilePicture" :trainerName="trainer.name"
-                         :trainerDescription="trainer.description" :routineAmount="trainer.routineAmount"
-                         :rating="trainer.rating" :reviewAmount="trainer.reviewAmount" :showDescription="false"/>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+    <v-slide-group class="slider" dark>
+      <v-slide-item class="item" v-for="trainer in recentTrainers" :key="trainer.id">
+        <TrainerCard :profilePicture="trainer.profilePicture" :trainerName="trainer.name"
+                     :trainerDescription="trainer.description" :routineAmount="trainer.routineAmount"
+                     :rating="trainer.rating" :reviewAmount="trainer.reviewAmount" :showDescription="false"/>
+      </v-slide-item>
+    </v-slide-group>
 
     <!-- Popular Trainers -->
     <!-- Title -->
-    <v-row class="mx-5 pa-5">
-      <v-col>
-        <h3 class="display-1">Popular Trainers</h3>
-      </v-col>
-
-      <v-spacer></v-spacer>
-
-      <!-- Scroll button -->
-      <!-- Centered -->
-      <v-col cols="auto">
-        <v-btn icon class="mx-5" color="white">
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
-        <v-btn icon class="mx-5" color="white">
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
+    <h3 class="display-1 pa-5">Popular Trainers</h3>
 
     <!-- Trainers -->
     <!-- Horizontal scrollable row -->
-    <!-- Spacing between cards -->
-    <v-row class="mx-5">
-      <v-col cols="12">
-        <v-row class="mx-5 flex-nowrap" align="center" justify="center">
-          <v-col v-for="trainer in recentTrainers" :key="trainer.id" cols="auto">
-            <TrainerCard :profilePicture="trainer.profilePicture" :trainerName="trainer.name"
-                         :trainerDescription="trainer.description" :routineAmount="trainer.routineAmount"
-                         :rating="trainer.rating" :reviewAmount="trainer.reviewAmount" :showDescription="true"/>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+    <v-slide-group class="slider" dark>
+      <v-slide-item class="item" v-for="trainer in recentTrainers" :key="trainer.id">
+        <TrainerCard :profilePicture="trainer.profilePicture" :trainerName="trainer.name"
+                     :trainerDescription="trainer.description" :routineAmount="trainer.routineAmount"
+                     :rating="trainer.rating" :reviewAmount="trainer.reviewAmount" :showDescription="true"/>
+      </v-slide-item>
+    </v-slide-group>
   </div>
 </template>
 
@@ -185,5 +120,13 @@ export default {
 div {
   background-color: #939393;
   color: white;
+}
+.item {
+  width: 500px;
+  background-color: #939393;
+  outline: 1px solid #939393;
+  color: white;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 </style>
