@@ -2,7 +2,7 @@
   <nav>
     <v-navigation-drawer app v-model="burger" class="menus secondary">
       <v-toolbar-title class="mb-5">
-        <v-img :aspect-ratio="16/9" src="@/assets/fitpal-logo.svg"></v-img>
+        <v-img :aspect-ratio="16/9" src="@/assets/fitpal-logo.svg"/>
       </v-toolbar-title>
 
       <v-card

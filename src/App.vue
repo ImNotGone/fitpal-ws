@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <NavBar/>
+    <NavBar v-if="!$route.meta.hideNavbar"/>
     <v-content>
         <router-view></router-view>
     </v-content>
@@ -21,5 +21,9 @@ export default {
   data: () => ({
     //
   }),
+
+  props: {
+    hideNavbar: Boolean,
+  }
 };
 </script>
