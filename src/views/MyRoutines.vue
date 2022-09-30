@@ -1,14 +1,13 @@
 <template>
     <div class="myroutines">
-        <h1>myroutines</h1>
-
-
+      <ToolBar title="My Routines"/>
     </div>
 </template>
 
 
 <script>
+import ToolBar from "@/components/ToolBar";
 export default {
-
+  components: {ToolBar}
 }
 </script>

@@ -1,14 +1,12 @@
 <template>
     <div class="exproutines">
-        <h1>exproutines</h1>
-
-
+      <ToolBar title="Explore Routines"/>
     </div>
 </template>
 
-
 <script>
+import ToolBar from "@/components/ToolBar";
 export default {
-
+  components: {ToolBar}
 }
 </script>

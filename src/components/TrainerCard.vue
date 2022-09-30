@@ -3,15 +3,18 @@
 <!-- The third row holds the trainers description -->
 
 <template>
-  <v-card class="mx-auto">
+  <v-card class="mx-auto" max-width="500">
     <!-- First row -->
     <v-card-title class="grey darken-3 white--text">
       <v-avatar size="100" class="mr-3">
         <img :src="profilePicture" alt="trainer picture">
       </v-avatar>
       <h3 class="headline mb-0 pa-5">{{trainerName}}</h3>
+
+      <v-spacer></v-spacer>
+
       <!-- Follow text Button -->
-      <v-btn text color="orange" class="white--text">
+      <v-btn text color="primary" class="white--text">
         <v-icon right>mdi-account-plus</v-icon>
         <span class="pa-2">Follow</span>
       </v-btn>
