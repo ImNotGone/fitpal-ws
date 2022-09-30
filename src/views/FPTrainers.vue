@@ -10,7 +10,7 @@
 
     <!-- Recent Trainers -->
     <!-- Title -->
-    <h3 class="display-1 pa-5">Recent Trainers</h3>
+    <h3 class="display-1 pa-5 ml-10">Recent Trainers</h3>
 
     <!-- Trainers -->
     <!-- Horizontal scrollable row -->
@@ -24,7 +24,7 @@
 
     <!-- Followed Trainers -->
     <!-- Title -->
-    <h3 class="display-1 pa-5">Followed Trainers</h3>
+    <h3 class="display-1 pa-5 ml-10">Followed Trainers</h3>
 
 
     <!-- Trainers -->
@@ -39,12 +39,12 @@
 
     <!-- Popular Trainers -->
     <!-- Title -->
-    <h3 class="display-1 pa-5">Popular Trainers</h3>
+    <h3 class="display-1 pa-5 ml-10">Popular Trainers</h3>
 
     <!-- Trainers -->
     <!-- Horizontal scrollable row -->
     <v-slide-group class="slider" dark>
-      <v-slide-item class="item" v-for="trainer in recentTrainers" :key="trainer.id">
+      <v-slide-item class="item pb-5" v-for="trainer in recentTrainers" :key="trainer.id">
         <TrainerCard :profilePicture="trainer.profilePicture" :trainerName="trainer.name"
                      :trainerDescription="trainer.description" :routineAmount="trainer.routineAmount"
                      :rating="trainer.rating" :reviewAmount="trainer.reviewAmount" :showDescription="true"/>
@@ -56,7 +56,7 @@
 
 <script>
 import ToolBar from "@/components/ToolBar";
-import TrainerCard from "@/components/TrainerCard";
+import TrainerCard from "@/components/Cards/TrainerCard";
 
 export default {
   components: {
