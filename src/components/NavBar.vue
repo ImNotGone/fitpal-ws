@@ -42,13 +42,14 @@
               </v-list-item-icon>
 
               <v-list-item-content>
-                <v-list-item-title v-text="item.title" class="menus mr-14" ></v-list-item-title>
+                <v-list-item-title v-text="item.title" class="menus mr-14"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
         </v-list>
       </v-card>
 
+      <!--
       <v-btn x-large block plain class="white--text" @click="expand = !expand">
         <v-icon left>
           mdi-book-open-variant
@@ -59,16 +60,22 @@
       </v-btn>
       <v-expand-transition>
         <v-card class="submenu secondary" v-show="expand">
-          <v-btn plain block class="mt-1 white--text" v-for="routineMenu in routinesMenu" :key="routineMenu.title" :to="routineMenu.route">
-            <span>{{routineMenu.title}}</span>
+          <v-btn plain block class="mt-1 white--text" v-for="routineMenu in routinesMenu" :key="routineMenu.title"
+                 :to="routineMenu.route">
+            <span>{{ routineMenu.title }}</span>
           </v-btn>
         </v-card>
       </v-expand-transition>
 
-       <v-btn x-large block plain class="my-3 white--text" v-for="menu in primaryItems" :key="menu.title" :to="menu.route">
-         <v-icon left>{{menu.icon}}</v-icon>
-         <span>{{menu.title}}</span>
-       </v-btn>
+      <v-btn x-large block plain class="my-3 white--text" v-for="menu in primaryItems" :key="menu.title"
+             :to="menu.route">
+        <v-icon left>{{ menu.icon }}</v-icon>
+        <span>{{ menu.title }}</span>
+      </v-btn>
+
+      -->
+
+
 
       <template v-slot:append>
         <div class="pa-2">
@@ -94,38 +101,40 @@ export default {
     expand: false,
     burger: true,
     primaryItems: [
-      { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
-      { title: 'Trainers', icon: 'mdi-account-multiple', route: '/trainers' },
-      { title: 'Settings', icon: 'mdi-cog', route: '/settings' },
+      {title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/'},
+      {title: 'Trainers', icon: 'mdi-account-multiple', route: '/trainers'},
+      {title: 'Settings', icon: 'mdi-cog', route: '/settings'},
     ],
     routinesMenu: [
-      { title: 'My Routines', route: '/my-routines' },
-      { title: 'Explore Routines', route: '/exp-routines' },
+      {title: 'My Routines', route: '/my-routines'},
+      {title: 'Explore Routines', route: '/exp-routines'},
     ],
   }),
   name: "NavBar",
-  mounted(){
-    this.$root.$on("fromToolBar", (msg) =>{
-      this.burger=msg;
+  mounted() {
+    this.$root.$on("fromToolBar", (msg) => {
+      this.burger = msg;
     });
   },
 }
 </script>
 
 <style scoped>
-  .menus{
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: lightgray;
-  }
-  .submenu{
-    display: inline-block;
-    height: 84px;
-    width: 320px;
-  }
-  .list .v-list-item-group .v-list-item--active{
-    color: #FF8754;
-    background-color: #353535;
-  }
+.menus {
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: lightgray;
+}
+
+.submenu {
+  display: inline-block;
+  height: 84px;
+  width: 320px;
+}
+
+.list .v-list-item-group .v-list-item--active {
+  color: #FF8754;
+  background-color: #353535;
+}
 </style>

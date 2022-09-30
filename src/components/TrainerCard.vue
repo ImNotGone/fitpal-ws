@@ -3,7 +3,7 @@
 <!-- The third row holds the trainers description -->
 
 <template>
-  <v-card class="mx-auto" max-width="500">
+  <v-card class="mx-auto" min-width="500" max-width="500">
     <!-- First row -->
     <v-card-title class="grey darken-3 white--text">
       <v-avatar size="100" class="mr-3">
@@ -21,7 +21,7 @@
     </v-card-title>
 
     <!-- Show description if showDescription is true -->
-    <v-card-text v-if="trainerDescription === null" class="grey darken-3 white--text">
+    <v-card-text v-if="showDescription" class="grey darken-3 white--text">
       <p>{{trainerDescription}}</p>
     </v-card-text>
 
