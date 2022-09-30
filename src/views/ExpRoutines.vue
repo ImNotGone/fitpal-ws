@@ -10,3 +10,10 @@ export default {
   components: {ToolBar}
 }
 </script>
+
+<style scoped>
+div {
+  background-color: #939393;
+  color: white;
+}
+</style>
