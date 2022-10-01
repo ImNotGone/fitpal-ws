@@ -3,7 +3,7 @@
   <v-toolbar app dark class="secondary">
     <v-toolbar-title>
       <router-link to="/landing-page" tag="span" style="cursor: pointer">
-        <v-img class="icon" src="@/assets/fitpal-verticallogo.svg"/>
+        <v-img class="icon" src="@/assets/fitpal-horizontallogo.svg"/>
       </router-link>
     </v-toolbar-title>
     <v-spacer></v-spacer>
@@ -70,7 +70,7 @@ export default {
   }
   .icon{
     height: 100%;
-    width: 70%;
+    width: 200px;
   }
   .max-v-list-height {
     width: 120px;
