@@ -2,7 +2,7 @@
   <nav>
     <v-navigation-drawer app v-model="burger" class="menus secondary">
       <v-toolbar-title class="mb-5">
-        <v-img :aspect-ratio="16/9" src="@/assets/fitpal-logo.svg"/>
+        <v-img contain :aspect-ratio="16/9" :width="width" src="@/assets/fitpal-logo.svg"/>
       </v-toolbar-title>
 
       <v-card
@@ -100,6 +100,7 @@ export default {
   data: () => ({
     expand: false,
     burger: true,
+    width: 250,
     primaryItems: [
       {title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/'},
       {title: 'Trainers', icon: 'mdi-account-multiple', route: '/trainers'},
