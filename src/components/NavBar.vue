@@ -100,7 +100,6 @@ export default {
   data: () => ({
     expand: false,
     burger: true,
-    width: 250,
     primaryItems: [
       {title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/'},
       {title: 'Trainers', icon: 'mdi-account-multiple', route: '/trainers'},
