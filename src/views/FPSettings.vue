@@ -20,6 +20,7 @@
           </v-tab-item>
         </v-tabs-items>
       </v-card>
+      <h1>Lula estuvo aqui O.o</h1>
     </div>
 </template>
 
