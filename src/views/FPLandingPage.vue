@@ -68,7 +68,6 @@ export default {
     background-image: url('../assets/background-landingpage.jpg');
     background-size: cover;
     height: 100vh;
-
   }
   .icon{
     height: 100%;

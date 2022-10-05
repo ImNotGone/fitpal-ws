@@ -1,7 +1,7 @@
 <template>
-  <v-col  class="fill-height fill-width flex-column accent">
-
-  <v-card dark max-width="600" class=" secondary">
+  <div class="fill-width fill-height accent">
+  <v-container  class="justify-center">
+  <v-card dark class="secondary">
     <router-link :to="pathBack">
       <v-icon large class="white--text">mdi-chevron-left</v-icon>
     </router-link>
@@ -12,12 +12,22 @@
       class="pa-4 pt-6"
   >
     <v-text-field
-        v-model="name"
+        v-model="firstName"
         filled
         :rules="[rules.required]"
         color="primary"
-        label="Name"
-        type="name"
+        label="First Name"
+        type="firstName"
+        @input="$v.name.$touch()"
+        @blur="$v.name.$touch()"
+    ></v-text-field>
+    <v-text-field
+        v-model="lastName"
+        filled
+        :rules="[rules.required]"
+        color="primary"
+        label="Last Name"
+        type="lastName"
         @input="$v.name.$touch()"
         @blur="$v.name.$touch()"
     ></v-text-field>
@@ -43,6 +53,17 @@
         @input="$v.name.$touch()"
         @blur="$v.name.$touch()"
     ></v-text-field>
+    <v-text-field
+        v-model="password2"
+        :rules="[rules.password, rules.length(8), rules.required]"
+        filled
+        color="primary"
+        label="Confirm Password"
+        style="min-height: 96px"
+        type="password"
+        @input="$v.name.$touch()"
+        @blur="$v.name.$touch()"
+    ></v-text-field>
     <v-select
         v-model="select"
         :items="trainer"
@@ -53,16 +74,12 @@
         class="primary mr-4"
         @click="submit"
     >
-      submit
-    </v-btn>
-    <v-btn
-        class="primary mr-4"
-        @click="clear()">
-      clear
+      Sign Up
     </v-btn>
   </v-form>
   </v-card>
-  </v-col>
+  </v-container>
+  </div>
 </template>
 
 <script>
@@ -70,9 +87,11 @@ export default {
   name: "FPSignUp",
   data: () => ({
     pathBack: '/landing-page',
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
+    password2: '',
     trainer: [
       'Yes',
       'No',
@@ -88,13 +107,6 @@ export default {
   methods: {
     submit () {
       this.$v.$touch()
-    },
-    clear () {
-      this.$v.$reset()
-      this.name = ''
-      this.email = ''
-      this.password=''
-      this.select = null
     },
   },
 }

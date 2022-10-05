@@ -1,7 +1,8 @@
 <template>
-  <v-col  class="fill-height fill-width flex-column accent">
+  <div class="fill-width fill-height accent">
+    <v-container  class="justify-center">
 
-    <v-card dark max-width="600" class=" secondary">
+    <v-card dark class=" secondary">
       <router-link :to="pathBack">
         <v-icon large class="white--text">mdi-chevron-left</v-icon>
       </router-link>
@@ -40,7 +41,8 @@
         </v-btn>
       </v-form>
     </v-card>
-  </v-col>
+    </v-container>
+  </div>
 </template>
 
 <script>

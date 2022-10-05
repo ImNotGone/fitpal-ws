@@ -1,7 +1,7 @@
 <template>
-    <div  class="settings">
+    <div  class="fill-height settings">
       <ToolBar title="Settings"/>
-      <v-card class="accent pa-lg-10">
+      <v-col class="fill-height fill-width flex-column accent">
         <v-tabs
             app
             v-model="tab"
@@ -19,8 +19,7 @@
 
           </v-tab-item>
         </v-tabs-items>
-      </v-card>
-      <h1>Lula estuvo aqui O.o</h1>
+      </v-col>
     </div>
 </template>
 
@@ -32,7 +31,7 @@ export default {
   data(){
     return{
      options: [
-        'General'
+        'Profile'
       ],
     }
   }
