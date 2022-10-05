@@ -49,34 +49,6 @@
         </v-list>
       </v-card>
 
-      <!--
-      <v-btn x-large block plain class="white--text" @click="expand = !expand">
-        <v-icon left>
-          mdi-book-open-variant
-        </v-icon>
-        <span>Routines</span>
-        <v-icon right v-show="!expand">mdi-chevron-down</v-icon>
-        <v-icon right v-show="expand">mdi-chevron-up</v-icon>
-      </v-btn>
-      <v-expand-transition>
-        <v-card class="submenu secondary" v-show="expand">
-          <v-btn plain block class="mt-1 white--text" v-for="routineMenu in routinesMenu" :key="routineMenu.title"
-                 :to="routineMenu.route">
-            <span>{{ routineMenu.title }}</span>
-          </v-btn>
-        </v-card>
-      </v-expand-transition>
-
-      <v-btn x-large block plain class="my-3 white--text" v-for="menu in primaryItems" :key="menu.title"
-             :to="menu.route">
-        <v-icon left>{{ menu.icon }}</v-icon>
-        <span>{{ menu.title }}</span>
-      </v-btn>
-
-      -->
-
-
-
       <template v-slot:append>
         <div class="pa-2">
           <v-btn block flat color="grey">
