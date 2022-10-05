@@ -5,9 +5,10 @@ import MyRoutines from './views/MyRoutines.vue'
 import ExpRoutines from './views/ExpRoutines.vue'
 import FPTrainers from './views/FPTrainers.vue'
 import FPSettings from './views/FPSettings.vue'
-import FPLandingPage from "@/views/FPLandingPage";
-import FPSignUp from "@/views/FPSignUp";
-import FPLogin from "@/views/FPLogin";
+import FPLandingPage from '@/views/FPLandingPage.vue';
+import FPSignUp from '@/views/FPSignUp.vue';
+import FPLogin from '@/views/FPLogin.vue';
+import FP404 from '@/views/FP404.vue';
 
 Vue.use(Router)
 
@@ -63,6 +64,11 @@ export default new Router({
             path: '/settings',
             name: 'settings',
             component: FPSettings
+        },
+        {
+            path: '/*',
+            name: '404',
+            component: FP404
         }
     ]
 })
