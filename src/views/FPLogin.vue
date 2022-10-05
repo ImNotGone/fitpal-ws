@@ -39,6 +39,7 @@
         <v-btn
             class="primary mr-4"
             @click="submit"
+            to="/"
         >
           Log In
         </v-btn>
