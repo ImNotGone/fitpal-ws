@@ -81,6 +81,7 @@
     <v-btn
         class="primary mr-4"
         @click="submit"
+        to="/"
     >
       Sign Up
     </v-btn>

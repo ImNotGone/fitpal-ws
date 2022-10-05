@@ -57,7 +57,7 @@
           </v-btn>
         </div>
         <div class="pa-2">
-          <v-btn block flat color="grey">
+          <v-btn block flat color="grey" to="/landing-page" >
             <v-icon left>mdi-exit-to-app</v-icon>
             <span>Sign Out</span>
           </v-btn>
