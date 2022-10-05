@@ -5,7 +5,15 @@
     <router-link :to="pathBack">
       <v-icon large class="white--text">mdi-chevron-left</v-icon>
     </router-link>
-    <v-card-title>Sign Up</v-card-title>
+
+    <div align="center">
+    <v-img class="logo d-flex justify-center ma-4" src="@/assets/fitpal-horizontallogo.svg"/>
+    </div>
+
+    <v-card-title>
+      Sign Up
+    </v-card-title>
+
   <v-form
       ref="form"
       v-model="form"
@@ -113,5 +121,7 @@ export default {
 </script>
 
 <style scoped>
-
+.logo{
+  width: 50%;
+}
 </style>
