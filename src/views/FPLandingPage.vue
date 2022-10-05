@@ -55,7 +55,7 @@ export default {
       menuItems: [
         { title: 'Home', path: '/landing-page', icon: 'mdi-home' },
         { title: 'Sign Up', path: '/signup', icon: 'mdi-account-plus' },
-        { title: 'Log In', path: '/signin', icon: 'mdi-login-variant' }
+        { title: 'Log In', path: '/login', icon: 'mdi-login-variant' }
       ]
     }
   },
@@ -63,10 +63,12 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600&display=swap');
   .image{
     background-image: url('../assets/background-landingpage.jpg');
     background-size: cover;
     height: 100vh;
+
   }
   .icon{
     height: 100%;
@@ -76,4 +78,15 @@ export default {
     width: 120px;
     overflow-x: auto;
   }
+  h1{
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 300%;
+    width: 50%;
+  }
+  h2{
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 200%;
+    width: 50%;
+  }
+
 </style>

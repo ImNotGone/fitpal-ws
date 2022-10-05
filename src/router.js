@@ -6,6 +6,8 @@ import ExpRoutines from './views/ExpRoutines.vue'
 import FPTrainers from './views/FPTrainers.vue'
 import FPSettings from './views/FPSettings.vue'
 import FPLandingPage from "@/views/FPLandingPage";
+import FPSignUp from "@/views/FPSignUp";
+import FPLogin from "@/views/FPLogin";
 
 Vue.use(Router)
 
@@ -22,6 +24,22 @@ export default new Router({
             path: '/landing-page',
             name: 'landing-page',
             component: FPLandingPage,
+            meta: {
+                hideNavbar: true,
+            }
+        },
+        {
+            path: '/signup',
+            name: 'signup',
+            component: FPSignUp,
+            meta: {
+                hideNavbar: true,
+            }
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: FPLogin,
             meta: {
                 hideNavbar: true,
             }
