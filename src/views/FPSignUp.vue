@@ -1,14 +1,13 @@
 <template>
   <div class="fill-width fill-height accent">
-  <v-container  class="justify-center">
+    <TopToolbar/>
+  <v-container>
   <v-card dark class="secondary">
     <router-link :to="pathBack">
       <v-icon large class="white--text">mdi-chevron-left</v-icon>
     </router-link>
 
-    <div align="center">
-    <v-img class="logo d-flex justify-center ma-4" src="@/assets/fitpal-horizontallogo.svg"/>
-    </div>
+    <v-img class="logo" src="@/assets/fitpal-horizontallogo.svg"/>
 
     <v-card-title>
       Sign Up
@@ -88,12 +87,17 @@
   </v-form>
   </v-card>
   </v-container>
+    <NoLoginFooter/>
   </div>
 </template>
 
 <script>
+import TopToolbar from "@/components/TopToolbar";
+import NoLoginFooter from "@/components/NoLoginFooter";
+
 export default {
   name: "FPSignUp",
+  components: {NoLoginFooter, TopToolbar},
   data: () => ({
     pathBack: '/landing-page',
     firstName: '',
@@ -124,5 +128,6 @@ export default {
 <style scoped>
 .logo{
   width: 50%;
+  margin: 0 auto;
 }
 </style>
