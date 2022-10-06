@@ -22,7 +22,8 @@ export default {
   .image{
     background-image: url('../assets/background-landingpage.jpg');
     background-size: cover;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
   }
   h1{
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -34,5 +35,4 @@ export default {
     font-size: 200%;
     width: 50%;
   }
-
 </style>

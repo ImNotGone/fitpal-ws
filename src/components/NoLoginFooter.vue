@@ -1,8 +1,9 @@
 <template>
   <v-footer
       class="secondary"
+      app
       padless
-      absolute
+      bottom
       dark
   >
     <v-row

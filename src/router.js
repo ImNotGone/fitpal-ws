@@ -9,6 +9,11 @@ import FPLandingPage from '@/views/FPLandingPage.vue';
 import FPSignUp from '@/views/FPSignUp.vue';
 import FPLogin from '@/views/FPLogin.vue';
 import FP404 from '@/views/FP404.vue';
+import FPDetailedExercise from "@/views/FPDetailedExercise";
+import FPDetailedRoutine from "@/views/FPDetailedRoutine";
+import FPExerciseInRoutine from "@/views/FPExerciseInRoutine";
+import FPCreateExercise from "@/views/FPCreateExercise";
+import FPCreateRoutine from "@/views/FPCreateRoutine";
 
 Vue.use(Router)
 
@@ -69,6 +74,34 @@ export default new Router({
             path: '/*',
             name: '404',
             component: FP404,
-        }
+            meta: {
+                hideNavbar: true,
+            }
+        },
+        {
+            path: '/detailed-exercise',
+            name: 'detailed-exercise',
+            component: FPDetailedExercise
+        },
+        {
+            path: '/routine',
+            name: 'detailed-routine',
+            component: FPDetailedRoutine
+        },
+        {
+            path: '/routine/exercise',
+            name: 'exercise-in-routine',
+            component: FPExerciseInRoutine
+        },
+        {
+            path: '/create-exercise',
+            name: 'create-exercise',
+            component: FPCreateExercise
+        },
+        {
+            path: '/create-routine',
+            name: 'create-routine',
+            component: FPCreateRoutine
+        },
     ]
 })

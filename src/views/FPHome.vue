@@ -1,17 +1,15 @@
 <template>
     <div class="home">
-        <h1 class="display-1 font-weight-medium">Home</h1>
-      <v-navigation-drawer app right class="accent">
-      </v-navigation-drawer>
-      <v-subheader class="home white--text">Top Trainers</v-subheader>
+      <ToolBar title="Home"/>
+      <h3 class="display-1 pa-5 ml-10">Top Trainers</h3>
       <v-slide-group class="slider" dark>
-        <v-slide-item class="item pb-5" v-for="trainer in recentTrainers" :key="trainer.id">
+        <v-slide-item class="item pb-3" v-for="trainer in recentTrainers" :key="trainer.id">
           <TrainerCard :profilePicture="trainer.profilePicture" :trainerName="trainer.name"
                        :trainerDescription="trainer.description" :routineAmount="trainer.routineAmount"
                        :rating="trainer.rating" :reviewAmount="trainer.reviewAmount" :showDescription="true"/>
         </v-slide-item>
       </v-slide-group>
-      <v-subheader class="home white--text">My Routines</v-subheader>
+      <h3 class="display-1 pa-5 ml-10">My Routines</h3>
       <v-container class="mx-auto">
         <v-row>
           <v-col
@@ -37,9 +35,11 @@
 <script>
 import RoutineCard from "@/components/Cards/RoutineCard";
 import TrainerCard from "@/components/Cards/TrainerCard";
+import ToolBar from "@/components/ToolBar";
 
 export default {
   components: {
+    ToolBar,
     RoutineCard,
     TrainerCard
   },
@@ -158,5 +158,13 @@ export default {
 div {
   background-color: #939393;
   color: white;
+}
+.item {
+  width: 500px;
+  background-color: #939393;
+  outline: 1px solid #939393;
+  color: white;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 </style>
