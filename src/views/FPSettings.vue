@@ -17,7 +17,7 @@
           </v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab">
-          <v-tab-item key="General">
+          <v-tab-item key="Profile">
 
           </v-tab-item>
         </v-tabs-items>
@@ -33,8 +33,7 @@ export default {
   data(){
     return{
      options: [
-        'General',
-         'Notifications'
+        'Profile'
       ],
     }
   }
