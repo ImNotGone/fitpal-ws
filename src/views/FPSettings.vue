@@ -5,8 +5,10 @@
         <v-tabs
             app
             v-model="tab"
-        dark
-        tabs>
+            dark
+            fixed-tabs
+            background-color="secondary"
+        >
           <v-tab class="secondary"
               v-for="option in options"
               :key="option"
@@ -15,7 +17,7 @@
           </v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab">
-          <v-tab-item>
+          <v-tab-item key="General">
 
           </v-tab-item>
         </v-tabs-items>
@@ -31,7 +33,8 @@ export default {
   data(){
     return{
      options: [
-        'Profile'
+        'General',
+         'Notifications'
       ],
     }
   }
