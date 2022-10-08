@@ -25,11 +25,6 @@
               prepend-icon="mdi-video"
               label="Video"
           ></v-file-input>
-          <v-select
-              v-model="typeSelected"
-              :items="types"
-              label="Type of exercise"
-          ></v-select>
           <v-btn flat class="primary mx-0 mt-3" @click="submit">Create</v-btn>
         </v-form>
       </v-card-text>
@@ -49,14 +44,12 @@ export default {
     desc: '',
     tags: ['abs', 'biceps', 'triceps', 'legs', 'chest', 'back'],
     tagsSelected: [],
-    types: ['Reps', 'Time'],
-    typeSelected: '',
     video: "",
 
   }),
   methods:{
     submit(){
-      console.log(this.exerciseName, this.desc, this.tagsSelected, this.typeSelected, this.video)
+      console.log(this.exerciseName, this.desc, this.tagsSelected, this.video)
     }
   }
 }

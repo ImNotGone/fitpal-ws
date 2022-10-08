@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div class="fill-height accent">
     <ToolBar title="Exercise"/>
+    <v-card class="accent pa-5">
     <ExerciseInRoutine :exercise-name="exerciseName"
                        :exercise-description="exerciseDescription"
                        :tags="tags"
                        :see-details="seeDetails"
                        :pause-exercise="pauseExercise"/>
+    </v-card>
   </div>
 
 </template>
