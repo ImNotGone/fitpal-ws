@@ -80,7 +80,6 @@
     <v-btn
         class="primary mr-4"
         @click="submit"
-        to="/"
     >
       Sign Up
     </v-btn>
@@ -94,6 +93,7 @@
 <script>
 import TopToolbar from "@/components/TopToolbar";
 import NoLoginFooter from "@/components/NoLoginFooter";
+import { UserApi, RegistrationCredentials } from "@/api/user";
 
 export default {
   name: "FPSignUp",
@@ -119,7 +119,11 @@ export default {
     },
   }),
   methods: {
-    submit () {
+    async submit () {
+      const creds = new RegistrationCredentials(this.firstName, this.lastName, this.email, this.password);
+        console.log("hola")
+    await UserApi.signup(creds)
+    console.log("hola2")
       this.$v.$touch()
     },
   },
