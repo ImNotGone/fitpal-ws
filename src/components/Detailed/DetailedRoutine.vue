@@ -170,6 +170,7 @@
             <v-btn
                 color="primary"
                 class="white--text"
+                to="routine/exercise"
             >
               Start Routine
             </v-btn>
