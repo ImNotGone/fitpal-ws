@@ -38,7 +38,7 @@
     <!-- Icon amount Routines -->
     <v-card-text>
       <v-row>
-        <v-icon class="pr-3 ml-3" color="white">mdi-account-multiple-outline</v-icon>
+        <v-icon class="pr-3 ml-3" color="white">mdi-book-open-variant</v-icon>
         <span class="white--text">In {{ amountRoutines }} Routines</span>
       </v-row>
     </v-card-text>

@@ -5,9 +5,15 @@
       <detailed-routine :routine-name="routineName"
                         :routine-description="routineDescription"
                         :amount-users="amountUsers"
-                        :time="time"
+                        :duration="duration"
                         :tags="tags"
-                        :muscles="muscles"/>
+                        :muscles="muscles"
+                        :progress="progress"
+                        :exercises="exercises"
+                        :series="series"
+                        :time-between-series="timeBetweenSeries"
+                        :routine-information="routineInformation"
+      ></detailed-routine>
     </v-card>
   </div>
 </template>
@@ -22,9 +28,27 @@ export default {
     routineName: 'Routine Name',
     routineDescription: 'Routine Description',
     amountUsers: 50,
-    time: '1 Hour',
+    duration: 30,
     tags: ['Biceps', 'Abs', 'Triceps'],
     muscles: ['Biceps', 'Abs', 'Triceps'],
+    progress: 48,
+    series: 3,
+    timeBetweenSeries: 30,
+    exercises: [
+        {
+          name: 'blank poses',
+          duration: "30 s"
+        },
+      {
+        name: 'pilates',
+        duration: "30 s"
+      },
+      {
+        name: 'Barbell Curl',
+        duration: "10 reps"
+      }
+    ],
+    routineInformation: "Last modified 25/08"
 
   })
 }

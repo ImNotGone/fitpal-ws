@@ -5,7 +5,7 @@
 
 <template>
   <!-- Card -->
-  <v-card class="mx-auto" min-width="350" max-width="350">
+  <v-card class="mx-auto" min-width="350" max-width="350" to="/routine">
     <!-- First row -->
     <v-card-title class="grey darken-3 white--text">
       <!-- Rectangular Image -->
