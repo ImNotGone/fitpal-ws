@@ -71,14 +71,6 @@ export default new Router({
             component: FPSettings
         },
         {
-            path: '/*',
-            name: '404',
-            component: FP404,
-            meta: {
-                hideNavbar: true,
-            }
-        },
-        {
             path: '/detailed-exercise',
             name: 'detailed-exercise',
             component: FPDetailedExercise
@@ -103,5 +95,14 @@ export default new Router({
             name: 'create-routine',
             component: FPCreateRoutine
         },
+        {
+            path: '/*',
+            name: '404',
+            component: FP404,
+            meta: {
+                hideNavbar: true,
+            }
+        },
+
     ]
 })

@@ -72,7 +72,7 @@
         @blur="$v.name.$touch()"
     ></v-text-field>
     <v-select
-        v-model="select"
+        v-model="selectedChoice"
         :items="trainer"
         :rules="[rules.required]"
         label="Are you a Trainer?"
@@ -109,6 +109,7 @@ export default {
       'Yes',
       'No',
     ],
+    selectedChoice: '',
     rules: {
       email: v => !!(v || '').match(/@/) || 'Please enter a valid email',
       length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,

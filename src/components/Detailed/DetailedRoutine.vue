@@ -10,18 +10,17 @@
 <template>
   <v-card class="grey darken-3 white--text">
     <!-- Video of the exercise -->
-    <video
-      class="mx-auto"
-      width="100%"
-      height="auto"
-      controls
-      :src="video"
-    ></video>
+    <v-img
+        class="mx-auto"
+        width="100%"
+        height="auto"
+        :src="routinePicture"
+    ></v-img>
 
     <!-- Exercise name -->
     <v-card-title primary-title>
       <div>
-        <h3 class="headline mb-0">{{ exerciseName }}</h3>
+        <h3 class="headline mb-0">{{ routineName }}</h3>
       </div>
     </v-card-title>
 
@@ -39,7 +38,9 @@
     <v-card-text>
       <v-row>
         <v-icon class="pr-3 ml-3" color="white">mdi-account-multiple-outline</v-icon>
-        <span class="white--text">In {{ amountRoutines }} Routines</span>
+        <span class="white--text"> {{amountUsers}} Users used this routine</span>
+        <v-icon class="pr-3 ml-3" color="white">mdi-clock-time-five-outline</v-icon>
+        <span class="white--text"> {{ time }}</span>
       </v-row>
     </v-card-text>
 
@@ -50,14 +51,14 @@
       </div>
     </v-card-title>
     <v-card-text class="white--text">
-      <p>{{ exerciseDescription }}</p>
+      <p>{{ routineDescription }}</p>
     </v-card-text>
 
     <!-- A list of muscles used by the exercise and a button to add the exercise to a routine at the bottom right -->
     <v-card-text class="white--text">
       <v-row>
         <v-col cols="8">
-          <h4 class="headline pb-3">Essence of exercise</h4>
+          <h4 class="headline pb-3">Essence of routine</h4>
           <!-- Vertical Column of muscles used by the exercise -->
           <v-col cols="8">
             <v-row class="pb-3" v-for="muscle in muscles" :key="muscle">
@@ -73,12 +74,12 @@
 
           <!-- TODO cambiar el css feo -->
           <v-btn
-            color="primary"
-            depressed
-            class="white--text pa-5"
-            style="float: right"
+              color="primary"
+              depressed
+              class="white--text pa-5"
+              style="float: right"
           >
-            Add to routine
+            Start Routine
           </v-btn>
         </v-col>
       </v-row>
@@ -89,12 +90,16 @@
 
 <script>
 export default {
-  name: "DetailedExercise",
+  name: "DetailedRoutine",
   props: {
-    video: String,
-    exerciseName: String,
-    exerciseDescription: String,
-    amountRoutines: Number,
+    routinePicture: {
+      type: String,
+      default: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZXhlcmNpc2V8ZW58MHx8MHx8&w=1000&q=80"
+    },
+    routineName: String,
+    routineDescription: String,
+    amountUsers: Number,
+    time: String,
     tags: Array,
     muscles: Array,
   },
