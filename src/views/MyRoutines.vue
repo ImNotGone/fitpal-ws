@@ -24,15 +24,15 @@
     <v-container class="mx-auto">
       <v-row>
         <v-col
-            v-for="routine in myRoutines"
+            v-for="routine in routinesStore.routines"
             :key="routine.id"
             cols="12"
             md="4"
         >
           <RoutineCard
-              :routinePicture="routine.picture"
+              :routinePicture="routine.img"
               :routineName="routine.name"
-              :routineDescription="routine.description"
+              :routineDescription="routine.desc"
               :duration="routine.duration"
               :tags="routine.tags"
               :showSaveButton="false"
@@ -47,6 +47,7 @@
 <script>
 import ToolBar from "@/components/ToolBar";
 import RoutineCard from "@/components/Cards/RoutineCard";
+import { useRoutinesStore } from "@/stores/RoutinesStore";
 
 export default {
   components: {
@@ -54,66 +55,11 @@ export default {
     RoutineCard
   },
 
-  data: () => ({
-    myRoutines: [
-      {
-        id: 1,
-        name: "Morning Routine",
-        description: "This is my morning routine",
-        duration: 30,
-        tags: ["Morning", "Routine", "Cardio"]
-      },
-      {
-        id: 2,
-        name: "Evening Routine",
-        description: "This is my evening routine",
-        duration: 30,
-        tags: ["Evening", "Routine", "Cardio"]
-      },
-      {
-        id: 3,
-        name: "Morning Routine",
-        description: "This is my morning routine",
-        duration: 30,
-        tags: ["Morning", "Routine", "Cardio"]
-      },
-      {
-        id: 4,
-        name: "Evening Routine",
-        description: "This is my evening routine",
-        duration: 30,
-        tags: ["Evening", "Routine", "Cardio"]
-      },
-      {
-        id: 5,
-        name: "Morning Routine",
-        description: "This is my morning routine",
-        duration: 30,
-        tags: ["Morning", "Routine", "Cardio"]
-      },
-      {
-        id: 6,
-        name: "Evening Routine",
-        description: "This is my evening routine",
-        duration: 30,
-        tags: ["Evening", "Routine", "Cardio"]
-      },
-      {
-        id: 7,
-        name: "Morning Routine",
-        description: "This is my morning routine",
-        duration: 30,
-        tags: ["Morning", "Routine", "Cardio"]
-      },
-      {
-        id: 8,
-        name: "Evening Routine",
-        description: "This is my evening routine",
-        duration: 30,
-        tags: ["Evening", "Routine", "Cardio"]
-      },
-    ]
-})
+  setup () {
+    const routinesStore = useRoutinesStore();
+
+    return { routinesStore };
+  },
 }
 </script>
 
