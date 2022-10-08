@@ -56,7 +56,7 @@
                 @click="updateTimer"
                 x-large
             >
-              {{ paused ? "Resume" : "Pause" }}
+              {{ started ? (paused ? "Resume" : "Pause") : "Start" }}
             </v-btn>
           </v-card-actions>
         </v-container>
@@ -122,8 +122,9 @@ export default {
       timeElapsed: 0,
       timerInterval: undefined,
       timeLimit: 5,
-      paused: false,
+      paused: true,
       done: false,
+      started: false,
     };
 
   },
@@ -141,6 +142,7 @@ export default {
       clearInterval(this.timerInterval);
     },
     resumeTimer() {
+      this.started = true;
       this.startTimer();
     },
     updateTimer() {
@@ -156,10 +158,6 @@ export default {
       this.done = false;
       this.startTimer();
     },
-  },
-  // Start timer immediately
-  mounted() {
-    this.startTimer();
   },
 }
 </script>
