@@ -74,8 +74,8 @@ export default {
     burger: true,
     primaryItems: [
       {title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/'},
-      {title: 'Trainers', icon: 'mdi-account-multiple', route: '/trainers'},
-      {title: 'Settings', icon: 'mdi-cog', route: '/settings'},
+      {title: 'Trainers', icon: 'mdi-weight-lifter', route: '/trainers'},
+      {title: 'Profile', icon: 'mdi-account', route: '/profile'},
     ],
     routinesMenu: [
       {title: 'My Routines', route: '/my-routines'},

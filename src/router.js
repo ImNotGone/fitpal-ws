@@ -4,7 +4,7 @@ import FPHome from './views/FPHome.vue'
 import MyRoutines from './views/MyRoutines.vue'
 import ExpRoutines from './views/ExpRoutines.vue'
 import FPTrainers from './views/FPTrainers.vue'
-import FPSettings from './views/FPSettings.vue'
+import FPProfile from './views/FPProfile.vue'
 import FPLandingPage from '@/views/FPLandingPage.vue';
 import FPSignUp from '@/views/FPSignUp.vue';
 import FPLogin from '@/views/FPLogin.vue';
@@ -66,9 +66,9 @@ export default new Router({
             component: FPTrainers
         },
         {
-            path: '/settings',
-            name: 'settings',
-            component: FPSettings
+            path: '/profile',
+            name: 'Profile',
+            component: FPProfile
         },
         {
             path: '/detailed-exercise',

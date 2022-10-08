@@ -5,7 +5,7 @@
       <span class="font-weight-medium">{{ title }}</span>
     </v-toolbar-title>
     <v-spacer/>
-    <router-link :to="pathSettings">
+    <router-link :to="pathProfile">
       <v-avatar class="mr-3">
         <img :src="profilePicture" alt="profile picture">
       </v-avatar>
@@ -16,7 +16,7 @@
 <script>
 export default {
   data: () => ({
-    pathSettings: '/settings',
+    pathProfile: '/profile',
     burger: true,
   }),
   name: "ToolBar",
