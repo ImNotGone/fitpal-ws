@@ -11,7 +11,7 @@ class Api {
         return 60 * 1000;
     }
 
-    static async myFetch(url, secure, init) {
+    static async fetch(url, secure, init) {
         if(secure && Api.token) {
             if(!init.header) {
                 init.header = {};
@@ -29,15 +29,16 @@ class Api {
             const text = await response.text();
             const result = text ? JSON.parse(text) : {};
 
-            if (result.code !== 'undefined') {
+            if (result.code) { // if result.code is present => error
                 throw result;
             }
+            return result;
         } catch(error) {
-            if(error.code !== 'undefined') {
-                throw error; // error de la api
-            } else if(error.name === 'AbortError') {
+            if(error.code) {  // if error.code is present => api error
+                throw error;  // throw api error
+            } else if(error.name === 'AbortError') { // controller aborted
                 throw { 'code': 98, 'description': error.message.toLowerCase()}
-            } else if(error.name === 'TypeError') {
+            } else if(error.name === 'TypeError') {  // bad call?
                 throw { 'code': 99, 'description': error.message.toLowerCase()}
             }
         } finally {
@@ -46,11 +47,11 @@ class Api {
     }
 
     static async get(url, secure) {
-        return await Api.myFetch(url, secure);
+        return await Api.fetch(url, secure);
     }
 
     static async post(url, secure, data) {
-        return await Api.myFetch(url, secure, {
+        return await Api.fetch(url, secure, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
@@ -60,7 +61,7 @@ class Api {
     }
 
     static async put(url, secure, data) {
-        return await Api.myFetch(url, secure, {
+        return await Api.fetch(url, secure, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
@@ -70,7 +71,7 @@ class Api {
     }
 
     static async delete(url, secure) {
-        return await Api.myFetch(url, secure, {
+        return await Api.fetch(url, secure, {
             method: "DELETE",
         });
     }
