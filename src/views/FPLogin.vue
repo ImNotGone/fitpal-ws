@@ -36,6 +36,8 @@
         ></v-text-field>
         <v-btn
             class="primary mr-4"
+            :loading="loading"
+            :disabled="loading"
             @click="submit"
             to="/"
         >
@@ -64,9 +66,11 @@ export default {
       password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/) ||
           'Password must contain an upper case letter and a numeric character',
     },
+    loading: false
   }),
   methods: {
     submit () {
+      this.loading=true
       this.$v.$touch()
     },
   },

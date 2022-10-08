@@ -79,6 +79,8 @@
     ></v-select>
     <v-btn
         class="primary mr-4"
+        :loading="loading"
+        :disabled="loading"
         @click="submit"
     >
       Sign Up
@@ -114,12 +116,14 @@ export default {
       email: v => !!(v || '').match(/@/) || 'Please enter a valid email',
       length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
       password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/) ||
-          'Password must contain an upper case letter and a numeric character',
+          'Password must contain an upper case letter, a lower case letter and a numeric character',
       required: v => !!v || 'This field is required',
     },
+    loading: false,
   }),
   methods: {
     async submit () {
+      this.loading=true;
       const creds = new RegistrationCredentials(this.firstName, this.lastName, this.email, this.password);
         console.log("hola")
     await UserApi.signup(creds)
