@@ -108,7 +108,7 @@
       <v-col cols="12" sm="4" md="4">
 
         <!-- Second card -->
-        <v-card class="grey darken-3 white--text">
+        <v-card class="fill-height grey darken-3 white--text">
 
           <!-- Detailed routine, edit button -->
           <v-card-title primary-title>
