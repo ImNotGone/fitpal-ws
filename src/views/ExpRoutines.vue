@@ -13,6 +13,7 @@
               color="primary"
               class="white--text rounded-lg"
               block
+              to="/create-routine"
           >
             Create New Routine
           </v-btn>

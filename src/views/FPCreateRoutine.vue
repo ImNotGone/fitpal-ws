@@ -8,15 +8,15 @@
         </v-card-title>
         <v-card-text>
           <v-form class="px-3">
-            <v-text-field label="Routine name" v-model="routineName"></v-text-field>
-            <v-textarea label="Description" v-model="desc"></v-textarea>
+            <v-text-field label="Routine name" v-model="createRoutineStore.routineName"></v-text-field>
+            <v-textarea label="Description" v-model="createRoutineStore.desc"></v-textarea>
             <v-tabs vertical class="pa-5" background-color="secondary">
 
               <v-tab>
                 Warmup Section
               </v-tab>
 
-              <v-tab v-for="section in sections"
+              <v-tab v-for="section in createRoutineStore.sections"
                      :key="section.title">
                 {{section.title}}
               </v-tab>
@@ -28,15 +28,15 @@
               <v-tab-item class="accent">
                 <v-container class="accent pa-5">
                   <v-row>
-                    <v-text-field dark counter-value="0" label="Series" v-model="warmup.series"></v-text-field>
+                    <v-text-field dark counter-value="0" label="Series" v-model="createRoutineStore.warmup.series"></v-text-field>
                     <v-spacer/>
-                    <v-text-field dark label="Time between series" v-model="warmup.rest"></v-text-field>
+                    <v-text-field dark label="Time between series" v-model="createRoutineStore.warmup.rest"></v-text-field>
                     <v-spacer/>
                     <ExerciseList @exerciseAdded="exerciseAddedWarmup($event)"/>
                     <v-spacer/>
                     <v-btn class="primary" @click="warmupDeleteExercise">delete exercise</v-btn>
                   </v-row>
-                  <v-list class="accent" v-for="exercise in warmup.exercises"
+                  <v-list class="accent" v-for="exercise in createRoutineStore.warmup.exercises"
                           :key="exercise.name">
                     <v-list-item-content dark>
                       <v-row class="pa-2">
@@ -53,7 +53,7 @@
                 </v-container>
               </v-tab-item>
 
-              <v-tab-item v-for="section in sections"
+              <v-tab-item v-for="section in createRoutineStore.sections"
                           :key="section.title">
                 <v-container class="accent pa-5">
                   <v-row>
@@ -85,13 +85,13 @@
               <v-tab-item>
                 <v-container class="accent pa-5">
                   <v-row>
-                    <v-text-field dark counter-value="0" label="Series" v-model="cooldown.series"></v-text-field>
+                    <v-text-field dark counter-value="0" label="Series" v-model="createRoutineStore.cooldown.series"></v-text-field>
                     <v-spacer/>
                     <ExerciseList @exerciseAdded="exerciseAddedCooldown($event)"/>
                     <v-spacer/>
                     <v-btn class="primary" @click="cooldownDeleteExercise">delete exercise</v-btn>
                   </v-row>
-                  <v-list class="accent" v-for="exercise in cooldown.exercises"
+                  <v-list class="accent" v-for="exercise in createRoutineStore.cooldown.exercises"
                           :key="exercise.name">
                     <v-list-item-content>
                       <v-row class="pa-2">
@@ -118,7 +118,7 @@
             </v-row>
 
             <v-file-input
-                v-model="image"
+                v-model="createRoutineStore.image"
                 accept="image/png, image/jpeg, image/bmp, image/svg"
                 placeholder="Insert image"
                 prepend-icon="mdi-camera"
@@ -135,57 +135,42 @@
 <script>
 import ToolBar from "@/components/ToolBar";
 import ExerciseList from "@/components/ExerciseList";
+import {useCreateRoutineStore} from "@/stores/CreateRoutineStore";
+
 export default {
+  setup(){
+    const createRoutineStore= useCreateRoutineStore()
+    return {createRoutineStore}
+  },
   name: "FPCreateRoutine",
   components: {ToolBar, ExerciseList},
-  data: () => ({
-    routineName: '',
-    desc: '',
-    image: "",
-    warmup:{
-      series:'',
-      rest:'',
-      exercises:[]
-    },
-    sections: [
-      {title:'Section 1',
-        series:'',
-        rest:'',
-        exercises:[]
-      }
-    ],
-    cooldown:{
-      series:'',
-      exercises:[]
-    },
-    numSect: 1,
 
-  }),
   methods:{
     submit(){
-      console.log(this.routineName, this.desc, this.image)
+      console.log(this.routineName, this.desc, this.image, this.warmup, this.sections, this.cooldown)
+      this.createRoutineStore.$reset();
     },
     addSection(){
-      this.numSect=this.numSect +1;
-      this.sections.push({title:'Section ' + this.numSect, rest: '', series: '', exercises: []});
+      this.createRoutineStore.numSect=this.createRoutineStore.numSect +1;
+      this.createRoutineStore.sections.push({title:'Section ' + this.createRoutineStore.numSect, rest: '', series: '', exercises: []});
     },
     deleteSection(){
-      if(this.numSect>1){
-        this.sections.pop();
-        this.numSect=this.numSect -1;
+      if(this.createRoutineStore.numSect>1){
+        this.createRoutineStore.sections.pop();
+        this.createRoutineStore.numSect=this.createRoutineStore.numSect -1;
       }
     },
     exerciseAddedWarmup(name){
-        this.warmup.exercises.push({name:name, reps:'', time:''})
+      this.createRoutineStore.warmup.exercises.push({name:name, reps:'', time:''})
     },
     exerciseAddedCooldown(name){
-      this.cooldown.exercises.push({name:name, reps:'', time:''})
+      this.createRoutineStore.cooldown.exercises.push({name:name, reps:'', time:''})
     },
     warmupDeleteExercise(){
-      this.warmup.exercises.pop();
+      this.createRoutineStore.warmup.exercises.pop();
     },
     cooldownDeleteExercise(){
-      this.cooldown.exercises.pop();
+      this.createRoutineStore.cooldown.exercises.pop();
     }
   }
 }
