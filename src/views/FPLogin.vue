@@ -81,7 +81,7 @@ export default {
       let result = await this.$login(credentials, true)
       this.loading=false;
       if(result == true) {
-        router.replace({ path: '/'})
+        await router.replace({ path: '/'})
       }
       this.$v.$touch()
     },

@@ -3,9 +3,13 @@
     <ToolBar title="Create Exercise"/>
     <v-container>
     <v-card dark class="secondary">
-      <v-card-title>
-        Create Exercise
-      </v-card-title>
+        <router-link :to="pathBack">
+          <v-icon large class="white--text">mdi-chevron-left</v-icon>
+        </router-link>
+        <v-card-title>
+          Create Exercise
+        </v-card-title>
+
       <v-card-text>
         <v-form class="px-3">
           <v-text-field label="Exercise name" v-model="exerciseName"></v-text-field>
@@ -40,6 +44,7 @@ export default {
   name: "FPCreateExercise",
   components: {ToolBar},
   data: () => ({
+    pathBack: '/create-routine',
     exerciseName: '',
     desc: '',
     tags: ['abs', 'biceps', 'triceps', 'legs', 'chest', 'back'],
@@ -50,6 +55,7 @@ export default {
   methods:{
     submit(){
       console.log(this.exerciseName, this.desc, this.tagsSelected, this.video)
+
     }
   }
 }

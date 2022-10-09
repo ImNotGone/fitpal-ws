@@ -25,7 +25,7 @@
                 Cooldown Section
               </v-tab>
 
-              <v-tab-item class="accent">
+              <v-tab-item class="fill-height accent">
                 <v-container class="accent pa-5">
                   <v-row>
                     <v-text-field dark counter-value="0" label="Series" v-model="createRoutineStore.warmup.series"></v-text-field>
