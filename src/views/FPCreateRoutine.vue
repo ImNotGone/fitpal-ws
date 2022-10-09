@@ -32,17 +32,21 @@
                     <v-spacer/>
                     <v-text-field dark label="Time between series" v-model="warmup.rest"></v-text-field>
                     <v-spacer/>
-                    <v-btn class="primary">add exercise</v-btn>
+                    <ExerciseList @exerciseAdded="exerciseAddedWarmup($event)"/>
                     <v-spacer/>
-                    <v-btn class="primary">delete exercise</v-btn>
+                    <v-btn class="primary" @click="warmupDeleteExercise">delete exercise</v-btn>
                   </v-row>
                   <v-list class="accent" v-for="exercise in warmup.exercises"
                           :key="exercise.name">
-                    <v-list-item-content v-text="exercise.name">
+                    <v-list-item-content dark>
+                      <v-row class="pa-2">
+                      <h3 class="white--text pa-3">{{exercise.name}}</h3>
                       <v-row>
-                        <v-text-field dark counter-value="0" label="Reps"></v-text-field>
                         <v-spacer/>
-                        <v-text-field dark label="Time"></v-text-field>
+                        <v-text-field dark counter-value="0" label="Reps" v-model="exercise.reps"></v-text-field>
+                        <v-spacer/>
+                        <v-text-field dark label="Time" v-model="exercise.time"></v-text-field>
+                      </v-row>
                       </v-row>
                     </v-list-item-content>
                   </v-list>
@@ -57,17 +61,21 @@
                     <v-spacer/>
                     <v-text-field dark label="Time between series" ></v-text-field>
                     <v-spacer/>
-                    <v-btn class="primary">add exercise</v-btn>
+                    <ExerciseList @exerciseAdded="section.exercises.push({name:$event, reps:'', time:''})"/>
                     <v-spacer/>
-                    <v-btn class="primary">delete exercise</v-btn>
+                    <v-btn class="primary" @click="section.exercises.pop()">delete exercise</v-btn>
                   </v-row>
-                  <v-list class="accent" v-for="exercise in cooldown.exercises"
+                  <v-list class="accent" v-for="exercise in section.exercises"
                           :key="exercise.name">
-                    <v-list-item-content v-text="exercise.name">
-                      <v-row>
-                        <v-text-field dark counter-value="0" label="Reps"></v-text-field>
-                        <v-spacer/>
-                        <v-text-field dark label="Time"></v-text-field>
+                    <v-list-item-content>
+                      <v-row class="pa-2">
+                        <h3 class="white--text pa-3">{{exercise.name}}</h3>
+                        <v-row>
+                          <v-spacer/>
+                          <v-text-field dark counter-value="0" label="Reps" v-model="exercise.reps"></v-text-field>
+                          <v-spacer/>
+                          <v-text-field dark label="Time" v-model="exercise.time"></v-text-field>
+                        </v-row>
                       </v-row>
                     </v-list-item-content>
                   </v-list>
@@ -79,17 +87,19 @@
                   <v-row>
                     <v-text-field dark counter-value="0" label="Series" v-model="cooldown.series"></v-text-field>
                     <v-spacer/>
-                    <v-btn class="primary">add exercise</v-btn>
+                    <ExerciseList @exerciseAdded="exerciseAddedCooldown($event)"/>
                     <v-spacer/>
-                    <v-btn class="primary">delete exercise</v-btn>
+                    <v-btn class="primary" @click="cooldownDeleteExercise">delete exercise</v-btn>
                   </v-row>
                   <v-list class="accent" v-for="exercise in cooldown.exercises"
                           :key="exercise.name">
-                    <v-list-item-content v-text="exercise.name">
-                      <v-row>
-                        <v-text-field dark counter-value="0" label="Reps"></v-text-field>
-                        <v-spacer/>
-                        <v-text-field dark label="Time"></v-text-field>
+                    <v-list-item-content>
+                      <v-row class="pa-2">
+                        <h3 class="white--text pa-3">{{exercise.name}}</h3>
+                        <v-row>
+                          <v-spacer/>
+                          <v-text-field dark label="Time" v-model="exercise.time"></v-text-field>
+                        </v-row>
                       </v-row>
                     </v-list-item-content>
                   </v-list>
@@ -124,9 +134,10 @@
 
 <script>
 import ToolBar from "@/components/ToolBar";
+import ExerciseList from "@/components/ExerciseList";
 export default {
   name: "FPCreateRoutine",
-  components: {ToolBar},
+  components: {ToolBar, ExerciseList},
   data: () => ({
     routineName: '',
     desc: '',
@@ -163,6 +174,18 @@ export default {
         this.sections.pop();
         this.numSect=this.numSect -1;
       }
+    },
+    exerciseAddedWarmup(name){
+        this.warmup.exercises.push({name:name, reps:'', time:''})
+    },
+    exerciseAddedCooldown(name){
+      this.cooldown.exercises.push({name:name, reps:'', time:''})
+    },
+    warmupDeleteExercise(){
+      this.warmup.exercises.pop();
+    },
+    cooldownDeleteExercise(){
+      this.cooldown.exercises.pop();
     }
   }
 }
