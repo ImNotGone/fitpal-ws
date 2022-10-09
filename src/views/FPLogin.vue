@@ -38,8 +38,7 @@
             class="primary mr-4"
             :loading="loading"
             :disabled="loading"
-            @click="submit"
-            to="/"
+            @click="login"
         >
           Log In
         </v-btn>
@@ -53,6 +52,9 @@
 <script>
 import TopToolbar from "@/components/TopToolbar";
 import NoLoginFooter from "@/components/NoLoginFooter";
+import { useSecurityStore } from "@/stores/SecurityStore";
+import { mapActions } from "pinia";
+import { LoginCredentials } from "@/api/user";
 
 export default {
   name: "FPLogin",
@@ -69,8 +71,14 @@ export default {
     loading: false
   }),
   methods: {
-    submit () {
-      this.loading=true
+    ...mapActions(useSecurityStore, {
+      $login: 'login',
+    }),
+    async login() {
+      this.loading=true;
+      const credentials = new LoginCredentials(this.email, this.password);
+      await this.$login(credentials, true)
+      this.loading=false;
       this.$v.$touch()
     },
   },

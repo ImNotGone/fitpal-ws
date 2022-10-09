@@ -10,7 +10,7 @@ export const useRoutinesStore = defineStore('routinesStore', {
             {
                 id: 1,
                 name:'Morning Routine',
-                img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZXhlcmNpc2V8ZW58MHx8MHx8&w=1000&q=80',
+                img: 'https://health.clevelandclinic.org/wp-content/uploads/sites/3/2022/04/exerciseHowOften-944015592-770x533-1-650x428.jpg',
                 desc: 'This is my morning routine',
                 duration: 30,
                 tags: ['Morning', 'Cardio', 'Routine'],
@@ -65,5 +65,9 @@ export const useRoutinesStore = defineStore('routinesStore', {
         duration: 30,
         tags: ["Evening", "Routine", "Cardio"]
       },
-    ]})
+    ]}),
+
+    getters: {
+
+    }
 })

@@ -122,11 +122,10 @@ export default {
   }),
   methods: {
     async submit () {
-      this.loading=true;
+      this.loading = true;
       const creds = new RegistrationCredentials(this.firstName, this.lastName, this.email, this.password);
-        console.log("hola")
-    await UserApi.signup(creds)
-    console.log("hola2")
+      await UserApi.signup(creds)
+      this.loading = false;
       this.$v.$touch()
     },
   },
