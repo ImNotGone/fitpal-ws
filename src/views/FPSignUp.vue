@@ -53,7 +53,6 @@
         :rules="[rules.password, rules.length(8), rules.required]"
         filled
         color="primary"
-        counter="8"
         label="Password"
         style="min-height: 96px"
         type="password"

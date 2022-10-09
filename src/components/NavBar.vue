@@ -50,13 +50,7 @@
       </v-card>
 
       <template v-slot:append>
-        <div class="pa-2">
-          <v-btn block flat color="grey">
-            <v-icon left>mdi-help-circle-outline</v-icon>
-            <span>Help</span>
-          </v-btn>
-        </div>
-        <div class="pa-2">
+        <div class="pb-5 px-2">
           <v-btn block flat color="grey" to="/landing-page" >
             <v-icon left>mdi-exit-to-app</v-icon>
             <span>Sign Out</span>
