@@ -3,10 +3,9 @@
     <ToolBar title="My Routines"/>
 
     <!-- My Routines, Create new routine button -->
-    <v-container class="mx-auto">
+    <v-container>
       <v-row>
-
-        <h2 class="pa-5 ml-5">My Routines</h2>
+        <h3 class="display-1 pa-5">My Routines</h3>
         <v-spacer/>
         <v-col class="pa-5" cols="12" md="4">
           <v-btn

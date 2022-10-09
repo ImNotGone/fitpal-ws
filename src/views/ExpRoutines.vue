@@ -6,7 +6,7 @@
     <v-container class="mx-auto">
       <v-row>
 
-        <h2 class="pa-5 ml-5">Explore Routines</h2>
+        <h3 class="display-1 pa-5">Explore Routines</h3>
         <v-spacer/>
         <v-col class="pa-5" cols="12" md="4">
           <v-btn
