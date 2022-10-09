@@ -9,7 +9,7 @@
 <template>
   <div class="fill-height settings">
     <ToolBar title="Profile"/>
-    <v-container fluid class="container">
+    <v-container class="container">
       <v-card>
         <v-card-title class="secondary">
           <v-avatar class="mr-3">
@@ -113,8 +113,8 @@ div{
   color: white;
 }
 .container{
-  display: block;
-  margin: auto;
+  margin: auto auto 40px auto;
+  padding: 20px;
 }
 </style>
 
