@@ -12,7 +12,7 @@
           class="max-v-list-height"
           v-for="item in menuItems"
           :key="item.title"
-          :to="item.path">
+          :to="item.path" replace>
         <v-icon left dark>{{ item.icon }}</v-icon>
         {{ item.title }}
       </v-list-item>

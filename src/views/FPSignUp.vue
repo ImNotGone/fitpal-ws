@@ -124,7 +124,16 @@ export default {
     async submit () {
       this.loading = true;
       const creds = new RegistrationCredentials(this.firstName, this.lastName, this.email, this.password);
-      await UserApi.signup(creds)
+      try {
+        console.log(await UserApi.signup(creds))
+        // TODO: MANDARLO A LA PAGINA DE VERIFICACION O ALGO
+        // POR EJEMPLO -> verify -> login
+        // router.replace({path: '/verify?email=${this.email}&code='''})
+        //  o sino mostrar un mensaje diciendo que vaya al mail a verificarse desde ahi
+      } catch (error) {
+        console.log(error)
+        // TODO: MOSTRAR EL ERROR EN PANTALLA
+      }
       this.loading = false;
       this.$v.$touch()
     },

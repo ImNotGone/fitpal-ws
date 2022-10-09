@@ -55,6 +55,7 @@ import NoLoginFooter from "@/components/NoLoginFooter";
 import { useSecurityStore } from "@/stores/SecurityStore";
 import { mapActions } from "pinia";
 import { LoginCredentials } from "@/api/user";
+import router from "@/router";
 
 export default {
   name: "FPLogin",
@@ -77,8 +78,11 @@ export default {
     async login() {
       this.loading=true;
       const credentials = new LoginCredentials(this.email, this.password);
-      await this.$login(credentials, true)
+      let result = await this.$login(credentials, true)
       this.loading=false;
+      if(result == true) {
+        router.replace({ path: '/'})
+      }
       this.$v.$touch()
     },
   },
