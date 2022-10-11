@@ -14,7 +14,7 @@
       </v-row>
       <v-list class="secondary">
         <v-list-item-group>
-          <v-list-item v-for="exercise in exercises"
+          <v-list-item v-for="exercise in exerciseStore.exercises"
                        :key="exercise.title" @click="submit(exercise.title)">
             <v-list-item-content>
               {{exercise.title}}
@@ -33,22 +33,21 @@
 </template>
 
 <script>
+import {useExerciseStore} from "@/stores/ExerciseStore";
+
 export default {
+  setup(){
+    const exerciseStore= useExerciseStore()
+    return {exerciseStore}
+  },
   name: "ExerciseList",
   data: () => ({
     list: false,
-    exercises:[
-      {title: 'Exercise Title 1', route:'/detailed-exercise'},
-      {title: 'Exercise Title 2', route:'/detailed-exercise'},
-      {title: 'Exercise Title 3', route:'/detailed-exercise'}
-    ]
-
   }),
   methods:{
     submit(title){
       this.$emit('exerciseAdded', title)
       this.list=false
-
     }
   }
 }

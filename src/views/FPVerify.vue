@@ -2,6 +2,10 @@
 <div class="fill-width fill-height accent">
     <div class='verify'>
         <TopToolbar/>
+      <v-card dark class="secondary pa-5">
+        <v-card-title>Verify</v-card-title>
+
+      </v-card>
         <!-- if automatic form or normal form are succesfull then show message-->
 
         <!-- button and form to submit if automatic form is not completed -->
