@@ -84,6 +84,20 @@
     >
       Sign Up
     </v-btn>
+    <v-dialog persistent v-model="showCard" max-width="600px">
+      <v-card dark class="secondary pa-5">
+        <v-card-title class="justify-center">Verification</v-card-title>
+        <v-card-text class="justify-center">An email has been sent to {{ email }}, please click the link in it or enter the code below to verify your account</v-card-text>
+        <v-text-field dark v-model="vCode" type="vCode" label="Verification Code"></v-text-field>
+        <v-row class="pa-5">
+          <v-btn class="primary pa-5" :loading="loading"
+                 :disabled="loading" @click="verify">Verify</v-btn>
+          <v-spacer/>
+          <v-btn :disabled="logIn" class="primary pa-5" to="/login">Log In</v-btn>
+        </v-row>
+
+      </v-card>
+    </v-dialog>
   </v-form>
   </v-card>
   </v-container>
@@ -94,12 +108,15 @@
 <script>
 import TopToolbar from "@/components/TopToolbar";
 import NoLoginFooter from "@/components/NoLoginFooter";
-import { UserApi, RegistrationCredentials } from "@/api/user";
+import {UserApi, RegistrationCredentials, AccountVerify} from "@/api/user";
 
 export default {
   name: "FPSignUp",
   components: {NoLoginFooter, TopToolbar},
   data: () => ({
+    logIn: true,
+    showCard: false,
+    vCode: '',
     pathBack: '/landing-page',
     firstName: '',
     lastName: '',
@@ -126,6 +143,7 @@ export default {
       const creds = new RegistrationCredentials(this.firstName, this.lastName, this.email, this.password);
       try {
         console.log(await UserApi.signup(creds))
+        this.showCard=true;
         // TODO: MANDARLO A LA PAGINA DE VERIFICACION O ALGO
         // POR EJEMPLO -> verify -> login
         // router.replace({path: '/verify?email=${this.email}&code='''})
@@ -136,6 +154,19 @@ export default {
       }
       this.loading = false;
       this.$v.$touch()
+    },
+    async verify() {
+      this.loading = true;
+      try {
+        const accountVerify = new AccountVerify(this.email, this.vCode);
+        await UserApi.verify_email(accountVerify);
+        this.logIn= true;
+      } catch(error) {
+        alert(error);
+        this.failed = false;
+      }
+      this.verified = true;
+      this.loading = false;
     },
   },
 }

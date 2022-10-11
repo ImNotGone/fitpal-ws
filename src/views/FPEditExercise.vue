@@ -26,7 +26,7 @@
                 prepend-icon="mdi-video"
                 label="Video"
             ></v-file-input>
-            <v-btn flat class="primary mx-0 mt-3" @click="submit">Create</v-btn>
+            <v-btn flat class="primary mx-0 mt-3" @click="submit">Submit</v-btn>
           </v-form>
         </v-card-text>
       </v-card>
@@ -37,7 +37,13 @@
 
 <script>
 import ToolBar from "@/components/ToolBar";
+import {useExerciseStore} from "@/stores/ExerciseStore";
 export default {
+  setup(){
+    const exerciseStore= useExerciseStore()
+    return {exerciseStore}
+        //TODO: edit exercise deberia ir a buscar a la store el ejercicio que le corresponde y cargar la info en data
+  },
   name: "FPEditExercise",
   components: {ToolBar},
   data: () => ({
@@ -51,7 +57,7 @@ export default {
   methods:{
     submit(){
       console.log(this.exerciseName, this.desc, this.tagsSelected, this.video)
-
+      //TODO: actualizar el valor dentro de la store con la info modificada de data
     }
   }
 }

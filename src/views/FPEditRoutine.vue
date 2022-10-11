@@ -124,7 +124,7 @@
                 prepend-icon="mdi-camera"
                 label="Image"
             ></v-file-input>
-            <v-btn flat class="primary mx-0 mt-3" @click="submit">Create</v-btn>
+            <v-btn flat class="primary mx-0 mt-3" @click="submit">Submit</v-btn>
           </v-form>
         </v-card-text>
       </v-card>
