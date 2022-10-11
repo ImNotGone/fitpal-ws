@@ -27,7 +27,8 @@ export default {
             code: this.$route.query.code
         }
     },
-    async verify() {
+    methods: {
+        async verify() {
         try {
             const acountVerify = new AccountVerify(this.email, this.code);
             await UserApi.verify_email(acountVerify);
@@ -37,6 +38,8 @@ export default {
         }
         this.verified = true;
     },
+    },
+
     // autoruns when component is called
     async created() {
         if(!this.code || !this.email) {
