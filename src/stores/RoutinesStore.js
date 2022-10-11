@@ -69,5 +69,8 @@ export const useRoutinesStore = defineStore('routinesStore', {
 
     getters: {
 
+    },
+    actions:{
+
     }
 })

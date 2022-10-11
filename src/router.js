@@ -15,6 +15,8 @@ import FPExerciseInRoutine from "@/views/FPExerciseInRoutine";
 import FPCreateExercise from "@/views/FPCreateExercise";
 import FPCreateRoutine from "@/views/FPCreateRoutine";
 import FPVerify from "@/views/FPVerify";
+import FPEditRoutine from "@/views/FPEditRoutine";
+import FPEditExercise from "@/views/FPEditExercise";
 
 Vue.use(Router)
 
@@ -93,6 +95,16 @@ export default new Router({
             path: '/routine/exercise',
             name: 'exercise-in-routine',
             component: FPExerciseInRoutine
+        },
+        {
+            path: '/edit-routine',
+            name: 'edit-routine',
+            component: FPEditRoutine
+        },
+        {
+            path: '/edit-exercise',
+            name: 'edit-exercise',
+            component: FPEditExercise
         },
         {
             path: '/create-exercise',

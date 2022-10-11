@@ -22,5 +22,8 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
             exercises:[]
         },
         numSect: 1,
-    })
+    }),
+    actions:{
+
+    }
     })

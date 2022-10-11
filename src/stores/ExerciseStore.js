@@ -7,5 +7,13 @@ export const useExerciseStore = defineStore('exerciseStore',{
             {title: 'Exercise Title 2', route:'/detailed-exercise'},
             {title: 'Exercise Title 3', route:'/detailed-exercise'}
         ]
-    })
+    }),
+    getters:{
+
+    },
+
+    actions:{
+
+    }
+
 })
