@@ -17,6 +17,7 @@ import FPCreateRoutine from "@/views/FPCreateRoutine";
 import FPVerify from "@/views/FPVerify";
 import FPEditRoutine from "@/views/FPEditRoutine";
 import FPEditExercise from "@/views/FPEditExercise";
+import FPMyExercises from "@/views/FPMyExercises";
 
 Vue.use(Router)
 
@@ -65,6 +66,11 @@ export default new Router({
             path: '/my-routines',
             name: 'my-routines',
             component: MyRoutines
+        },
+        {
+            path: '/my-exercises',
+            name: 'my-exercises',
+            component: FPMyExercises
         },
         {
             path: '/exp-routines',

@@ -116,6 +116,7 @@ export default {
   data: () => ({
     logIn: true,
     showCard: false,
+    verified: false,
     vCode: '',
     pathBack: '/landing-page',
     firstName: '',
@@ -153,7 +154,6 @@ export default {
         // TODO: MOSTRAR EL ERROR EN PANTALLA
       }
       this.loading = false;
-      this.$v.$touch()
     },
     async verify() {
       this.loading = true;

@@ -147,8 +147,7 @@ export default {
 
   methods:{
     submit(){
-      console.log(this.routineName, this.desc, this.image, this.warmup, this.sections, this.cooldown)
-      this.createRoutineStore.$reset();
+
     },
     addSection(){
       this.createRoutineStore.numSect=this.createRoutineStore.numSect +1;

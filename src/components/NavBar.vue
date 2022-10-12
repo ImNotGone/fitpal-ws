@@ -74,6 +74,7 @@ export default {
     routinesMenu: [
       {title: 'My Routines', route: '/my-routines'},
       {title: 'Explore Routines', route: '/exp-routines'},
+      {title: 'My Exercises', route: 'my-exercises'}
     ],
   }),
   name: "NavBar",

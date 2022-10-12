@@ -4,7 +4,6 @@
         <TopToolbar/>
       <v-card dark class="secondary pa-5">
         <v-card-title>Verify</v-card-title>
-
       </v-card>
         <!-- if automatic form or normal form are succesfull then show message-->
 
@@ -34,8 +33,8 @@ export default {
     methods: {
         async verify() {
         try {
-            const acountVerify = new AccountVerify(this.email, this.code);
-            await UserApi.verify_email(acountVerify);
+            const accountVerify = new AccountVerify(this.email, this.code);
+            await UserApi.verify_email(accountVerify);
         } catch(error) {
             console.log(error);
             this.failed = true;
