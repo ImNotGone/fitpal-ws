@@ -4,7 +4,12 @@
     <v-content>
         <router-view></router-view>
     </v-content>
-
+    <v-dialog persistent v-model="isOffline" max-width="600px">
+      <v-card dark class="secondary pa-5">
+        <v-card-title class="justify-center">Error</v-card-title>
+        <v-card-text class="justify-center">Connection lost</v-card-text>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -19,9 +24,18 @@ export default {
   },
 
   data: () => ({
-    //
-  }),
+    isOffline: !navigator.onLine,
 
+  }),
+  methods: {
+    updateOnlineStatus() {
+        this.isOffline = !navigator.onLine
+    },
+  },
+  created() {
+    window.addEventListener('online', this.updateOnlineStatus);
+    window.addEventListener('offline', this.updateOnlineStatus);
+  },
   props: {
     hideNavbar: Boolean,
   }
