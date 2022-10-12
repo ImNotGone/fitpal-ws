@@ -1,6 +1,6 @@
 import { Api } from "./api.js";
 
-export { ExercisesApi, Exercise };
+export { ExercisesApi, Exercise, Image };
 
 class ExercisesApi {
     static getUrl(slug) {
@@ -26,6 +26,22 @@ class ExercisesApi {
     static async deleteExercise(id) {
         return await Api.delete(ExercisesApi.getUrl(id), true);
     }
+
+    static async getImages(exerciseId) {
+        return await Api.get(`${ExercisesApi.getUrl()}/${exerciseId}/images`, true);
+    }
+
+    static async addImage(exerciseId, image) {
+        return await Api.post(`${ExercisesApi.getUrl()}/${exerciseId}/images`,true, image);
+    }
+
+    static async editImage(exerciseId, imageId, image) {
+        return await Api.post(`${ExercisesApi.getUrl()}/${exerciseId}/images/${imageId}`, true, image);
+    }
+
+    static async deleteImage(exerciseId, imageId) {
+        return await Api.delete(`${ExercisesApi.getUrl()}/${exerciseId}/images/${imageId}`, true);
+    }
 }
 
 
@@ -35,5 +51,12 @@ class Exercise {
         this.detail = detail;   // char[200]
         this.type = type;       // enum{ "excercise", "rest" }
         this.metadata = metadata;
+    }
+}
+
+class Image {
+    constructor(imgUrl) {
+        this.number = 1;
+        this.imgUrl = imgUrl;
     }
 }
