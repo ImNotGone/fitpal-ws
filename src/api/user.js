@@ -20,15 +20,15 @@ class UserApi {
     }
 
     static async current_user() {
-        return Api.get(UserApi.getUrl('current'), true);
+        return await Api.get(UserApi.getUrl('current'), true);
     }
 
     static async resend_verification(email) {
-        return Api.post(UserApi.getUrl('resend_verification'), false, email);
+        return await Api.post(UserApi.getUrl('resend_verification'), false, email);
     }
 
     static async verify_email(email_verification) {
-        return Api.post(UserApi.getUrl('verify_email'), false, email_verification);
+        return await Api.post(UserApi.getUrl('verify_email'), false, email_verification);
     }
 }
 
