@@ -72,9 +72,9 @@ export default {
       {title: 'Profile', icon: 'mdi-account', route: '/profile'},
     ],
     routinesMenu: [
+      {title: 'My Exercises', route: 'my-exercises'},
       {title: 'My Routines', route: '/my-routines'},
-      {title: 'Explore Routines', route: '/exp-routines'},
-      {title: 'My Exercises', route: 'my-exercises'}
+      {title: 'Explore Routines', route: '/exp-routines'}
     ],
   }),
   name: "NavBar",
