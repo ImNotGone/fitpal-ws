@@ -19,8 +19,16 @@ class UserApi {
         return await Api.post(UserApi.getUrl('logout'), true);
     }
 
-    static async current_user() {
+    static async getCurrentUser() {
         return await Api.get(UserApi.getUrl('current'), true);
+    }
+
+    static async editCurrentUser(accountEdit) {
+        return await Api.put(UserApi.getUrl('current'), true, accountEdit);
+    }
+
+    static async deleteCurrentUser() {
+        return await Api.delete(UserApi.getUrl('current'), true);
     }
 
     static async resend_verification(email) {
