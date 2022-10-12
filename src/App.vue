@@ -7,7 +7,7 @@
     <v-dialog persistent v-model="isOffline" max-width="600px">
       <v-card dark class="secondary pa-5">
         <v-card-title class="justify-center">Error</v-card-title>
-        <v-card-text class="justify-center">Connection lost</v-card-text>
+        <v-card-text class="justify-center">Connection lost, please restart your connection</v-card-text>
       </v-card>
     </v-dialog>
   </v-app>
@@ -22,7 +22,6 @@ export default {
   components: {
     NavBar,
   },
-
   data: () => ({
     isOffline: !navigator.onLine,
 
