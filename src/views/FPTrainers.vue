@@ -10,7 +10,7 @@
 
     <!-- Recent Trainers -->
     <!-- Title -->
-    <h3 class="display-1 pa-5 ml-10">Recent Trainers</h3>
+    <h3 class="display-1 pa-5">Recent Trainers</h3>
 
     <!-- Trainers -->
     <!-- Horizontal scrollable row -->
@@ -24,7 +24,7 @@
 
     <!-- Followed Trainers -->
     <!-- Title -->
-    <h3 class="display-1 pa-5 ml-10">Followed Trainers</h3>
+    <h3 class="display-1 pa-5">Followed Trainers</h3>
 
 
     <!-- Trainers -->
@@ -39,7 +39,7 @@
 
     <!-- Popular Trainers -->
     <!-- Title -->
-    <h3 class="display-1 pa-5 ml-10">Popular Trainers</h3>
+    <h3 class="display-1 pa-5">Popular Trainers</h3>
 
     <!-- Trainers -->
     <!-- Horizontal scrollable row -->

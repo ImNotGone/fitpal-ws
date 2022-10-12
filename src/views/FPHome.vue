@@ -1,7 +1,8 @@
 <template>
     <div class="home">
       <ToolBar title="Home"/>
-      <h3 class="display-1 pa-5 ml-10">Top Trainers</h3>
+
+      <h3 class="display-1 pa-5">Top Trainers</h3>
       <v-slide-group class="slider" dark>
         <v-slide-item class="item pb-3" v-for="trainer in recentTrainers" :key="trainer.id">
           <TrainerCard :profilePicture="trainer.profilePicture" :trainerName="trainer.name"
@@ -9,7 +10,8 @@
                        :rating="trainer.rating" :reviewAmount="trainer.reviewAmount" :showDescription="true"/>
         </v-slide-item>
       </v-slide-group>
-      <h3 class="display-1 pa-5 ml-10">My Routines</h3>
+
+      <h3 class="display-1 pa-5">My Routines</h3>
       <v-container class="mx-auto">
         <v-row>
           <v-col
