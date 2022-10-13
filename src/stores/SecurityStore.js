@@ -56,7 +56,7 @@ export const useSecurityStore = defineStore('security', {
             if(this.user) {
                 return this.user;
             }
-            const result = await UserApi.get();
+            const result = await UserApi.getCurrentUser();
             this.setUser(result);
             return this.user;
         }

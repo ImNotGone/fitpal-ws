@@ -56,6 +56,7 @@ class RegistrationCredentials {
         this.username = email;
         this.password = password;
         this.metadata = metadata;
+        this.avatarUrl = "https://plusvalleyadventure.com/wp-content/uploads/2020/11/default-user-icon-8.jpg";
     }
 }
 

@@ -11,12 +11,12 @@ class Api {
         return 60 * 1000;
     }
 
-    static async fetch(url, secure, init) {
+    static async fetch(url, secure, init = {}) {
         if(secure && Api.token) {
-            if(!init.header) {
-                init.header = {};
+            if(!init.headers) {
+                init.headers = {};
             }
-            init.header['Authorization'] = `bearer ${Api.token}`
+            init.headers['Authorization'] = `bearer ${Api.token}`
         }
 
         const controller = new AbortController();
@@ -47,7 +47,7 @@ class Api {
     }
 
     static async get(url, secure) {
-        return await Api.fetch(url, secure);
+        return await Api.fetch(url, secure, {});
     }
 
     static async post(url, secure, data) {
