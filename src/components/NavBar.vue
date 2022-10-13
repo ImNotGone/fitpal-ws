@@ -69,4 +69,8 @@ export default {
   text-transform: uppercase;
   color: lightgray;
 }
+.list .v-list-item-group .v-list-item--active {
+  color: #FF8754;
+  background-color: #353535;
+}
 </style>
