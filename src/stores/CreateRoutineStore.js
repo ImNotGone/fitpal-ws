@@ -23,6 +23,15 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
         },
         numSect: 1,
     }),
+    getters:{
+        getRoutineName: (state) => state.routineName,
+        getDesc: (state) => state.desc,
+        getImage: (state) => state.image,
+        getWarmup: (state) => state.warmup,
+        getSections: (state) => state.sections,
+        getCooldown: (state) => state.cooldown,
+        getNumSect: (state) => state.numSect,
+    },
     actions:{
 
     }
