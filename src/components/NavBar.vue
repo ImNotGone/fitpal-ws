@@ -11,26 +11,6 @@
           flat
       >
         <v-list>
-          <v-list-group
-              prepend-icon="mdi-book-open-variant"
-          >
-            <template v-slot:activator>
-              <v-list-item-title class="menus">Routines</v-list-item-title>
-            </template>
-
-            <v-list-item-group>
-              <v-list-item
-                  v-for="routine in routinesMenu"
-                  :key="routine.title" :to="routine.route"
-                  class="menus"
-              >
-                <v-list-item-content>
-                  <v-list-item-title v-text="routine.title" class="menus"></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list-group>
-
           <v-list-item-group>
             <v-list-item
                 v-for="item in primaryItems"
@@ -67,14 +47,10 @@ export default {
     expand: false,
     burger: true,
     primaryItems: [
-      {title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/'},
-      {title: 'Trainers', icon: 'mdi-weight-lifter', route: '/trainers'},
+      {title: 'Exercises', icon: 'mdi-dumbbell', route: 'my-exercises'},
+      {title: 'Routines', icon: 'mdi-gymnastics', route: '/my-routines'},
+      {title: 'Explore', icon: 'mdi-weight-lifter', route: '/exp-routines'},
       {title: 'Profile', icon: 'mdi-account', route: '/profile'},
-    ],
-    routinesMenu: [
-      {title: 'My Exercises', route: 'my-exercises'},
-      {title: 'My Routines', route: '/my-routines'},
-      {title: 'Explore Routines', route: '/exp-routines'}
     ],
   }),
   name: "NavBar",
@@ -93,13 +69,6 @@ export default {
   text-transform: uppercase;
   color: lightgray;
 }
-
-.submenu {
-  display: inline-block;
-  height: 84px;
-  width: 320px;
-}
-
 .list .v-list-item-group .v-list-item--active {
   color: #FF8754;
   background-color: #353535;
