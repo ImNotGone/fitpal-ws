@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import FPHome from './views/FPHome.vue'
 import MyRoutines from './views/MyRoutines.vue'
 import ExpRoutines from './views/ExpRoutines.vue'
-import FPTrainers from './views/FPTrainers.vue'
 import FPProfile from './views/FPProfile.vue'
 import FPLandingPage from '@/views/FPLandingPage.vue';
 import FPSignUp from '@/views/FPSignUp.vue';
@@ -25,11 +23,6 @@ export default new Router({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
-        {
-            path: '/',
-            name: 'home',
-            component: FPHome
-        },
         {
             path: '/landing-page',
             name: 'landing-page',
@@ -76,11 +69,6 @@ export default new Router({
             path: '/exp-routines',
             name: 'exp-routines',
             component: ExpRoutines
-        },
-        {
-            path: '/trainers',
-            name: 'trainers',
-            component: FPTrainers
         },
         {
             path: '/profile',
