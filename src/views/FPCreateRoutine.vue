@@ -12,62 +12,26 @@
             <v-textarea label="Description" v-model="createRoutineStore.getDesc"></v-textarea>
             <v-tabs vertical class="pa-5" background-color="secondary">
 
-              <v-tab>
-                Warmup Section
-              </v-tab>
-
               <v-tab v-for="section in createRoutineStore.getSections"
                      :key="section.title">
                 {{section.title}}
               </v-tab>
 
-              <v-tab>
-                Cooldown Section
-              </v-tab>
-
-              <v-tab-item class="accent">
+              <v-tab-item class="accent" v-for="section in createRoutineStore.getSections" :key="section.title">
                 <v-container class="accent pa-5">
                   <v-row>
-                    <v-text-field dark counter-value="0" label="Series" v-model="createRoutineStore.getWarmup.series"></v-text-field>
+                    <v-text-field dark counter-value="0" label="Series" v-model="section.series"></v-text-field>
                     <v-spacer/>
-                    <v-text-field dark label="Time between series" v-model="createRoutineStore.getWarmup.rest"></v-text-field>
+                    <v-text-field dark label="Time between series" v-model="section.rest"></v-text-field>
                     <v-spacer/>
-                    <ExerciseList @exerciseAdded="exerciseAddedWarmup($event)"/>
+                    <ExerciseList v-model="list" @exerciseAdded="createRoutineStore.addExercise(section, $event)"/>
+                    <v-btn class="primary ma-auto" @click="list = !list">Add Exercise</v-btn>
                     <v-spacer/>
-                    <v-btn class="primary ma-auto" @click="warmupDeleteExercise">delete exercise</v-btn>
-                  </v-row>
-                  <v-list class="accent" v-for="exercise in createRoutineStore.getWarmup.exercises"
-                          :key="exercise.name">
-                    <v-list-item-content dark>
-                      <v-row class="pa-2">
-                      <h3 class="white--text pa-3">{{exercise.name}}</h3>
-                      <v-row>
-                        <v-spacer/>
-                        <v-text-field dark counter-value="0" label="Reps" v-model="exercise.reps"></v-text-field>
-                        <v-spacer/>
-                        <v-text-field dark label="Time" v-model="exercise.time"></v-text-field>
-                      </v-row>
-                      </v-row>
-                    </v-list-item-content>
-                  </v-list>
-                </v-container>
-              </v-tab-item>
-
-              <v-tab-item v-for="section in createRoutineStore.sections"
-                          :key="section.title">
-                <v-container class="accent pa-5">
-                  <v-row>
-                    <v-text-field dark counter-value="0" label="Series"></v-text-field>
-                    <v-spacer/>
-                    <v-text-field dark label="Time between series" ></v-text-field>
-                    <v-spacer/>
-                    <ExerciseList @exerciseAdded="section.exercises.push({name:$event, reps:'', time:''})"/>
-                    <v-spacer/>
-                    <v-btn class="primary" @click="section.exercises.pop()">delete exercise</v-btn>
+                    <v-btn class="primary ma-auto" @click="createRoutineStore.deleteExercise(section)">Delete Exercise</v-btn>
                   </v-row>
                   <v-list class="accent" v-for="exercise in section.exercises"
                           :key="exercise.name">
-                    <v-list-item-content>
+                    <v-list-item-content dark>
                       <v-row class="pa-2">
                         <h3 class="white--text pa-3">{{exercise.name}}</h3>
                         <v-row>
@@ -82,41 +46,16 @@
                 </v-container>
               </v-tab-item>
 
-              <v-tab-item>
-                <v-container class="accent pa-5">
-                  <v-row>
-                    <v-text-field dark counter-value="0" label="Series" v-model="createRoutineStore.cooldown.series"></v-text-field>
-                    <v-spacer/>
-                    <ExerciseList @exerciseAdded="exerciseAddedCooldown($event)"/>
-                    <v-spacer/>
-                    <v-btn class="primary" @click="cooldownDeleteExercise">delete exercise</v-btn>
-                  </v-row>
-                  <v-list class="accent" v-for="exercise in createRoutineStore.cooldown.exercises"
-                          :key="exercise.name">
-                    <v-list-item-content>
-                      <v-row class="pa-2">
-                        <h3 class="white--text pa-3">{{exercise.name}}</h3>
-                        <v-row>
-                          <v-spacer/>
-                          <v-text-field dark label="Time" v-model="exercise.time"></v-text-field>
-                        </v-row>
-                      </v-row>
-                    </v-list-item-content>
-                  </v-list>
-                </v-container>
-              </v-tab-item>
-
             </v-tabs>
             <v-row class="pa-5">
-              <v-btn class="primary pa-5 px-3" @click="addSection">
+              <v-btn class="primary pa-5 px-3" @click="createRoutineStore.addSection()">
                 Add Section
               </v-btn>
               <v-spacer/>
-              <v-btn class="primary pa-5 px-3" @click="deleteSection">
+              <v-btn class="primary pa-5 px-3" @click="createRoutineStore.deleteSection()">
                 Delete section
               </v-btn>
             </v-row>
-
 
             <v-btn flat class="primary mx-0 mt-3" @click="submit">Create</v-btn>
           </v-form>
@@ -128,8 +67,8 @@
 
 <script>
 import ToolBar from "@/components/ToolBar";
-import ExerciseList from "@/components/ExerciseList";
 import {useCreateRoutineStore} from "@/stores/CreateRoutineStore";
+import ExerciseList from "@/components/ExerciseList";
 
 export default {
   setup(){
@@ -138,39 +77,19 @@ export default {
   },
   name: "FPCreateRoutine",
   components: {ToolBar, ExerciseList},
-
+  data: () => ({
+    list: false,
+  }),
   methods:{
     submit(){
 
     },
-    addSection(){
-      this.createRoutineStore.numSect=this.createRoutineStore.numSect +1;
-      this.createRoutineStore.sections.push({title:'Section ' + this.createRoutineStore.numSect, rest: '', series: '', exercises: []});
-    },
-    deleteSection(){
-      if(this.createRoutineStore.numSect>1){
-        this.createRoutineStore.sections.pop();
-        this.createRoutineStore.numSect=this.createRoutineStore.numSect -1;
-      }
-    },
-    exerciseAddedWarmup(name){
-      this.createRoutineStore.warmup.exercises.push({name:name, reps:'', time:''})
-    },
-    exerciseAddedCooldown(name){
-      this.createRoutineStore.cooldown.exercises.push({name:name, reps:'', time:''})
-    },
-    warmupDeleteExercise(){
-      this.createRoutineStore.warmup.exercises.pop();
-    },
-    cooldownDeleteExercise(){
-      this.createRoutineStore.cooldown.exercises.pop();
-    }
   }
 }
 </script>
 
-<style scoped>
-.v-tabs--vertical .v-window{
-  height: 100%;
+<style>
+.v-tabs--vertical > .v-window{
+  height: 100% !important;
 }
 </style>

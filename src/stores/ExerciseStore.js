@@ -9,7 +9,7 @@ export const useExerciseStore = defineStore('exerciseStore',{
         ]
     }),
     getters:{
-
+        getExercises: (state) => state.exercises,
     },
 
     actions:{

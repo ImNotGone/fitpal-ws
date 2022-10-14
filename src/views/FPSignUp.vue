@@ -59,12 +59,6 @@
               style="min-height: 96px"
               type="password"
           ></v-text-field>
-          <v-select
-              v-model="selectedChoice"
-              :items="trainer"
-              :rules="[rules.required]"
-              label="Are you a Trainer?"
-          ></v-select>
           <v-btn
               class="primary mr-4 mt-3"
               :loading="loading"
@@ -152,11 +146,6 @@ export default {
     email: '',
     password: '',
     password2: '',
-    trainer: [
-      'Yes',
-      'No',
-    ],
-    selectedChoice: '',
 
     // Form validation
     rules: {
