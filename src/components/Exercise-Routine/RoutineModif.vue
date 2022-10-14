@@ -2,7 +2,7 @@
   <v-container>
     <v-card dark class="secondary">
       <v-card-title>
-        <v-icon large class="white--text mr-4" @click="$router.back()">mdi-chevron-left</v-icon>
+        <v-icon large class="mr-4" @click="$router.back()">mdi-chevron-left</v-icon>
         {{ title + ' Routine' }}
       </v-card-title>
       <v-card-text>
@@ -88,8 +88,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .v-tabs--vertical > .v-window{
   height: 100% !important;
+}
+.v-icon{
+  color: #FF8754 !important;
 }
 </style>

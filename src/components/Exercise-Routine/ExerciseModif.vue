@@ -2,7 +2,7 @@
       <v-container>
         <v-card dark class="secondary">
           <v-card-title>
-            <v-icon large class="white--text mr-4" @click="$router.back()">mdi-chevron-left</v-icon>
+            <v-icon large class="mr-4" @click="$router.back()">mdi-chevron-left</v-icon>
             {{ title + ' Exercise' }}
           </v-card-title>
 
@@ -65,5 +65,7 @@ export default {
 </script>
 
 <style scoped>
-
+.v-icon{
+  color: #FF8754 !important;
+}
 </style>

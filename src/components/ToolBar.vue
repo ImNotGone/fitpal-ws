@@ -1,6 +1,6 @@
 <template>
   <v-toolbar dark flat app class="toolbar secondary">
-    <v-app-bar-nav-icon @click="sendMessage()"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click="sendMessage()"/>
     <v-toolbar-title class="headline">
       <span class="font-weight-medium">{{ title }}</span>
     </v-toolbar-title>
@@ -39,5 +39,7 @@ export default {
 </script>
 
 <style scoped>
-
+.v-btn{
+  color: #FF8754 !important;
+}
 </style>
