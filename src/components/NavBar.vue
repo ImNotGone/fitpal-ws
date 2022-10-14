@@ -31,7 +31,7 @@
 
       <template v-slot:append>
         <div class="pb-5 px-2">
-          <v-btn block flat color="grey" to="/landing-page" >
+          <v-btn block flat color="grey" @click="signOut">
             <v-icon left>mdi-exit-to-app</v-icon>
             <span>Sign Out</span>
           </v-btn>
@@ -42,6 +42,9 @@
 </template>
 
 <script>
+import { useSecurityStore } from '@/stores/SecurityStore';
+import { mapActions } from 'pinia';
+
 export default {
   data: () => ({
     expand: false,
@@ -59,6 +62,15 @@ export default {
       this.burger = msg;
     });
   },
+  methods: {
+    ...mapActions(useSecurityStore, {
+        $signOut: 'logout'
+    }),
+    async signOut() {
+        await this.$signOut()
+        this.$router.replace({path: "/landing-page"})
+    }
+  }
 }
 </script>
 

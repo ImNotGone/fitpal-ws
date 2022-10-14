@@ -53,6 +53,9 @@
 
 <script>
 import ToolBar from "@/components/ToolBar";
+//import { useSecurityStore } from "@/stores/SecurityStore";
+//import { mapActions } from "pinia";
+
 export default {
   components: {ToolBar},
   data(){
@@ -61,14 +64,19 @@ export default {
         'Profile'
       ],
       textFields: [
-        {model: 'Pepe', label: 'First Name', type: 'text', rules: v => !!(v || '').match(/^[A-Za-z]+$/) ||  'First name must only contain letters', disabled: false},
-        {model: 'Fernandez', label: 'Last Name', type: 'text', rules: v => !!(v || '').match(/^[A-Za-z]+$/) || 'Last name must only contain letters', disabled: false},
-        {model: 'pepe@gmail.com', label: 'Email', type: 'email', rules: v => !!(v || '').match(/@/) || 'Please enter a valid email', disabled: true},
+        {model: '', label: 'First Name', type: 'text', rules: v => !!(v || '').match(/^[A-Za-z]+$/) ||  'First name must only contain letters', disabled: false},
+        {model: '', label: 'Last Name', type: 'text', rules: v => !!(v || '').match(/^[A-Za-z]+$/) || 'Last name must only contain letters', disabled: false},
+        {model: '', label: 'Email', type: 'email', rules: v => !!(v || '').match(/@/) || 'Please enter a valid email', disabled: true},
         {model: '1234', label: 'Password', type: 'password', rules: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/) || 'Password must contain an upper case letter and a numeric character', disabled: false}
       ],
-      profilePicture: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+      profilePicture: '',
     }
   },
+/*  methods: {
+    ...mapActions(useSecurityStore,{
+            $getUser: 'getUser',
+    }),
+  },*/
 }
 </script>
 

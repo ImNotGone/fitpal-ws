@@ -49,7 +49,11 @@ export const useSecurityStore = defineStore('security', {
             return true;
         },
         async logout() {
-            await UserApi.logout();
+            try {
+                await UserApi.logout();
+            } catch(error) {
+                console.log(error)
+            }
             this.removeToken();
         },
         async getUser() {

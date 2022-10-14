@@ -7,7 +7,7 @@
     <v-spacer/>
     <router-link :to="pathProfile">
       <v-avatar class="mr-3">
-        <img :src="profilePicture" alt="profile picture">
+        <img :src="securityStore.user.avatarUrl" alt="profile picture">
       </v-avatar>
     </router-link>
   </v-toolbar>
@@ -21,14 +21,14 @@ export default {
   data: () => ({
     pathProfile: '/profile',
     burger: true,
-    profilePicture: {
-        type: String,
-        default: 'https://cdn.vuetifyjs.com/images/lists/1.jpg'
-    }
   }),
   name: "ToolBar",
   props: {
     title: String,
+  },
+  setup() {
+    const securityStore = useSecurityStore()
+    return {securityStore}
   },
   methods:{
     ...mapActions(useSecurityStore, {
@@ -39,9 +39,13 @@ export default {
       this.$root.$emit("fromToolBar", this.burger);
     }
   },
-  async created() {
-    const user = await this.$getUser()
-    this.profilePicture = user.avatarUrl
+  async beforeCreate() {
+    useSecurityStore().init()
+    if(!useSecurityStore().isLoggedIn) {
+        this.$router.replace({path: '/login'})
+    }
+    await this.$getUser()
+
   }
 }
 </script>

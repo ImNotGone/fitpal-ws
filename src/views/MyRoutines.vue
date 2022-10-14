@@ -54,10 +54,8 @@ export default {
     ToolBar,
     RoutineCard
   },
-
   setup () {
     const routinesStore = useRoutinesStore();
-
     return { routinesStore };
   },
 }
