@@ -24,7 +24,7 @@
     <v-container class="mx-auto">
       <v-row>
         <v-col
-            v-for="routine in routinesStore.routines"
+            v-for="routine in routinesStore.myRoutines"
             :key="routine.id"
             cols="12"
             md="4"
