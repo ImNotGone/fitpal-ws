@@ -26,17 +26,6 @@
                 :type="field.type"
                 :disabled="field.disabled"
             />
-            <v-file-input
-                class="secondary"
-                dark
-                filled
-                v-model="profilePictureModel"
-                accept="image/png, image/jpeg, image/bmp, image/svg"
-                placeholder="Insert image"
-                prepend-icon="mdi-camera"
-                label="Change profile picture"
-                :disabled="true"
-            ></v-file-input>
             <!-- Save button and text, showing error message or success message -->
             <p
                 v-if="finished && error"
@@ -94,9 +83,6 @@ export default {
     email: String,
     profilePicture: String,
 
-    // Input fields
-    profilePictureModel: '',
-
     textFields: [
         // First Name
         {
@@ -133,17 +119,15 @@ export default {
             (v) => /.+@.+\..+/.test(v) || 'Please enter a valid email',
           ],
         },
-        // Password
+        //Avatar URL
         {
           model: '',
-          label: 'Password',
-          type: 'password',
-          disabled: true,
-          /*rules: [
-            (v) => !!v || 'Password is required',
-            (v) => (v && v.length >= 8 && v.length <= 50) || 'Password must be at least 8 characters long and less than 50 characters',
-            (v) => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/) || 'Password must contain an upper case letter and a numeric character'
-          ],*/
+          label: 'Profile Picture URL',
+          type: 'text',
+          disabled: false,
+          rules: [
+            (v) => /.+\..+/.test(v) || 'Please enter a valid URL',
+          ],
         },
       ],
   }),
@@ -159,7 +143,7 @@ export default {
       if (this.textFields[0].model === this.firstName &&
           this.textFields[1].model === this.lastName &&
           this.textFields[2].model === this.email &&
-          this.profilePictureModel === '') {
+          this.textFields[3].model === this.profilePicture) {
         return;
       }
 
@@ -174,7 +158,7 @@ export default {
       const accountEdit = new AccountEdit(
           this.textFields[0].model,
           this.textFields[1].model,
-          this.profilePictureModel.length === 0 ? this.profilePicture : this.profilePictureModel,
+          this.textFields[3].model,
       );
 
       try {
@@ -220,8 +204,6 @@ export default {
     await useSecurityStore().getUser();
 
     // Update fields
-    this.profilePicture = useSecurityStore().avatarUrl;
-
     this.firstName = useSecurityStore().firstName;
     this.textFields[0].model = this.firstName;
 
@@ -230,6 +212,9 @@ export default {
 
     this.email = useSecurityStore().email;
     this.textFields[2].model = this.email;
+
+    this.profilePicture = useSecurityStore().avatarUrl;
+    this.textFields[3].model = this.profilePicture;
   }
 }
 </script>
