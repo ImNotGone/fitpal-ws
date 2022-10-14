@@ -50,7 +50,7 @@ export default {
     expand: false,
     burger: true,
     primaryItems: [
-      {title: 'Exercises', icon: 'mdi-dumbbell', route: 'my-exercises'},
+      {title: 'Exercises', icon: 'mdi-dumbbell', route: '/my-exercises'},
       {title: 'Routines', icon: 'mdi-gymnastics', route: '/my-routines'},
       {title: 'Explore', icon: 'mdi-weight-lifter', route: '/exp-routines'},
       {title: 'Profile', icon: 'mdi-account', route: '/profile'},
