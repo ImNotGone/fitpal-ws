@@ -3,7 +3,7 @@
         <v-card dark class="secondary">
           <v-card-title>
             <v-icon large class="white--text mr-4" @click="$router.back()">mdi-chevron-left</v-icon>
-            {{ title }}
+            {{ title + ' Exercise' }}
           </v-card-title>
 
           <v-card-text>
@@ -25,7 +25,7 @@
                   prepend-icon="mdi-video"
                   label="Video"
               ></v-file-input>
-              <v-btn flat class="primary mx-0 mt-3" @click="submit">Create</v-btn>
+              <v-btn flat class="primary mx-0 mt-3" @click="submit">{{ title }}</v-btn>
             </v-form>
           </v-card-text>
         </v-card>

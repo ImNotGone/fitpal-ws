@@ -1,7 +1,7 @@
 <template>
   <div class="fill-height accent">
     <ToolBar title="Edit Exercise"/>
-    <ExerciseModif title="Edit Exercise" :path-back="returnPath"/>
+    <ExerciseModif title="Edit" :path-back="returnPath"/>
   </div>
 
 </template>

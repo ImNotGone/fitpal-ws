@@ -1,7 +1,7 @@
 <template>
   <div class="fill-height accent">
     <ToolBar title="Create Exercise"/>
-    <ExerciseModif title="Create Exercise"/>
+    <ExerciseModif title="Create"/>
   </div>
 
 </template>
