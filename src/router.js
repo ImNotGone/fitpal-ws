@@ -16,10 +16,11 @@ import FPVerify from "@/views/FPVerify";
 import FPEditRoutine from "@/views/FPEditRoutine";
 import FPEditExercise from "@/views/FPEditExercise";
 import FPMyExercises from "@/views/FPMyExercises";
+import {useSecurityStore} from "@/stores/SecurityStore";
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
@@ -33,6 +34,7 @@ export default new Router({
             component: FPLandingPage,
             meta: {
                 hideNavbar: true,
+                requiresAuth: false
             }
         },
         {
@@ -41,6 +43,7 @@ export default new Router({
             component: FPSignUp,
             meta: {
                 hideNavbar: true,
+                requiresAuth: false
             }
         },
         {
@@ -49,6 +52,7 @@ export default new Router({
             component: FPVerify,
             meta: {
                 hideNavbar: true,
+                requiresAuth: false
             }
         },
         {
@@ -57,6 +61,7 @@ export default new Router({
             component: FPLogin,
             meta: {
                 hideNavbar: true,
+                requiresAuth: false
             }
         },
         {
@@ -120,8 +125,29 @@ export default new Router({
             component: FP404,
             meta: {
                 hideNavbar: true,
+                requiresAuth: false
             }
         },
 
     ]
-})
+});
+
+
+router.beforeEach((to, from, next) => {
+
+    const securityStore = useSecurityStore();
+
+    if (to.name === 'login') {
+        next() // login route is always  okay (we could use the requires auth flag below). prevent a redirect loop
+    } else if (to.meta && to.meta.requiresAuth === false) {
+        next() // requires auth is explicitly set to false
+    } else if (securityStore.isLoggedIn) {
+        next() // i'm logged in. carry on
+    } else {
+        next({name: 'login'}) // always put your redirect as the default case
+    }
+});
+
+export default router;
+
+
