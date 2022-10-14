@@ -15,25 +15,23 @@
       >
         <v-text-field
             v-model="email"
-            :rules="[rules.email]"
             filled
             color="primary"
             label="Email address"
             type="email"
-            @input="$v.name.$touch()"
-            @blur="$v.name.$touch()"
         ></v-text-field>
         <v-text-field
             v-model="password"
-            :rules="[rules.password]"
             filled
             color="primary"
             label="Password"
             style="min-height: 96px"
             type="password"
-            @input="$v.name.$touch()"
-            @blur="$v.name.$touch()"
         ></v-text-field>
+        <!-- Login Error Message -->
+        <p v-if="loginError" class="error--text align-center mt-n7">
+          {{ loginErrorText }}
+        </p>
         <v-btn
             class="primary mr-4"
             :loading="loading"
@@ -62,13 +60,16 @@ export default {
   components: {NoLoginFooter, TopToolbar},
   data: () => ({
     pathBack: '/landing-page',
+
+    // Login
+    loginError: false,
+    loginErrorText: '',
+
+    // Form data
     email: '',
     password: '',
-    rules: {
-      email: v => !!(v || '').match(/@/) || 'Please enter a valid email',
-      password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/) ||
-          'Password must contain an upper case letter and a numeric character',
-    },
+
+    // For button loading
     loading: false
   }),
   methods: {
@@ -76,14 +77,31 @@ export default {
       $login: 'login',
     }),
     async login() {
-      this.loading=true;
+      this.loading = true;
+
+      // Create a login credentials object
       const credentials = new LoginCredentials(this.email, this.password);
-      let result = await this.$login(credentials, true)
-      this.loading=false;
-      if(result == true) {
-        await router.replace({ path: '/'})
+
+      try {
+        // Attempt to log in
+        await this.$login(credentials);
+
+        // If successful, redirect to the home page
+        await router.replace({path: '/'});
+      } catch (e) {
+        // If unsuccessful, display an error message
+        this.loginError = true;
+
+        if (e.code === 8) {
+          this.loginErrorText = 'Email not verified';
+        } else if (e.code === 4) {
+          this.loginErrorText = 'Invalid email or password';
+        } else {
+          this.loginErrorText = 'An unknown error occurred, please try again later';
+        }
       }
-      this.$v.$touch()
+
+      this.loading = false;
     },
   },
 }

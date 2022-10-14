@@ -39,13 +39,11 @@ export const useSecurityStore = defineStore('security', {
             this.setToken(null);
         },
         async login(credentials) {
-            try {
-                const result = await UserApi.login(credentials);
-                this.saveToken(result.token);
-            } catch(error) {
-                alert(error.description)
-                return false;
-            }
+
+            const result = await UserApi.login(credentials);
+
+            this.saveToken(result.token);
+
             return true;
         },
         async logout() {
