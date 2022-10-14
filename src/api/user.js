@@ -1,6 +1,6 @@
 import { Api } from './api.js'
 
-export { UserApi, LoginCredentials, RegistrationCredentials, ResendVerification, AccountVerify};
+export { UserApi, LoginCredentials, RegistrationCredentials, ResendVerification, AccountVerify, AccountEdit};
 
 class UserApi {
     static getUrl(slug) {
@@ -57,6 +57,15 @@ class RegistrationCredentials {
         this.password = password;
         this.metadata = metadata;
         this.avatarUrl = "https://plusvalleyadventure.com/wp-content/uploads/2020/11/default-user-icon-8.jpg";
+    }
+}
+
+
+class AccountEdit {
+    constructor(firstName, lastName, avatarUrl) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.avatarUrl = avatarUrl;
     }
 }
 

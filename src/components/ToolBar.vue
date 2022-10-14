@@ -7,7 +7,7 @@
     <v-spacer/>
     <router-link :to="pathProfile">
       <v-avatar class="mr-3">
-        <img :src="securityStore.user.avatarUrl" alt="profile picture">
+        <img :src="securityStore.avatarUrl" alt="profile picture">
       </v-avatar>
     </router-link>
   </v-toolbar>
@@ -15,7 +15,6 @@
 
 <script>
 import { useSecurityStore } from "@/stores/SecurityStore";
-import { mapActions } from "pinia";
 
 export default {
   data: () => ({
@@ -31,9 +30,6 @@ export default {
     return {securityStore}
   },
   methods:{
-    ...mapActions(useSecurityStore, {
-      $getUser: 'getUser',
-    }),
     sendMessage(){
       this.burger=!this.burger;
       this.$root.$emit("fromToolBar", this.burger);

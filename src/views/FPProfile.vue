@@ -8,12 +8,12 @@
             <img :src="profilePicture" alt="profile picture">
           </v-avatar>
           <div class="secondary">
-            <h3 class="headline mb-0">{{ textFields[0].model }} {{ textFields[1].model }}</h3>
-            <div class="secondary">{{ textFields[2].model }}</div>
+            <h3 class="headline mb-0">{{ firstName }} {{ lastName }}</h3>
+            <div class="secondary">{{ email }}</div>
           </div>
         </v-card-title>
         <v-card-text class="secondary">
-          <v-form>
+          <v-form ref="form">
             <v-text-field
                 dark
                 filled
@@ -21,29 +21,45 @@
                 v-for="field in textFields"
                 :key="field.label"
                 v-model="field.model"
-                :rules="[field.rules]"
+                :rules="field.rules"
                 :label="field.label"
                 :type="field.type"
                 :disabled="field.disabled"
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"/>
+            />
             <v-file-input
                 class="secondary"
                 dark
                 filled
-                v-model="profilePicture"
+                v-model="profilePictureModel"
                 accept="image/png, image/jpeg, image/bmp, image/svg"
                 placeholder="Insert image"
                 prepend-icon="mdi-camera"
                 label="Change profile picture"
+                :disabled="true"
             ></v-file-input>
-            <v-btn
-                class="primary mr-4"
-                @click="submit"
-                to="/"
+            <!-- Save button and text, showing error message or success message -->
+            <p
+                v-if="finished && error"
+                type="error"
+                class="mt-3 error--text"
             >
-              Save
-            </v-btn>
+              {{ errorText }}
+            </p>
+            <p
+                v-else-if="finished"
+                type="success"
+                class="white--text"
+            >
+              <v-icon class="mr-2" color="primary">mdi-check</v-icon>
+              {{ successText }}
+            </p>
+              <v-btn
+                  class="primary mr-4"
+                  @click="submit"
+                  :loading="loading"
+              >
+                Save
+              </v-btn>
           </v-form>
         </v-card-text>
       </v-card>
@@ -53,30 +69,168 @@
 
 <script>
 import ToolBar from "@/components/ToolBar";
-//import { useSecurityStore } from "@/stores/SecurityStore";
-//import { mapActions } from "pinia";
+import { useSecurityStore } from "@/stores/SecurityStore";
+import {AccountEdit, UserApi} from "@/api/user";
 
 export default {
   components: {ToolBar},
-  data(){
-    return{
-     options: [
-        'Profile'
+  data: () => ({
+    options: [
+      'Profile'
+    ],
+
+    // For loading animation
+    loading: false,
+
+    // Error message
+    finished: false,
+    error: false,
+    errorText: '',
+    successText: '',
+
+    // Fields that do not update with the form
+    firstName: String,
+    lastName: String,
+    email: String,
+    profilePicture: String,
+
+    // Input fields
+    profilePictureModel: '',
+
+    textFields: [
+        // First Name
+        {
+          model: '',
+          label: 'First Name',
+          type: 'text',
+          disabled: false,
+          rules: [
+            (v) => !!v || 'First Name is required',
+            (v) => /^[a-zA-Z ]+$/.test(v) || 'First Name must contain only letters and spaces',
+            (v) => (v && v.length <= 50) || 'First Name must be less than 50 characters',
+          ],
+        },
+        // Last Name
+        {
+          model: '',
+          label: 'Last Name',
+          type: 'text',
+          disabled: false,
+          rules: [
+            (v) => !!v || 'Last Name is required',
+            (v) => /^[a-zA-Z ]+$/.test(v) || 'Last Name must contain only letters and spaces',
+            (v) => (v && v.length <= 50) || 'Last Name must be less than 50 characters',
+          ],
+        },
+        // Email
+        {
+          model: '',
+          label: 'Email',
+          type: 'email',
+          disabled: true,
+          rules: [
+            (v) => !!v || 'E-mail is required',
+            (v) => /.+@.+\..+/.test(v) || 'Please enter a valid email',
+          ],
+        },
+        // Password
+        {
+          model: '',
+          label: 'Password',
+          type: 'password',
+          disabled: true,
+          /*rules: [
+            (v) => !!v || 'Password is required',
+            (v) => (v && v.length >= 8 && v.length <= 50) || 'Password must be at least 8 characters long and less than 50 characters',
+            (v) => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/) || 'Password must contain an upper case letter and a numeric character'
+          ],*/
+        },
       ],
-      textFields: [
-        {model: '', label: 'First Name', type: 'text', rules: v => !!(v || '').match(/^[A-Za-z]+$/) ||  'First name must only contain letters', disabled: false},
-        {model: '', label: 'Last Name', type: 'text', rules: v => !!(v || '').match(/^[A-Za-z]+$/) || 'Last name must only contain letters', disabled: false},
-        {model: '', label: 'Email', type: 'email', rules: v => !!(v || '').match(/@/) || 'Please enter a valid email', disabled: true},
-        {model: '1234', label: 'Password', type: 'password', rules: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/) || 'Password must contain an upper case letter and a numeric character', disabled: false}
-      ],
-      profilePicture: '',
-    }
+  }),
+  methods: {
+    async submit() {
+
+      // Check if the form is valid
+      if (!this.$refs.form.validate()) {
+        return;
+      }
+
+      // Check for changes in the form
+      if (this.textFields[0].model === this.firstName &&
+          this.textFields[1].model === this.lastName &&
+          this.textFields[2].model === this.email &&
+          this.profilePictureModel === '') {
+        return;
+      }
+
+      // Button loading animation
+      this.loading = true;
+
+      // Flags
+      this.finished = false;
+      this.error = false;
+
+      // Create a new accountEdit object
+      const accountEdit = new AccountEdit(
+          this.textFields[0].model,
+          this.textFields[1].model,
+          this.profilePictureModel.length === 0 ? this.profilePicture : this.profilePictureModel,
+      );
+
+      try {
+        // Call the editAccount method from the security store
+        await UserApi.editCurrentUser(accountEdit);
+
+        // Update the security store
+        await useSecurityStore().updateUser();
+
+        // Update fields
+        this.firstName = useSecurityStore().firstName;
+        this.lastName = useSecurityStore().lastName;
+        this.email = useSecurityStore().email;
+        this.profilePicture = useSecurityStore().avatarUrl;
+
+        // Success message
+        this.successText = 'Profile updated successfully';
+
+      } catch (e) {
+
+        this.error = true;
+
+        // Set error message
+        // None of this should happen
+        if (e.code === 1) {
+          this.errorText = 'Invalid data';
+        } else if (e.code === 7) {
+          this.errorText = 'You dont have permission to edit this account';
+        } else {
+          this.errorText = 'An error occurred, please try again later';
+        }
+      }
+
+      // Button loading animation
+      this.loading = false;
+
+      // Set finished flag
+      this.finished = true;
+    },
   },
-/*  methods: {
-    ...mapActions(useSecurityStore,{
-            $getUser: 'getUser',
-    }),
-  },*/
+  async beforeMount() {
+    // Get user data if user is not loaded
+    await useSecurityStore().getUser();
+
+    // Update fields
+    this.profilePicture = useSecurityStore().avatarUrl;
+
+    this.firstName = useSecurityStore().firstName;
+    this.textFields[0].model = this.firstName;
+
+    this.lastName = useSecurityStore().lastName;
+    this.textFields[1].model = this.lastName;
+
+    this.email = useSecurityStore().email;
+    this.textFields[2].model = this.email;
+  }
 }
 </script>
 

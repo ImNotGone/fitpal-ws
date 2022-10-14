@@ -38,6 +38,12 @@ export const useSecurityStore = defineStore('security', {
                 return this.user.email;
             }
             return '';
+        },
+        avatarUrl() {
+            if(this.user) {
+                return this.user.avatarUrl;
+            }
+            return '';
         }
     },
 
@@ -75,11 +81,21 @@ export const useSecurityStore = defineStore('security', {
             this.removeToken();
             this.loading = false;
         },
+        async updateUser() {
+            const user = await UserApi.getCurrentUser();
+            //TODO
+            console.log(user);
+            this.setUser(user);
+        },
         async getUser() {
             this.loading = true;
+
             const result = await UserApi.getCurrentUser();
             this.setUser(result);
+
             this.loading = false;
+
+            return this.user;
         }
     }
 });

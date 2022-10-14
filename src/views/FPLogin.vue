@@ -87,6 +87,7 @@ export default {
         await this.$login(credentials);
 
         // If successful, redirect to the home page
+        await useSecurityStore().getUser();
         await router.replace({path: '/'});
       } catch (e) {
         // If unsuccessful, display an error message
