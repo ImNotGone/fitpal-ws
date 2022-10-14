@@ -24,7 +24,7 @@
     <v-container class="mx-auto">
       <v-row>
         <v-col
-            v-for="routine in routinesStore.myRoutines"
+            v-for="routine in routinesStore.getMyRoutines"
             :key="routine.id"
             cols="12"
             md="4"
@@ -65,5 +65,8 @@ export default {
 div {
   background-color: #939393;
   color: white;
+}
+.myroutines{
+  height: 100vh;
 }
 </style>
