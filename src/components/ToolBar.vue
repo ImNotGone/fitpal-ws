@@ -39,14 +39,6 @@ export default {
       this.$root.$emit("fromToolBar", this.burger);
     }
   },
-  async beforeCreate() {
-    useSecurityStore().init()
-    if(!useSecurityStore().isLoggedIn) {
-        this.$router.replace({path: '/login'})
-    }
-    await this.$getUser()
-
-  }
 }
 </script>
 

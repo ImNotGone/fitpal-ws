@@ -6,6 +6,7 @@ const SECURITY_TOKEN_KEY = 'security-token';
 
 export const useSecurityStore = defineStore('security', {
     state: () => ({
+        loading: false,
         token: null,
         user: null
     }),
@@ -14,6 +15,30 @@ export const useSecurityStore = defineStore('security', {
         isLoggedIn() {
             return this.token != null;
         },
+        firstName() {
+            if(this.user) {
+                return this.user.firstName;
+            }
+            return '';
+        },
+        lastName() {
+            if(this.user) {
+                return this.user.lastName;
+            }
+            return '';
+        },
+        image() {
+            if(this.user) {
+                return this.user.avatarUrl;
+            }
+            return '';
+        },
+        email() {
+            if(this.user) {
+                return this.user.email;
+            }
+            return '';
+        }
     },
 
     actions: {
@@ -39,28 +64,22 @@ export const useSecurityStore = defineStore('security', {
             this.setToken(null);
         },
         async login(credentials) {
-
+            this.loading = true;
             const result = await UserApi.login(credentials);
-
             this.saveToken(result.token);
-
-            return true;
+            this.loading = false;
         },
         async logout() {
-            try {
-                await UserApi.logout();
-            } catch(error) {
-                console.log(error)
-            }
+            this.loading = true;
+            await UserApi.logout();
             this.removeToken();
+            this.loading = false;
         },
         async getUser() {
-            if(this.user) {
-                return this.user;
-            }
+            this.loading = true;
             const result = await UserApi.getCurrentUser();
             this.setUser(result);
-            return this.user;
+            this.loading = false;
         }
     }
 });

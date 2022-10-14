@@ -15,6 +15,7 @@
 
 <script>
 import NavBar from '@/components/NavBar';
+import { useSecurityStore } from './stores/SecurityStore';
 
 export default {
   name: 'App',
@@ -30,6 +31,9 @@ export default {
     updateOnlineStatus() {
         this.isOffline = !navigator.onLine
     },
+  },
+  mounted() {
+    useSecurityStore().getUser()
   },
   created() {
     window.addEventListener('online', this.updateOnlineStatus);
