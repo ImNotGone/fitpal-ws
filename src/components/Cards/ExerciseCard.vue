@@ -19,8 +19,8 @@
         <v-col cols="8">
           <h4 class="headline mb-0">{{exerciseName}}</h4>
         </v-col>
-
       </v-row>
+
       <v-chip-group column>
         <v-chip v-for="tag in tags" :key="tag" color="primary" text-color="white" small>
           {{ tag }}

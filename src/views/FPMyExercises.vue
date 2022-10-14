@@ -1,6 +1,7 @@
 <template>
-<div class="fill-height">
+<div class="my-exercises fill-height">
   <ToolBar title="My Exercises"/>
+
   <v-container>
     <v-row>
       <h3 class="display-1 pa-5">My Exercises</h3>
@@ -20,7 +21,7 @@
     <v-container class="mx-auto">
       <v-row>
         <v-col
-            v-for="exercise in exerciseStore.exercises"
+            v-for="exercise in exerciseStore.getExercises"
             :key="exercise.id"
             cols="12"
             md="4"

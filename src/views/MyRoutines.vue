@@ -1,5 +1,5 @@
 <template>
-  <div class="myroutines">
+  <div class="my-routines fill-height">
     <ToolBar title="My Routines"/>
 
     <!-- My Routines, Create new routine button -->
@@ -65,8 +65,5 @@ export default {
 div {
   background-color: #939393;
   color: white;
-}
-.myroutines{
-  height: 100vh;
 }
 </style>
