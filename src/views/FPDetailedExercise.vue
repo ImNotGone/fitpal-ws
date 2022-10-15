@@ -7,8 +7,7 @@
                          :exercise-name="exerciseName"
                          :exercise-description="exerciseDescription"
                          :amount-routines="amountRoutines"
-                         :muscles="muscles"
-                         :tags="tags"
+                         :muscles="tags"
                          :id="this.$route.params.id"
       />
     </v-card>
@@ -32,7 +31,6 @@ export default {
     exerciseDescription:  '',
     amountRoutines: 0,
     tags: [],
-    muscles: [],
 
   }),
   async beforeMount() {
@@ -56,9 +54,8 @@ export default {
     this.exerciseDescription = store.getExerciseDetail(exerciseId);
 
     this.tags = store.getExerciseMetadata(exerciseId)?.tags;
-    // TODO: Get muscles from exercise metadata and amount of routines from exercise metadata
+    // TODO: Get muscles amount of routines from exercise metadata
     // this.amountRoutines
-    this.muscles = store.getExerciseMetadata(exerciseId)?.tags;
     this.video = store.getExerciseImage(exerciseId);
   }
 }

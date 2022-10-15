@@ -34,15 +34,6 @@
       <v-btn class="primary pa-5" :to="'/edit-exercise/' + id">Edit exercise</v-btn>
     </v-card-title>
 
-    <!-- Exercise tags -->
-    <v-card-actions>
-      <v-chip-group column>
-        <v-chip v-for="tag in tags" :key="tag" color="primary" text-color="white" small>
-          {{ tag }}
-        </v-chip>
-      </v-chip-group>
-    </v-card-actions>
-
     <!-- Amount of times the exercise appears in other routines -->
     <!-- Icon amount Routines -->
     <v-card-text>
@@ -104,7 +95,6 @@ export default {
     exerciseName: String,
     exerciseDescription: String,
     amountRoutines: Number,
-    tags: Array,
     muscles: Array,
     id: String,
   },

@@ -16,7 +16,7 @@
     <v-card-text class="grey darken-3 white--text">
       <v-row>
         <!-- exercise name -->
-        <v-col cols="8">
+        <v-col cols="12">
           <h4 class="headline mb-0">{{exerciseName}}</h4>
         </v-col>
       </v-row>
