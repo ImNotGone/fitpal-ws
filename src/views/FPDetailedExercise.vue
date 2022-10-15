@@ -17,21 +17,48 @@
 <script>
 import ToolBar from "@/components/ToolBar";
 import DetailedExercise from "@/components/Detailed/DetailedExercise";
+import {useExerciseStore} from "@/stores/ExerciseStore";
+
+
 export default {
   name: "FPDetailedExercise",
   components: {DetailedExercise, ToolBar},
   data: () => ({
-    video: {
-      type: String,
-      default: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
-    },
-        exerciseName: 'Exercise Name',
-        exerciseDescription: 'Exercise Description',
-        amountRoutines: 50,
-        tags: ['Biceps', 'Abs', 'Triceps'],
-        muscles: ['Biceps', 'Abs', 'Triceps'],
+    video: '',
+    exerciseName: '',
+    exerciseDescription:  '',
+    amountRoutines: 0,
+    tags: [],
+    muscles: [],
 
-  })
+  }),
+  async beforeMount() {
+    const store = useExerciseStore();
+
+    // Get exercise id from url
+    const exerciseId = Number(this.$route.params.id);
+    console.log(exerciseId);
+
+    // If invalid id, redirect to my exercises
+    if (isNaN(exerciseId))
+      await this.$router.push('/my-exercises');
+
+    await store.updateExercises();
+
+    // If exercise doesn't exist, redirect to my exercises
+    if (!store.containsExerciseWithId(exerciseId))
+      await this.$router.push('/my-exercises');
+
+
+    this.exerciseName = store.getExerciseName(exerciseId);
+    this.exerciseDescription = store.getExerciseDetail(exerciseId);
+
+    this.tags = store.getExerciseMetadata(exerciseId)?.tags;
+    // TODO: Get muscles from exercise metadata and amount of routines from exercise metadata
+    // this.amountRoutines
+    this.muscles = store.getExerciseMetadata(exerciseId)?.tags;
+    this.video = store.getExerciseImage(exerciseId);
+  }
 }
 </script>
 

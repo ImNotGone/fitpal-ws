@@ -85,7 +85,7 @@ const router = new Router({
             component: FPProfile
         },
         {
-            path: '/detailed-exercise',
+            path: '/exercise/:id',
             name: 'detailed-exercise',
             component: FPDetailedExercise
         },

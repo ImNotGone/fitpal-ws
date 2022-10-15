@@ -7,7 +7,9 @@ export const useExerciseStore = defineStore('exerciseStore',{
     }),
     getters:{
         getExercises: (state) => state.exercises,
-        getExercise: (state) => (id) => state.exercises.find(exercise => exercise.id === id),
+        containsExerciseWithId: (state) => (id) => {
+            return state.exercises.some(exercise => exercise.id === id);
+        },
         getExercisesId: (state) => {
             // Return an array of the exercises id
             let exercisesId = [];
@@ -16,11 +18,11 @@ export const useExerciseStore = defineStore('exerciseStore',{
             });
             return exercisesId;
         },
-        getExerciseName: (state) => (id) => state.exercises.find(exercise => exercise.id === id).name,
-        getExerciseDetail: (state) => (id) => state.exercises.find(exercise => exercise.id === id).detail,
-        getExerciseType: (state) => (id) => state.exercises.find(exercise => exercise.id === id).type,
-        getExerciseMetadata: (state) => (id) => state.exercises.find(exercise => exercise.id === id).metadata,
-        getExerciseImage: (state) => (id) => state.exercises.find(exercise => exercise.id === id).image,
+        getExerciseName: (state) => (id) => state.exercises.find(exercise => exercise.id === id)?.name,
+        getExerciseDetail: (state) => (id) => state.exercises.find(exercise => exercise.id === id)?.detail,
+        getExerciseType: (state) => (id) => state.exercises.find(exercise => exercise.id === id)?.type,
+        getExerciseMetadata: (state) => (id) => state.exercises.find(exercise => exercise.id === id)?.metadata,
+        getExerciseImage: (state) => (id) => state.exercises.find(exercise => exercise.id === id)?.image,
     },
 
     actions:{
@@ -31,8 +33,6 @@ export const useExerciseStore = defineStore('exerciseStore',{
             for (let i = 0; i < this.exercises.length; i++) {
                 this.exercises[i].image = await ExercisesApi.getImage(this.exercises[i].id);
             }
-
-            console.log(this.exercises);
         },
         async addExercise(exercise, image){
             const resp = await ExercisesApi.addExercise(exercise);
