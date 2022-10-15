@@ -7,25 +7,39 @@
           </v-card-title>
 
           <v-card-text>
-            <v-form class="px-3">
-              <v-text-field label="Exercise name" v-model="exerciseName"></v-text-field>
-              <v-textarea label="Description" v-model="desc"></v-textarea>
+            <v-form class="px-3" ref="form">
+              <v-text-field label="Exercise name" v-model="exerciseName" :rules="[rules.required, rules.onlyLettersAndSpaces, rules.length(100)]" ></v-text-field>
+              <v-textarea label="Description" v-model="desc" :rules="[rules.required, rules.length(200)]"></v-textarea>
               <v-select
                   v-model="tagsSelected"
                   :items="tags"
-                  attach
                   chips
                   label="Tags"
                   multiple
               ></v-select>
-              <v-file-input
+              <v-text-field
                   v-model="video"
-                  accept="video/mp4"
-                  placeholder="Insert video"
                   prepend-icon="mdi-video"
                   label="Video"
-              ></v-file-input>
-              <v-btn flat class="primary mx-0 mt-3" @click="submit">{{ title }}</v-btn>
+              ></v-text-field>
+
+              <p
+                  v-if="finished && error"
+                  type="error"
+                  class="mt-3 error--text"
+              >
+                {{ errorText }}
+              </p>
+              <p
+                  v-else-if="finished"
+                  type="success"
+                  class="white--text"
+              >
+                <v-icon class="mr-2" color="primary">mdi-check</v-icon>
+                {{ successText }}
+              </p>
+
+              <v-btn flat class="primary mx-0 mt-3" @click="submit" :loading="loading">{{ title }}</v-btn>
             </v-form>
           </v-card-text>
         </v-card>
@@ -34,30 +48,117 @@
 
 <script>
 import {useExerciseStore} from "@/stores/ExerciseStore";
+import {Exercise, Image} from "@/api/exercises";
+import {imageExists} from "@/lib/validation";
 
 export default {
   setup(){
     const exerciseStore= useExerciseStore()
     return {exerciseStore}
-      //TODO: exercise deberia ir a buscar a la store el ejercicio que le corresponde y cargar la info en data
   },
 
   name: "ExerciseModif",
   data: () => ({
-    pathBack: '/exercise-list',
+    pathBack: '/my-exercises',
+
+    // Form data
     exerciseName: '',
     desc: '',
     tags: ['Abs', 'Biceps', 'Triceps', 'Legs', 'Chest', 'Back'],
     tagsSelected: [],
     video: "",
 
+    // Form rules
+    rules: {
+      required: v => !!v || 'This field is required',
+      length: (maxLen) => v => ((v || '').length <= maxLen) || `Required less than ${maxLen} characters`,
+      onlyLettersAndSpaces:  (v) => /^[a-zA-Z ]+$/.test(v) || 'Must contain only letters and spaces'
+    },
+
+    // For button loading
+    loading: false,
+
+    // Error message
+    finished: false,
+    error: false,
+    errorText: '',
+    successText: '',
+
   }),
   methods:{
-    submit(){
-      console.log(this.exerciseName, this.desc, this.tagsSelected, this.video)
-      //TODO: actualizar el valor dentro de la store con la info modificada de data
+    async submit(){
+
+      // Validate Form
+      if (!this.$refs.form.validate()) {
+        return;
+      }
+
+      // Button loading animation
+      this.loading = true;
+
+      // Check if image exists
+      if (this.video.length > 0 && !await imageExists(this.video)) {
+        this.error = true;
+        this.finished = true;
+        this.loading = false;
+        this.errorText = 'Image does not exist';
+        return;
+      }
+
+      // Flags
+      this.finished = false;
+      this.error = false;
+
+      // Metadata for tags
+      const metadata = {
+        tags: this.tagsSelected
+      };
+
+      // Create new exercise object
+      const exercise = new Exercise(
+          this.exerciseName,
+          this.desc,
+          "exercise",
+          metadata
+      )
+
+      // Create Image object
+      const image = this.video.length === 0 ? null : new Image(
+          this.video
+      )
+
+      try {
+        // Add exercise to store
+        await this.exerciseStore.addExercise(exercise, image);
+
+        // Success message
+        this.successText = 'Exercise created successfully';
+
+      } catch (e) {
+
+        this.error = true;
+
+        if (e.code === 2) {
+          this.errorText = 'Exercise already exists';
+        } else if (e.code === 1){ // Should not happen
+          this.errorText = 'Invalid data';
+        } else {
+          this.errorText = 'An error occured ,please try again later';
+        }
+      }
+
+      // Button loading animation
+      this.loading = false;
+
+      // Set finished flag
+      this.finished = true;
+
+      // Redirect to my exercises
+      await this.$router.push(this.pathBack);
     }
   },
+
+
   props: {
     title: String,
   }
@@ -65,7 +166,4 @@ export default {
 </script>
 
 <style scoped>
-.v-icon{
-  color: #FF8754 !important;
-}
 </style>

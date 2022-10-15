@@ -21,17 +21,17 @@
     <v-container class="mx-auto">
       <v-row>
         <v-col
-            v-for="exercise in exerciseStore.getExercises"
-            :key="exercise.id"
+            v-for="exercise in exercises"
+            :key="exercise"
             cols="12"
             md="4"
         >
           <exerciseCard
-              :exercisePicture="exercise.img"
-              :exerciseName="exercise.title"
-              :exerciseDescription="exercise.desc"
-              :tags="exercise.tags"
-              :route="exercise.route"
+              :exercisePicture="exerciseStore.getExerciseImage(exercise)"
+              :exerciseName="exerciseStore.getExerciseName(exercise)"
+              :exerciseDescription="exerciseStore.getExerciseDetail(exercise)"
+              :tags="exerciseStore.getExerciseMetadata(exercise)?.tags"
+              :route="`/exercise/${exercise}`"
           />
         </v-col>
       </v-row>
@@ -55,7 +55,15 @@ export default {
 
     return { exerciseStore };
   },
-  name: "FPMyExercises"
+  data: () => ({
+    exercises: []
+  }),
+  name: "FPMyExercises",
+  async beforeMount() {
+    await this.exerciseStore.updateExercises();
+
+    this.exercises = this.exerciseStore.getExercisesId;
+  }
 }
 </script>
 

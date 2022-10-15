@@ -8,7 +8,8 @@ class ExercisesApi {
     }
 
     static async getExercises() {
-        return await Api.get(ExercisesApi.getUrl(), true);
+        let resp = await Api.get(ExercisesApi.getUrl(), true);
+        return resp.content;
     }
 
     static async addExercise(exercise) {
@@ -27,8 +28,9 @@ class ExercisesApi {
         return await Api.delete(ExercisesApi.getUrl(id), true);
     }
 
-    static async getImages(exerciseId) {
-        return await Api.get(`${ExercisesApi.getUrl()}/${exerciseId}/images`, true);
+    static async getImage(exerciseId) {
+        let resp = await Api.get(`${ExercisesApi.getUrl()}/${exerciseId}/images`, true);
+        return resp.content[0]?.url;
     }
 
     static async addImage(exerciseId, image) {
@@ -57,6 +59,6 @@ class Exercise {
 class Image {
     constructor(imgUrl) {
         this.number = 1;
-        this.imgUrl = imgUrl;
+        this.url = imgUrl;
     }
 }

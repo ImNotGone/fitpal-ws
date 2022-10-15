@@ -60,6 +60,7 @@
 import ToolBar from "@/components/ToolBar";
 import { useSecurityStore } from "@/stores/SecurityStore";
 import {AccountEdit, UserApi} from "@/api/user";
+import {imageExists} from "@/lib/validation";
 
 export default {
   components: {ToolBar},
@@ -149,6 +150,15 @@ export default {
 
       // Button loading animation
       this.loading = true;
+
+      // Check if image exists, if it does not return
+      if (!await imageExists(this.textFields[3].model)) {
+        this.error = true;
+        this.finished = true;
+        this.loading = false;
+        this.errorText = 'Image does not exist';
+        return;
+      }
 
       // Flags
       this.finished = false;
