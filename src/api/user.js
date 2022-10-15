@@ -23,6 +23,10 @@ class UserApi {
         return await Api.get(UserApi.getUrl('current'), true);
     }
 
+    static async getUserRoutines() {
+        return await Api.get(`${UserApi.getUrl('current/routines')}`,true);
+    }
+
     static async editCurrentUser(accountEdit) {
         return await Api.put(UserApi.getUrl('current'), true, accountEdit);
     }

@@ -69,7 +69,7 @@ export default {
     tags: Array,
     duration: Number,
     showSaveButton: Boolean,
-  }
+  },
 }
 </script>
 

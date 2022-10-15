@@ -24,17 +24,17 @@
     <v-container class="mx-auto">
       <v-row>
         <v-col
-            v-for="routine in routinesStore.getMyRoutines"
+            v-for="routine in routinesStore.myRoutines.content"
             :key="routine.id"
             cols="12"
             md="4"
         >
           <RoutineCard
-              :routinePicture="routine.img"
+              :routinePicture="routine.metadata.imageUrl"
               :routineName="routine.name"
-              :routineDescription="routine.desc"
+              :routineDescription="routine.detail"
               :duration="routine.duration"
-              :tags="routine.tags"
+              :tags="routine.metadata.tags"
               :showSaveButton="false"
           />
         </v-col>
@@ -58,6 +58,9 @@ export default {
     const routinesStore = useRoutinesStore();
     return { routinesStore };
   },
+  async beforeMount() {
+    this.routinesStore.retrieveMyRoutines();
+  }
 }
 </script>
 
