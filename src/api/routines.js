@@ -48,13 +48,13 @@ class RoutineApi {
 * */
 
 class RoutineData {
-    constructor(name, detail, isPublic, difficulty, category, metadata) {
+    constructor(name, detail, isPublic, difficulty, imageUrl, tags) {
         this.name = name;
         this.detail = detail;
         this.isPublic = isPublic;
         this.difficulty = difficulty;
-        this.category = category;
-        this.metadata = metadata;
+        this.metadata.imageUrl = imageUrl;
+        this.metadata.tags = tags;
     }
 }
 
