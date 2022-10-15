@@ -1,6 +1,6 @@
 <template>
     <div class="404 justify-center">
-      <v-img class="image" src="@/assets/error-404.svg"/>
+      <v-img class="image" src="error.svg"/>
       <div class="text">
         <h1> ERROR 404 </h1>
         <h2> Page Not Found </h2>

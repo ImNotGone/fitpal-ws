@@ -18,6 +18,7 @@
                 dark
                 filled
                 class="secondary"
+                color="#FF8754"
                 v-for="field in textFields"
                 :key="field.label"
                 v-model="field.model"
