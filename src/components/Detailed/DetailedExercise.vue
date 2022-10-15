@@ -31,7 +31,7 @@
         <h3 class="headline mb-0">{{ exerciseName }}</h3>
       </div>
       <v-spacer/>
-      <v-btn class="primary pa-5" to="/edit-exercise">Edit exercise</v-btn>
+      <v-btn class="primary pa-5" :to="'/edit-exercise/' + id">Edit exercise</v-btn>
     </v-card-title>
 
     <!-- Exercise tags -->
@@ -106,6 +106,7 @@ export default {
     amountRoutines: Number,
     tags: Array,
     muscles: Array,
+    id: String,
   },
 }
 </script>

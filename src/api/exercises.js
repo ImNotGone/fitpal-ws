@@ -30,7 +30,7 @@ class ExercisesApi {
 
     static async getImage(exerciseId) {
         let resp = await Api.get(`${ExercisesApi.getUrl()}/${exerciseId}/images`, true);
-        return resp.content[0]?.url;
+        return resp.content[0];
     }
 
     static async addImage(exerciseId, image) {
@@ -38,7 +38,7 @@ class ExercisesApi {
     }
 
     static async editImage(exerciseId, imageId, image) {
-        return await Api.post(`${ExercisesApi.getUrl()}/${exerciseId}/images/${imageId}`, true, image);
+        return await Api.put(`${ExercisesApi.getUrl()}/${exerciseId}/images/${imageId}`, true, image);
     }
 
     static async deleteImage(exerciseId, imageId) {

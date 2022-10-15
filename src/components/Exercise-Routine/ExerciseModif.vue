@@ -1,49 +1,72 @@
 <template>
-      <v-container>
-        <v-card dark class="secondary">
-          <v-card-title>
-            <v-icon large class="mr-4" @click="$router.back()">mdi-chevron-left</v-icon>
-            {{ title + ' Exercise' }}
-          </v-card-title>
+  <v-container>
+    <v-card dark class="secondary">
+      <v-card-title>
+        <v-icon large class="mr-4" @click="$router.back()">mdi-chevron-left</v-icon>
+        {{ (edit ? 'Edit' : 'Create') + ' Exercise' }}
+      </v-card-title>
 
-          <v-card-text>
-            <v-form class="px-3" ref="form">
-              <v-text-field label="Exercise name" v-model="exerciseName" :rules="[rules.required, rules.onlyLettersAndSpaces, rules.length(100)]" ></v-text-field>
-              <v-textarea label="Description" v-model="desc" :rules="[rules.required, rules.length(200)]"></v-textarea>
-              <v-select
-                  v-model="tagsSelected"
-                  :items="tags"
-                  chips
-                  label="Tags"
-                  multiple
-              ></v-select>
-              <v-text-field
-                  v-model="video"
-                  prepend-icon="mdi-video"
-                  label="Video"
-              ></v-text-field>
+      <v-card-text>
+        <v-form class="px-3" ref="form">
+          <v-text-field label="Exercise name" v-model="exerciseName"
+                        :rules="[rules.required, rules.onlyLettersAndSpaces, rules.length(100)]"></v-text-field>
+          <v-textarea label="Description" v-model="desc" :rules="[rules.required, rules.length(200)]"></v-textarea>
+          <v-select
+              v-model="tagsSelected"
+              :items="tags"
+              chips
+              label="Tags"
+              multiple
+          ></v-select>
+          <v-text-field
+              v-model="video"
+              prepend-icon="mdi-video"
+              label="Video"
+          ></v-text-field>
 
-              <p
-                  v-if="finished && error"
-                  type="error"
-                  class="mt-3 error--text"
-              >
-                {{ errorText }}
-              </p>
-              <p
-                  v-else-if="finished"
-                  type="success"
-                  class="white--text"
-              >
-                <v-icon class="mr-2" color="primary">mdi-check</v-icon>
-                {{ successText }}
-              </p>
+          <p
+              v-if="finished && error"
+              type="error"
+              class="mt-3 error--text"
+          >
+            {{ errorText }}
+          </p>
+          <p
+              v-else-if="finished"
+              type="success"
+              class="white--text"
+          >
+            <v-icon class="mr-2" color="primary">mdi-check</v-icon>
+            {{ successText }}
+          </p>
+          <v-row class="mt-3 pb-5">
+            <v-btn flat class="primary mx-0" @click="submit" :loading="loading">{{
+                (edit ? 'Edit' : 'Create')
+              }}
+            </v-btn>
+            <v-spacer></v-spacer>
 
-              <v-btn flat class="primary mx-0 mt-3" @click="submit" :loading="loading">{{ title }}</v-btn>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-container>
+            <!-- Delete button -->
+            <v-btn flat class="error mx-0" v-if="edit" @click="toggleDialog">Delete</v-btn>
+
+            <!-- Dialog to confirm deletion -->
+            <v-dialog v-model="showDialog" max-width="600">
+              <v-card dark class="secondary">
+                <v-card-title class="headline">Are you sure you want to delete this exercise?</v-card-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="primary" text @click="() => this.showDialog = false">Cancel</v-btn>
+                  <v-btn color="error" @click="deleteExercise">Delete</v-btn>
+                  <v-spacer></v-spacer>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
+
+        </v-form>
+      </v-card-text>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -52,27 +75,38 @@ import {Exercise, Image} from "@/api/exercises";
 import {imageExists} from "@/lib/validation";
 
 export default {
-  setup(){
-    const exerciseStore= useExerciseStore()
+  setup() {
+    const exerciseStore = useExerciseStore()
     return {exerciseStore}
   },
 
   name: "ExerciseModif",
-  data: () => ({
-    pathBack: '/my-exercises',
 
+  props: {
+    // Initial values
+    edit: Boolean,
+    initExerciseName: String,
+    initDesc: String,
+    initTags: Array,
+    initVideo: String,
+    videoId: Number,
+    id: String,
+    pathBack: String,
+  },
+
+  data: () => ({
     // Form data
     exerciseName: '',
     desc: '',
     tags: ['Abs', 'Biceps', 'Triceps', 'Legs', 'Chest', 'Back'],
     tagsSelected: [],
-    video: "",
+    video: '',
 
     // Form rules
     rules: {
       required: v => !!v || 'This field is required',
       length: (maxLen) => v => ((v || '').length <= maxLen) || `Required less than ${maxLen} characters`,
-      onlyLettersAndSpaces:  (v) => /^[a-zA-Z ]+$/.test(v) || 'Must contain only letters and spaces'
+      onlyLettersAndSpaces: (v) => /^[a-zA-Z ]+$/.test(v) || 'Must contain only letters and spaces'
     },
 
     // For button loading
@@ -84,12 +118,20 @@ export default {
     errorText: '',
     successText: '',
 
+    // Delete Dialog
+    showDialog: false
+
   }),
-  methods:{
-    async submit(){
+  methods: {
+    async submit() {
 
       // Validate Form
       if (!this.$refs.form.validate()) {
+        return;
+      }
+
+      // If in edition, return if no fields have been changed
+      if (this.edit && this.exerciseName === this.initExerciseName && this.desc === this.initDesc && this.tagsSelected === this.initTags && this.video === this.initVideo) {
         return;
       }
 
@@ -97,7 +139,7 @@ export default {
       this.loading = true;
 
       // Check if image exists
-      if (this.video.length > 0 && !await imageExists(this.video)) {
+      if (this.video && !await imageExists(this.video)) {
         this.error = true;
         this.finished = true;
         this.loading = false;
@@ -123,16 +165,20 @@ export default {
       )
 
       // Create Image object
-      const image = this.video.length === 0 ? null : new Image(
+      const image = (this.video.length === 0 || this.video === this.initVideo) ? null : new Image(
           this.video
       )
 
       try {
-        // Add exercise to store
-        await this.exerciseStore.addExercise(exercise, image);
+        // Add or edit exercise to store
+        if (this.edit) {
+          await this.exerciseStore.editExercise(this.id, exercise, image, this.videoId);
+        } else {
+          await this.exerciseStore.addExercise(exercise, image);
+        }
 
         // Success message
-        this.successText = 'Exercise created successfully';
+        this.successText = 'Exercise ' + (this.edit? 'edited' : 'created') + ' successfully';
 
       } catch (e) {
 
@@ -140,7 +186,7 @@ export default {
 
         if (e.code === 2) {
           this.errorText = 'Exercise already exists';
-        } else if (e.code === 1){ // Should not happen
+        } else if (e.code === 1) { // Should not happen
           this.errorText = 'Invalid data';
         } else {
           this.errorText = 'An error occured ,please try again later';
@@ -154,13 +200,25 @@ export default {
       this.finished = true;
 
       // Redirect to my exercises
+      if (!this.edit) {
+        await this.$router.push(this.pathBack);
+      }
+
+    },
+    toggleDialog() {
+      this.showDialog = !this.showDialog;
+    },
+    async deleteExercise() {
+      await this.exerciseStore.deleteExercise(this.id);
       await this.$router.push(this.pathBack);
     }
   },
-
-
-  props: {
-    title: String,
+  beforeMount() {
+    // Set initial values
+    this.exerciseName = this.initExerciseName;
+    this.desc = this.initDesc;
+    this.tagsSelected = this.initTags;
+    this.video = this.initVideo;
   }
 }
 </script>

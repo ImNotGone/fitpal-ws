@@ -2,12 +2,15 @@
   <div class="fill-height accent">
     <ToolBar title="Detailed Exercise"/>
     <v-card class="accent pa-5">
+      <v-icon large class="mr-3 mb-2" color="white" @click="$router.back()">mdi-chevron-left</v-icon>
       <detailed-exercise :video="video"
                          :exercise-name="exerciseName"
                          :exercise-description="exerciseDescription"
                          :amount-routines="amountRoutines"
                          :muscles="muscles"
-                         :tags="tags"/>
+                         :tags="tags"
+                         :id="this.$route.params.id"
+      />
     </v-card>
   </div>
 
@@ -37,7 +40,6 @@ export default {
 
     // Get exercise id from url
     const exerciseId = Number(this.$route.params.id);
-    console.log(exerciseId);
 
     // If invalid id, redirect to my exercises
     if (isNaN(exerciseId))

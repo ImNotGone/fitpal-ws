@@ -105,7 +105,7 @@ const router = new Router({
             component: FPEditRoutine
         },
         {
-            path: '/edit-exercise',
+            path: '/edit-exercise/:id',
             name: 'edit-exercise',
             component: FPEditExercise
         },

@@ -22,7 +22,8 @@ export const useExerciseStore = defineStore('exerciseStore',{
         getExerciseDetail: (state) => (id) => state.exercises.find(exercise => exercise.id === id)?.detail,
         getExerciseType: (state) => (id) => state.exercises.find(exercise => exercise.id === id)?.type,
         getExerciseMetadata: (state) => (id) => state.exercises.find(exercise => exercise.id === id)?.metadata,
-        getExerciseImage: (state) => (id) => state.exercises.find(exercise => exercise.id === id)?.image,
+        getExerciseImage: (state) => (id) => state.exercises.find(exercise => exercise.id === id)?.image.url,
+        getExerciseImageId: (state) => (id) => state.exercises.find(exercise => exercise.id === id)?.image.id,
     },
 
     actions:{
@@ -44,7 +45,7 @@ export const useExerciseStore = defineStore('exerciseStore',{
             // Add the exercise to the store
             this.exercises.push(resp);
         },
-        async editExercise(id, exercise, image){
+        async editExercise(id, exercise, image, imageId){
             await ExercisesApi.editExercise(id, exercise);
 
             // Update the exercise in the store
@@ -53,7 +54,7 @@ export const useExerciseStore = defineStore('exerciseStore',{
 
             // If there is an image, edit it
             if (image) {
-                await ExercisesApi.editImage(id, image);
+                await ExercisesApi.editImage(id, imageId, image);
                 this.exercises[index].image = image;
             }
         },

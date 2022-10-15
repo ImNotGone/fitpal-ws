@@ -1,7 +1,7 @@
 <template>
   <div class="fill-height accent">
     <ToolBar title="Create Exercise"/>
-    <ExerciseModif title="Create"/>
+    <ExerciseModif :edit="false" :init-desc="''" :init-exercise-name="''" :init-tags="[]" :init-video="''" path-back="/my-exercises"/>
   </div>
 
 </template>
