@@ -25,8 +25,9 @@ export default {
     loaded: false,
   }),
   async beforeMount() {
-      await this.createRoutineStore.fetchRoutine(this.$route.params.id);
-      this.loaded = true;
+    const store = useCreateRoutineStore();
+    await store.fetchRoutine(this.$route.params.id);
+    this.loaded = true;
   }
 }
 </script>

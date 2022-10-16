@@ -126,21 +126,34 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
         },
 
         async fetchRoutine(routineId){
-            let routine = await this.routinesStore.getRoutine(routineId);
+            const store = useRoutinesStore();
+            await store.init();
+            let routine = store.getRoutine(routineId);
             this.routineName = routine.name;
-            this.desc = routine.description;
+            this.desc = routine.detail;
             this.isPublic = routine.isPublic;
-            this.difficulty = routine.difficulty;
+            this.difficulty = routine.difficulty.charAt(0).toUpperCase() + routine.difficulty.slice(1);
             this.image = routine.image;
-            this.sections = await RoutineApi.getSection(routineId);
+            let sections = await RoutineApi.getSections(routineId);
+            this.sections = [];
 
-            for (let i = 0; i < this.sections.length; i++){
-                let section = this.sections[i];
-                section.exercises = await RoutineApi.getExercisesFromSection(routineId, section.id);
+            for (let i = 0; i < sections.content.length; i++){
+                let section = sections.content[i];
+                this.sections.push({title: section.name, series: section.repetitions, rest: section.metadata.rest, exercises: []});
+
+
+                let ex = await RoutineApi.getExercisesFromSection(routineId, section.id);
+                console.log(ex);
+                for (let j = 0; j < ex.content.length; j++){
+                    const exercise = ex.content[j].exercise;
+                    const type = (ex.content[j].duration === 0) ? 'Reps' : 'Time (seconds)';
+                    const amount = (type === 'Reps') ? ex.content[j].repetitions : ex.content[j].duration;
+                    this.sections[i].exercises.push({name: exercise.name, id: exercise.id, type: type, amount: amount});
+                }
+
             }
             this.numSect = this.sections.length;
             this.activeSection = "Warmup Section";
-            console.log(routine);
         },
 
         clearRoutine(){

@@ -32,11 +32,15 @@ class RoutineApi {
     }
 
     static async getSection(routineId, sectionid) {
-        return await Api.fetch(RoutineApi.getUrl(routineId.toString() + '/cycles' + sectionid.toString()), true);
+        return await Api.get(RoutineApi.getUrl(routineId.toString() + '/cycles/' + sectionid.toString()), true);
+    }
+
+    static async getSections(routineId) {
+        return await Api.get(RoutineApi.getUrl(routineId.toString() + '/cycles'), true);
     }
 
     static async getExercisesFromSection(routineId, sectionId) {
-        return await Api.fetch(RoutineApi.getUrl(routineId.toString() + '/cycles' + sectionId.toString() + '/exercises/'), true);
+        return await Api.get(`${Api.baseUrl}` + '/cycles/' + sectionId.toString() + '/exercises', true);
     }
 
     static async getRoutine(id) {

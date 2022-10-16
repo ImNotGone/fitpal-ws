@@ -113,7 +113,7 @@ import ExerciseList from "@/components/ExerciseList";
 
 export default {
   setup(){
-    const createRoutineStore= useCreateRoutineStore()
+    const createRoutineStore = useCreateRoutineStore()
     return {createRoutineStore}
   },
   name: "RoutineModif",
@@ -179,7 +179,6 @@ export default {
       // Button loading animation
       this.loading = false;
       this.finished = true;
-
     },
   },
   props: {
@@ -188,6 +187,10 @@ export default {
     pathBack: String,
     title: String,
   },
+  beforeMount() {
+    if(!this.edit)
+      this.createRoutineStore.clearRoutine();
+  }
 }
 </script>
 
