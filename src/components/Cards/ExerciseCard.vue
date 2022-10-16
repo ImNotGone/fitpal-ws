@@ -3,13 +3,13 @@
     <!-- First row -->
     <v-card-title class="grey darken-3 white--text">
       <!-- Rectangular Image -->
-      <v-img
-          class="white--text align-end rounded-lg"
+      <iframe
+          width="100%"
+          frameborder="0"
           :src="exercisePicture"
-          aspect-ratio="2.75"
-          max-height="200"
-      >
-      </v-img>
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+      ></iframe>
     </v-card-title>
 
     <!-- Second row -->

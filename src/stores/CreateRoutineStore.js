@@ -3,10 +3,6 @@ import {useRoutinesStore} from "@/stores/RoutinesStore";
 import {CycleExercise, RoutineApi, RoutineData, SectionData} from "@/api/routines";
 
 export const useCreateRoutineStore = defineStore('createRoutineStore',{
-    setup(){
-        const routinesStore = useRoutinesStore()
-        return {routinesStore}
-    },
     state:() =>({
         routineName: '',
         desc: '',
@@ -95,7 +91,8 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
             []
             )
 
-            let resp = await this.routinesStore.addRoutine(routineData);
+            const store = useRoutinesStore();
+            let resp = await store.addRoutine(routineData);
 
             // Add the sections to the database
             for(let i = 0; i < this.sections.length; i++){
