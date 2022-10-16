@@ -10,7 +10,7 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
                 title:'Warmup Section',
                 series:'',
                 rest:'',
-                exercises:[]
+                exercises:[],
             },
             {title:'Section 1',
                 series:'',
@@ -24,6 +24,7 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
             }
         ],
         numSect: 1,
+        activeSection: "Warmup Section",
     }),
     getters:{
         getRoutineName: (state) => state.routineName,
@@ -31,6 +32,7 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
         getImage: (state) => state.image,
         getSections: (state) => state.sections,
         getNumSect: (state) => state.numSect,
+        getActiveSection: (state) => state.activeSection,
     },
     actions:{
         addSection(){
@@ -42,12 +44,32 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
                 this.sections = this.sections.filter((section) => section.title !== 'Section ' + this.numSect);
                 this.numSect = this.numSect - 1;
             }
+
+            // If we delete the active section, we set the active section to the last section
+            if(this.activeSection === 'Section ' + (this.numSect + 1)){
+                this.activeSection = (this.numSect === 1)? 'Cooldown Section': 'Section ' + this.numSect;
+            }
         },
-        addExercise(section, exName){
-            this.sections.find((s) => s.title === section.title).exercises.push({name:exName, reps:'', time:''});
+        addExercise(exName){
+            // Find active Section
+            let section = this.sections.find(section => section.title === this.activeSection);
+
+            // Create a unique id for the exercise
+            let uid = 0;
+
+            while (this.sections.find(s => s.title === section.title).exercises.some(exercise => exercise.id === uid)) {
+                uid++;
+            }
+
+            this.sections.find((s) => s.title === section.title).exercises.push({name:exName, reps:'', time:'', id:uid});
         },
-        deleteExercise(section){
-            this.sections.find((s) => s.title === section.title).exercises.pop();
+        deleteExercise(section, id){
+            this.sections.find((s) => s.title === section.title).exercises = this.sections.find((s) => s.title === section.title).exercises.filter((ex) => ex.id !== id);
+            console.log(this.sections.find((s) => s.title === section.title).exercises);
+        },
+        setActiveSection(section){
+            this.activeSection = section.title;
+            console.log(this.activeSection);
         }
     }
     })

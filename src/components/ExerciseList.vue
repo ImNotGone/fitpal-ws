@@ -11,19 +11,17 @@
           </v-btn>
         </v-row>
         <v-list class="secondary">
-          <v-list-item-group>
-            <v-list-item v-for="exercise in exerciseStore.getExercises"
-                         :key="exercise.title" @click="submit(exercise.title)">
+            <v-list-item v-for="exercise in exerciseStore.getExercisesId"
+                         :key="exerciseStore.getExerciseName(exercise)" @click="submit(exerciseStore.getExerciseName(exercise))">
               <v-list-item-content>
-                {{exercise.title}}
+                {{exerciseStore.getExerciseName(exercise)}}
               </v-list-item-content>
               <v-list-item-icon>
-                <router-link :to="exercise.route">
+                <router-link :to="'/exercise/' + exercise">
                   <v-icon>mdi-dots-vertical</v-icon>
                 </router-link>
               </v-list-item-icon>
             </v-list-item>
-          </v-list-item-group>
         </v-list>
       </v-card>
     </v-dialog>
@@ -55,7 +53,10 @@ export default {
         this.$emit('input', value)
       }
     }
-  }
+  },
+  async beforeMount() {
+    await this.exerciseStore.updateExercises();
+  },
 }
 </script>
 

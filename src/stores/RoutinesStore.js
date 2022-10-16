@@ -17,7 +17,7 @@ export const useRoutinesStore = defineStore('routinesStore', {
             return this.publicRoutines;
         }
     },
-    actions:{
+    actions: {
         init() {
             // GET USER ROUTINES
 
@@ -28,6 +28,9 @@ export const useRoutinesStore = defineStore('routinesStore', {
         },
         async retrievePublicRoutines() {
             this.publicRoutines = await RoutineApi.getRoutines();
+        },
+        async addRoutine(routineData) {
+            return await RoutineApi.addRoutine(routineData);
         },
     }
 })

@@ -1,43 +1,62 @@
 <template>
   <v-container>
     <v-card dark class="secondary">
+
+      <!-- Exercise List Dialog-->
+      <ExerciseList v-model="list" @exerciseAdded="createRoutineStore.addExercise($event)"/>
+
       <v-card-title>
         <v-icon large class="mr-4" color="#FF8754" @click="$router.back()">mdi-chevron-left</v-icon>
         {{ title + ' Routine' }}
       </v-card-title>
       <v-card-text>
         <v-form class="px-3">
+          <!-- Name -->
           <v-text-field color="#FF8754" label="Routine name" v-model="createRoutineStore.getRoutineName"></v-text-field>
+
+          <!-- Description -->
           <v-textarea color="#FF8754" label="Description" v-model="createRoutineStore.getDesc"></v-textarea>
-          <v-tabs vertical class="pa-5" background-color="secondary">
+
+          <!-- Add Sections & Exercises -->
+          <v-tabs vertical class="pa-5" background-color="secondary" ref="tabs" >
 
             <v-tab v-for="section in createRoutineStore.getSections"
-                   :key="section.title">
+                   :key="section.title"
+                   @click="createRoutineStore.setActiveSection(section)"
+            >
               {{section.title}}
             </v-tab>
 
             <v-tab-item class="accent" v-for="section in createRoutineStore.getSections" :key="section.title">
               <v-container class="accent pa-5">
                 <v-row>
-                  <v-text-field color="#FF8754" dark counter-value="0" label="Series" v-model="section.series"></v-text-field>
+                  <!-- Amount of series -->
+                  <v-text-field color="#FF8754" dark  label="Series" type="number" v-model="section.series"></v-text-field>
                   <v-spacer/>
-                  <v-text-field color="#FF8754" dark label="Time between series" v-model="section.rest"></v-text-field>
+                  <!-- Time between series -->
+                  <v-text-field color="#FF8754" dark label="Time between series" type="number" v-model="section.rest"></v-text-field>
                   <v-spacer/>
-                  <ExerciseList v-model="list" @exerciseAdded="createRoutineStore.addExercise(section, $event)"/>
+
+                  <!-- Add exercise Button-->
                   <v-btn class="primary ma-auto" @click="list = !list">Add Exercise</v-btn>
                   <v-spacer/>
-                  <v-btn class="primary ma-auto" @click="createRoutineStore.deleteExercise(section)">Delete Exercise</v-btn>
                 </v-row>
                 <v-list class="accent" v-for="exercise in section.exercises"
-                        :key="exercise.name">
+                        :key="section.title + exercise.name + exercise.id">
                   <v-list-item-content dark>
                     <v-row class="pa-2">
                       <h3 class="white--text pa-3">{{exercise.name}}</h3>
                       <v-row>
                         <v-spacer/>
-                        <v-text-field dark counter-value="0" label="Reps" v-model="exercise.reps"></v-text-field>
+                        <!-- Select if using reps or time -->
+                        <v-select dark v-model="exercise.type" :items="['Reps', 'Time (seconds)']"></v-select>
                         <v-spacer/>
-                        <v-text-field dark label="Time" v-model="exercise.time"></v-text-field>
+                         <!-- Amount of reps or time -->
+                        <v-text-field dark label="Amount" type="number" v-model="exercise.amount"></v-text-field>
+                        <v-spacer/>
+                        <v-btn class="primary mr-5 mt-3" @click="createRoutineStore.deleteExercise(section, exercise.id)">
+                          <v-icon>mdi-delete</v-icon>
+                        </v-btn>
                       </v-row>
                     </v-row>
                   </v-list-item-content>
