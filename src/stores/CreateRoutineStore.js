@@ -16,12 +16,14 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
                 rest:'',
                 exercises:[],
             },
-            {title:'Section 1',
+            {
+                title:'Section 1',
                 series:'',
                 rest:'',
                 exercises:[]
             },
-            {title:'Cooldown Section',
+            {
+                title:'Cooldown Section',
                 series:'',
                 rest:'',
                 exercises:[]
@@ -125,6 +127,12 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
             }
         },
 
+        async editRoutine(id){
+            const store = useRoutinesStore();
+            await store.deleteRoutine(id);
+            await this.submitRoutine();
+        },
+
         async fetchRoutine(routineId){
             const store = useRoutinesStore();
             await store.init();
@@ -139,11 +147,9 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
 
             for (let i = 0; i < sections.content.length; i++){
                 let section = sections.content[i];
-                this.sections.push({title: section.name, series: section.repetitions, rest: section.metadata.rest, exercises: []});
-
-
+                this.sections.push({title: section.name, series: section.repetitions, rest: section.metadata.rest, exercises: [], id:section.id});
                 let ex = await RoutineApi.getExercisesFromSection(routineId, section.id);
-                console.log(ex);
+
                 for (let j = 0; j < ex.content.length; j++){
                     const exercise = ex.content[j].exercise;
                     const type = (ex.content[j].duration === 0) ? 'Reps' : 'Time (seconds)';

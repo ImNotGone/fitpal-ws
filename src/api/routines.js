@@ -43,6 +43,18 @@ class RoutineApi {
         return await Api.get(`${Api.baseUrl}` + '/cycles/' + sectionId.toString() + '/exercises', true);
     }
 
+    static async modifySection(routineId, sectionId, sectionData) {
+        return await Api.put(RoutineApi.getUrl(routineId.toString() + '/cycles/' + sectionId.toString()), true, sectionData);
+    }
+
+    static async modifyExerciseToSection(id, exerciseId, exerciseData) {
+        return await Api.put(RoutineApi.getSectionUrl(id, exerciseId), true, exerciseData);
+    }
+
+    static async deleteAllSections(routineId){
+        return await Api.delete(RoutineApi.getUrl(routineId.toString() + '/cycles'), true);
+    }
+
     static async getRoutine(id) {
         return await Api.get(RoutineApi.getUrl(id), true);
     }
@@ -62,8 +74,6 @@ class RoutineApi {
     static async addRoutineReview(id, review) {
         return await Api.post(RoutineApi.getRewiewsUrl(id), true, review);
     }
-
-
 }
 
 /*

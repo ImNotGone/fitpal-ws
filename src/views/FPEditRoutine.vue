@@ -1,7 +1,7 @@
 <template>
   <div class="fill-height accent">
     <ToolBar title="Edit Routine"/>
-    <RoutineModif v-if="loaded" title="Edit" :path-back="'/routine/' + this.$route.params.id" :edit="true" :id="this.$route.params.id"/>
+    <RoutineModif v-if="loaded" :path-back="'/routine/' + this.$route.params.id" :edit="true" :id="this.$route.params.id"/>
   </div>
 </template>
 

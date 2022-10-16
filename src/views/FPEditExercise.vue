@@ -1,7 +1,7 @@
 <template>
   <div class="fill-height accent">
     <ToolBar title="Edit Exercise"/>
-    <ExerciseModif v-if="loaded" title="Edit" :path-back="'/exercise/' + this.$route.params.id" :edit="true"
+    <ExerciseModif v-if="loaded" :path-back="'/exercise/' + this.$route.params.id" :edit="true"
                    :init-desc="exerciseDescription" :init-exercise-name="exerciseName"
                    :init-tags="tags" :init-video="video" :id="this.$route.params.id" :video-id="videoId"/>
   </div>

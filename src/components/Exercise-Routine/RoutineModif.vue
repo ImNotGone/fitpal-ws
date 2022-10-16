@@ -7,7 +7,7 @@
 
       <v-card-title>
         <v-icon large class="mr-4" color="#FF8754" @click="$router.back()">mdi-chevron-left</v-icon>
-        {{ title + ' Routine' }}
+        {{ (edit ? 'Edit' : 'Create') + ' Routine' }}
       </v-card-title>
       <v-card-text>
         <v-form class="px-3" ref="routineForm">
@@ -100,7 +100,7 @@
             {{ successText }}
           </p>
 
-          <v-btn flat class="primary mx-2 mt-6" @click="submit">{{ title }}</v-btn>
+          <v-btn flat class="primary mx-2 mt-6" @click="submit">{{ (edit ? 'Edit' : 'Create') }}</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
@@ -159,10 +159,13 @@ export default {
 
       try {
         // Submit
-        await this.createRoutineStore.submitRoutine();
-
-        // Success message
-        this.successText = 'Routine created successfully';
+        if(this.edit){
+          await this.createRoutineStore.editRoutine(this.$route.params.id);
+          this.successText = 'Routine edited successfully';
+        } else {
+          await this.createRoutineStore.submitRoutine();
+          this.successText = 'Routine created successfully';
+        }
 
         await this.$router.push('/my-routines');
       } catch (e) {
@@ -172,9 +175,6 @@ export default {
         // TODO: Handle errors
         this.errorText = "An error occurred while creating the routine";
       }
-
-      // Clear form
-      this.createRoutineStore.clearRoutine();
 
       // Button loading animation
       this.loading = false;

@@ -17,7 +17,7 @@ export const useRoutinesStore = defineStore('routinesStore', {
             return this.publicRoutines;
         },
         containsRoutineWithId: (state) => (id) => {
-            return state.myRoutines.some(r => r.id === id);
+            return state.myRoutines.content.some(r => r.id === id);
         },
         getRoutinesId: (state) => {
             if(!state.myRoutines.content) {
@@ -51,5 +51,12 @@ export const useRoutinesStore = defineStore('routinesStore', {
         async addRoutine(routineData) {
             return await RoutineApi.addRoutine(routineData);
         },
+        async editRoutine(routineId, routineData) {
+            return await RoutineApi.modifyRoutine(routineId, routineData);
+        },
+        async deleteRoutine(routineId) {
+            await RoutineApi.deleteAllSections(routineId);
+            return await RoutineApi.deleteRoutine(routineId);
+        }
     }
 })
