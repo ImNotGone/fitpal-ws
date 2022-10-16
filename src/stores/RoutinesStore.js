@@ -11,7 +11,6 @@ export const useRoutinesStore = defineStore('routinesStore', {
 
     getters: {
         getMyRoutines() {
-            console.log("hola");
             return this.myRoutines;
         },
         getPublicRoutines() {
@@ -21,9 +20,12 @@ export const useRoutinesStore = defineStore('routinesStore', {
             return state.myRoutines.some(r => r.id === id);
         },
         getRoutinesId: (state) => {
+            if(!state.myRoutines.content) {
+                return;
+            }
             // Return an array of the routines id
             let routinesId = [];
-            state.myRoutines.forEach(r => {
+            state.myRoutines.content.forEach(r => {
                 routinesId.push(r.id);
             });
             return routinesId;
@@ -44,7 +46,8 @@ export const useRoutinesStore = defineStore('routinesStore', {
             this.myRoutines = await UserApi.getUserRoutines();
         },
         async retrievePublicRoutines() {
-            this.publicRoutines = await RoutineApi.getRoutines().filter(r => r.isPublic);
+            this.publicRoutines = await RoutineApi.getRoutines();
+            console.log(this.publicRoutines)
         },
         async addRoutine(routineData) {
             let resp = await RoutineApi.addRoutine(routineData);
