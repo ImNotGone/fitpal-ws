@@ -34,7 +34,7 @@
               <h3 class="headline mb-n5">{{ routineName }}</h3>
             </div>
             <v-spacer />
-            <v-btn class="primary pa-5" to="/edit-routine">Edit routine</v-btn>
+            <v-btn class="primary pa-5" :to="'/edit-routine/' + id">Edit routine</v-btn>
             <v-btn text class="white--text pa-5 pt-7">
               <v-icon x-large>mdi-bookmark-multiple-outline</v-icon>
             </v-btn>
@@ -185,6 +185,8 @@
 </template>
 
 <script>
+
+
 export default {
   name: "DetailedRoutine",
   props: {
@@ -205,7 +207,8 @@ export default {
     series: Number,
     timeBetweenSeries: Number,
     exercises: Array,
-    routineInformation: String
+    routineInformation: String,
+    id: String,
   },
 }
 </script>

@@ -11,26 +11,48 @@ export const useRoutinesStore = defineStore('routinesStore', {
 
     getters: {
         getMyRoutines() {
+            console.log("hola");
             return this.myRoutines;
         },
         getPublicRoutines() {
             return this.publicRoutines;
-        }
+        },
+        containsRoutineWithId: (state) => (id) => {
+            return state.myRoutines.some(r => r.id === id);
+        },
+        getRoutinesId: (state) => {
+            // Return an array of the routines id
+            let routinesId = [];
+            state.myRoutines.forEach(r => {
+                routinesId.push(r.id);
+            });
+            return routinesId;
+        },
+        getRoutine: (state) => (id) => state.myRoutines.find(r => r.id === id),
+        getRoutineName: (state) => (id) => state.myRoutines.find(r => r.id === id)?.name,
+        getRoutineDetail: (state) => (id) => state.myRoutines.find(r => r.id === id)?.detail,
+        getRoutineMetadata: (state) => (id) => state.myRoutines.find(r => r.id === id)?.metadata,
+        getRoutineImage: (state) => (id) => state.myRoutines.find(r => r.id === id)?.image.url,
+        getRoutineImageId: (state) => (id) => state.myRoutines.find(r => r.id === id)?.image.id,
     },
     actions: {
         init() {
-            // GET USER ROUTINES
-
-            // GET PUBLIC ROUTINES
+            this.retrieveMyRoutines().then(r => console.log(r));
+            this.retrievePublicRoutines().then(r => console.log(r));
         },
         async retrieveMyRoutines() {
             this.myRoutines = await UserApi.getUserRoutines();
         },
         async retrievePublicRoutines() {
-            this.publicRoutines = await RoutineApi.getRoutines();
+            this.publicRoutines = await RoutineApi.getRoutines().filter(r => r.isPublic);
         },
         async addRoutine(routineData) {
-            return await RoutineApi.addRoutine(routineData);
+            let resp = await RoutineApi.addRoutine(routineData);
+            this.myRoutines.push(routineData);
+            if(routineData.isPublic) {
+                this.publicRoutines.push(routineData);
+            }
+            return resp;
         },
     }
 })

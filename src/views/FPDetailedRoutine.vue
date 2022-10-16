@@ -13,7 +13,8 @@
                         :series="series"
                         :time-between-series="timeBetweenSeries"
                         :routine-information="routineInformation"
-      ></detailed-routine>
+                        :id="this.$route.params.id"
+      />
     </v-card>
   </div>
 </template>
@@ -21,36 +22,52 @@
 <script>
 import ToolBar from "@/components/ToolBar";
 import DetailedRoutine from "@/components/Detailed/DetailedRoutine";
+import {useRoutinesStore} from "@/stores/RoutinesStore";
+
 export default {
   name: "FPDetailedRoutine",
   components: {DetailedRoutine, ToolBar},
   data: () => ({
-    routineName: 'Routine Name',
-    routineDescription: 'Routine Description',
-    amountUsers: 50,
-    duration: 30,
-    tags: ['Biceps', 'Abs', 'Triceps'],
-    muscles: ['Biceps', 'Abs', 'Triceps'],
-    progress: 48,
-    series: 3,
-    timeBetweenSeries: 30,
-    exercises: [
-        {
-          name: 'blank poses',
-          duration: "30 s"
-        },
-      {
-        name: 'pilates',
-        duration: "30 s"
-      },
-      {
-        name: 'Barbell Curl',
-        duration: "10 reps"
-      }
-    ],
-    routineInformation: "Last modified 25/08"
+    routineName: '',
+    routineDescription: '',
+    amountUsers: 0,
+    duration: 0,
+    tags: [],
+    muscles: [],
+    progress: 0,
+    series: 0,
+    timeBetweenSeries: 0,
+    //Name, duration
+    exercises: [],
+    routineInformation: ''
+  }),
 
-  })
+  async beforeMount() {
+    const store = useRoutinesStore();
+
+    // Get exercise id from url
+    const routineId = Number(this.$route.params.id);
+
+    // If invalid id, redirect to my routines
+    if (isNaN(routineId))
+      await this.$router.push('/my-routines');
+
+    // await store.updateRoutines();
+
+    // If routine doesn't exist, redirect to my routines
+    if (!store.containsRoutineWithId(routineId))
+      await this.$router.push('/my-routines');
+
+
+    this.routineName = store.getRoutineName(routineId);
+    this.routineDescription = store.getRoutineDetail(routineId);
+
+    // this.tags = store.getRoutineMetadata(routineId)?.tags;
+
+    this.muscles = store.getRoutineMetadata(routineId)?.tags;
+    this.image = store.getRoutineImage(routineId);
+    this.imageId = store.getRoutineImageId(routineId);
+  }
 }
 </script>
 

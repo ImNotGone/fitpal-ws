@@ -1,7 +1,12 @@
 import {defineStore} from "pinia";
+import {useRoutinesStore} from "@/stores/RoutinesStore";
 import {CycleExercise, RoutineApi, RoutineData, SectionData} from "@/api/routines";
 
 export const useCreateRoutineStore = defineStore('createRoutineStore',{
+    setup(){
+        const routinesStore = useRoutinesStore()
+        return {routinesStore}
+    },
     state:() =>({
         routineName: '',
         desc: '',
@@ -85,12 +90,12 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
                 this.routineName,
                 this.desc,
                 this.isPublic,
-                this.difficulty,
+                this.difficulty.toLowerCase(),
                 this.image,
             []
             )
 
-            let resp = await RoutineApi.addRoutine(routineData);
+            let resp = await this.routinesStore.addRoutine(routineData);
 
             // Add the sections to the database
             for(let i = 0; i < this.sections.length; i++){
@@ -122,6 +127,25 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
                 }
             }
         },
+
+        async fetchRoutine(routineId){
+            let routine = await this.routinesStore.getRoutine(routineId);
+            this.routineName = routine.name;
+            this.desc = routine.description;
+            this.isPublic = routine.isPublic;
+            this.difficulty = routine.difficulty;
+            this.image = routine.image;
+            this.sections = await RoutineApi.getSection(routineId);
+
+            for (let i = 0; i < this.sections.length; i++){
+                let section = this.sections[i];
+                section.exercises = await RoutineApi.getExercisesFromSection(routineId, section.id);
+            }
+            this.numSect = this.sections.length;
+            this.activeSection = "Warmup Section";
+            console.log(routine);
+        },
+
         clearRoutine(){
             this.routineName = '';
             this.desc = '';

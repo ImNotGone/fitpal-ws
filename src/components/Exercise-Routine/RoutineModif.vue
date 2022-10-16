@@ -12,16 +12,16 @@
       <v-card-text>
         <v-form class="px-3" ref="routineForm">
           <!-- Name -->
-          <v-text-field color="#FF8754" label="Routine name" v-model="createRoutineStore.routineName" :rules="[rules.required, rules.max(100)]"></v-text-field>
+          <v-text-field color="#FF8754" label="Routine name" v-model="createRoutineStore.routineName" :rules="[rules.required, rules.max(100)]"/>
 
           <!-- Description -->
-          <v-textarea color="#FF8754" label="Description" v-model="createRoutineStore.desc" :rules="[rules.required, rules.max(200)]"></v-textarea>
+          <v-textarea color="#FF8754" label="Description" v-model="createRoutineStore.desc" :rules="[rules.required, rules.max(200)]"/>
 
           <!-- Difficulty -->
-          <v-select color="#FF8754" label="Difficulty" v-model="createRoutineStore.difficulty" :items="['rookie', 'beginner', 'intermediate', 'advanced', 'expert']" :rules="[rules.required]"></v-select>
+          <v-select color="#FF8754" label="Difficulty" v-model="createRoutineStore.difficulty" :items="['Rookie', 'Beginner', 'Intermediate', 'Advanced', 'Expert']" :rules="[rules.required]"/>
 
           <!-- Public -->
-          <v-checkbox color="#FF8754" label="Public" v-model="createRoutineStore.isPublic"></v-checkbox>
+          <v-checkbox color="#FF8754" label="Public" v-model="createRoutineStore.isPublic"/>
 
           <!-- Exercises title -->
           <h1 class="mt-2 mb-2">Exercises</h1>
@@ -40,10 +40,10 @@
               <v-container class="accent pa-5">
                 <v-row>
                   <!-- Amount of series -->
-                  <v-text-field color="#FF8754" dark  label="Series" type="number" v-model="section.series" :rules="[rules.required, rules.number(1, 999)]"></v-text-field>
+                  <v-text-field color="#FF8754" dark  label="Series" type="number" v-model="section.series" :rules="[rules.required, rules.number(1, 999)]"/>
                   <v-spacer/>
                   <!-- Time between series -->
-                  <v-text-field color="#FF8754" dark label="Time between series (seconds)" type="number" v-model="section.rest" :rules="[rules.required]"></v-text-field>
+                  <v-text-field color="#FF8754" dark label="Time between series (seconds)" type="number" v-model="section.rest" :rules="[rules.required]"/>
                   <v-spacer/>
 
                   <!-- Add exercise Button-->
@@ -100,7 +100,7 @@
             {{ successText }}
           </p>
 
-          <v-btn flat class="primary mx-0 mt-3" @click="submit">{{ title }}</v-btn>
+          <v-btn flat class="primary mx-2 mt-6" @click="submit">{{ title }}</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
@@ -157,7 +157,6 @@ export default {
         return;
       }
 
-
       try {
         // Submit
         await this.createRoutineStore.submitRoutine();
@@ -184,8 +183,11 @@ export default {
     },
   },
   props: {
+    edit: Boolean,
+    id: String,
+    pathBack: String,
     title: String,
-  }
+  },
 }
 </script>
 

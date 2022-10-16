@@ -36,6 +36,7 @@
               :duration="routine.duration"
               :tags="routine.metadata.tags"
               :showSaveButton="false"
+              :route="`/routine/${routine.id}`"
           />
         </v-col>
       </v-row>
@@ -59,7 +60,7 @@ export default {
     return { routinesStore };
   },
   async beforeMount() {
-    this.routinesStore.retrieveMyRoutines();
+    await this.routinesStore.retrieveMyRoutines();
   }
 }
 </script>

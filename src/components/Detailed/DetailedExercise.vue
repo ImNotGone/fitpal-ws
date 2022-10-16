@@ -10,20 +10,14 @@
 <template>
   <v-card class="grey darken-3 white--text">
     <!-- Video of the exercise -->
-    <!--<video
+    <video
       class="mx-auto"
       width="100%"
       height="auto"
       controls
       :src="video"
-    ></video>-->
+    />
     <!--TODO: Replace with video of exercise-->
-    <v-img
-      class="mx-auto"
-      width="100%"
-      height="auto"
-      :src="video"
-    ></v-img>
 
     <!-- Exercise name -->
     <v-card-title primary-title>

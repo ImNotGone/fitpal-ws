@@ -90,7 +90,7 @@ const router = new Router({
             component: FPDetailedExercise
         },
         {
-            path: '/routine',
+            path: '/routine/:id',
             name: 'detailed-routine',
             component: FPDetailedRoutine
         },
@@ -100,7 +100,7 @@ const router = new Router({
             component: FPExerciseInRoutine
         },
         {
-            path: '/edit-routine',
+            path: '/edit-routine/:id',
             name: 'edit-routine',
             component: FPEditRoutine
         },

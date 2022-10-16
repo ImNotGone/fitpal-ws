@@ -73,8 +73,8 @@
 
 <script>
 import {useExerciseStore} from "@/stores/ExerciseStore";
-import {Exercise, Image} from "@/api/exercises";
-import {imageExists} from "@/lib/validation";
+import {Exercise, Video} from "@/api/exercises";
+import {videoExists} from "@/lib/validation";
 
 export default {
   setup() {
@@ -140,12 +140,12 @@ export default {
       // Button loading animation
       this.loading = true;
 
-      // Check if image exists
-      if (this.video && !await imageExists(this.video)) {
+      // Check if video exists
+      if (this.video && !await videoExists(this.video)) {
         this.error = true;
         this.finished = true;
         this.loading = false;
-        this.errorText = 'Image does not exist';
+        this.errorText = 'Video does not exist';
         return;
       }
 
@@ -166,17 +166,17 @@ export default {
           metadata
       )
 
-      // Create Image object
-      const image = (this.video.length === 0 || this.video === this.initVideo) ? null : new Image(
+      // Create Video object
+      const video = (this.video.length === 0 || this.video === this.initVideo) ? null : new Video(
           this.video
       )
 
       try {
         // Add or edit exercise to store
         if (this.edit) {
-          await this.exerciseStore.editExercise(this.id, exercise, image, this.videoId);
+          await this.exerciseStore.editExercise(this.id, exercise, video, this.videoId);
         } else {
-          await this.exerciseStore.addExercise(exercise, image);
+          await this.exerciseStore.addExercise(exercise, video);
         }
 
         // Success message

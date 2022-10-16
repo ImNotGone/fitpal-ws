@@ -5,7 +5,7 @@
 
 <template>
   <!-- Card -->
-  <v-card class="mx-auto" min-width="350" max-width="350" to="/routine">
+  <v-card class="mx-auto" min-width="350" max-width="350" :to="route">
     <!-- First row -->
     <v-card-title class="grey darken-3 white--text">
       <!-- Rectangular Image -->
@@ -69,6 +69,7 @@ export default {
     tags: Array,
     duration: Number,
     showSaveButton: Boolean,
+    route: String,
   },
 }
 </script>
