@@ -51,8 +51,8 @@ class RoutineApi {
         return await Api.put(RoutineApi.getSectionUrl(id, exerciseId), true, exerciseData);
     }
 
-    static async deleteAllSections(routineId){
-        return await Api.delete(RoutineApi.getUrl(routineId.toString() + '/cycles'), true);
+    static async deleteSection(routineId, sectionId) {
+        return await Api.delete(`${Api.baseUrl}` + '/routines/' + routineId + '/cycles/' + sectionId, true);
     }
 
     static async getRoutine(id) {

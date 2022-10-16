@@ -126,10 +126,15 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
                 }
             }
         },
+        async deleteRoutine(routineId) {
+            await this.sections.forEach((s) => RoutineApi.deleteSection(routineId, s.id));
+
+            return await RoutineApi.deleteRoutine(routineId);
+        },
 
         async editRoutine(id){
-            const store = useRoutinesStore();
-            await store.deleteRoutine(id);
+            //const store = useRoutinesStore();
+            await this.deleteRoutine(id);
             await this.submitRoutine();
         },
 

@@ -54,9 +54,5 @@ export const useRoutinesStore = defineStore('routinesStore', {
         async editRoutine(routineId, routineData) {
             return await RoutineApi.modifyRoutine(routineId, routineData);
         },
-        async deleteRoutine(routineId) {
-            await RoutineApi.deleteAllSections(routineId);
-            return await RoutineApi.deleteRoutine(routineId);
-        }
     }
 })

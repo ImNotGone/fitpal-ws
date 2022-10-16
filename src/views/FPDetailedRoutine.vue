@@ -66,7 +66,6 @@ export default {
     this.routineName = store.getRoutineName(routineId);
     this.routineDescription = store.getRoutineDetail(routineId);
 
-
     // this.tags = store.getRoutineMetadata(routineId)?.tags;
 
     this.muscles = store.getRoutineMetadata(routineId)?.tags;
@@ -85,9 +84,7 @@ export default {
         const amount = (type === 'Reps') ? ex.content[j].repetitions : ex.content[j].duration;
         this.sections[i].exercises.push({name: exercise.name, id: exercise.id, type: type, amount: amount});
       }
-
     }
-
   }
 }
 </script>
