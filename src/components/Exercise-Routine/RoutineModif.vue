@@ -168,7 +168,7 @@ export default {
       } catch (e) {
         // Error message
         this.error = true;
-
+        console.log(e);
         // TODO: Handle errors
         this.errorText = "An error occurred while creating the routine";
       }

@@ -30,12 +30,12 @@ export const useRoutinesStore = defineStore('routinesStore', {
             });
             return routinesId;
         },
-        getRoutine: (state) => (id) => state.myRoutines.find(r => r.id === id),
-        getRoutineName: (state) => (id) => state.myRoutines.find(r => r.id === id)?.name,
-        getRoutineDetail: (state) => (id) => state.myRoutines.find(r => r.id === id)?.detail,
-        getRoutineMetadata: (state) => (id) => state.myRoutines.find(r => r.id === id)?.metadata,
-        getRoutineImage: (state) => (id) => state.myRoutines.find(r => r.id === id)?.image.url,
-        getRoutineImageId: (state) => (id) => state.myRoutines.find(r => r.id === id)?.image.id,
+        getRoutine: (state) => (id) => state.myRoutines.content.find(r => r.id === id),
+        getRoutineName: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.name,
+        getRoutineDetail: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.detail,
+        getRoutineMetadata: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.metadata,
+        getRoutineImage: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.image.url,
+        getRoutineImageId: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.image.id,
     },
     actions: {
         init() {
@@ -47,15 +47,9 @@ export const useRoutinesStore = defineStore('routinesStore', {
         },
         async retrievePublicRoutines() {
             this.publicRoutines = await RoutineApi.getRoutines();
-            console.log(this.publicRoutines)
         },
         async addRoutine(routineData) {
-            let resp = await RoutineApi.addRoutine(routineData);
-            this.myRoutines.push(routineData);
-            if(routineData.isPublic) {
-                this.publicRoutines.push(routineData);
-            }
-            return resp;
+            return await RoutineApi.addRoutine(routineData);
         },
     }
 })
