@@ -6,13 +6,11 @@
       <detailed-exercise :video="video"
                          :exercise-name="exerciseName"
                          :exercise-description="exerciseDescription"
-                         :amount-routines="amountRoutines"
                          :muscles="tags"
                          :id="this.$route.params.id"
       />
     </v-card>
   </div>
-
 
 </template>
 
@@ -21,7 +19,6 @@ import ToolBar from "@/components/ToolBar";
 import DetailedExercise from "@/components/Detailed/DetailedExercise";
 import {useExerciseStore} from "@/stores/ExerciseStore";
 
-
 export default {
   name: "FPDetailedExercise",
   components: {DetailedExercise, ToolBar},
@@ -29,7 +26,6 @@ export default {
     video: '',
     exerciseName: '',
     exerciseDescription:  '',
-    amountRoutines: 0,
     tags: [],
 
   }),
@@ -54,8 +50,6 @@ export default {
     this.exerciseDescription = store.getExerciseDetail(exerciseId);
 
     this.tags = store.getExerciseMetadata(exerciseId)?.tags;
-    // TODO: Get muscles amount of routines from exercise metadata
-    // this.amountRoutines
     this.video = store.getExerciseImage(exerciseId);
   }
 }

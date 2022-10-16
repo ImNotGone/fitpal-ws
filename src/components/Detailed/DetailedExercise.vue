@@ -10,14 +10,23 @@
 <template>
   <v-card class="grey darken-3 white--text">
     <!-- Video of the exercise -->
-    <video
+    <!--<video
       class="mx-auto"
       width="100%"
       height="auto"
       controls
       :src="video"
-    />
+    />-->
     <!--TODO: Replace with video of exercise-->
+
+    <iframe
+        width="100%"
+        height="600"
+        frameborder="0"
+        :src="video"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
 
     <!-- Exercise name -->
     <v-card-title primary-title>
@@ -27,15 +36,6 @@
       <v-spacer/>
       <v-btn class="primary pa-5" :to="'/edit-exercise/' + id">Edit exercise</v-btn>
     </v-card-title>
-
-    <!-- Amount of times the exercise appears in other routines -->
-    <!-- Icon amount Routines -->
-    <v-card-text>
-      <v-row>
-        <v-icon class="pr-3 ml-3" color="white">mdi-book-open-variant</v-icon>
-        <span class="white--text">In {{ amountRoutines }} Routines</span>
-      </v-row>
-    </v-card-text>
 
     <!-- Exercise description -->
     <v-card-title primary-title>
@@ -88,7 +88,6 @@ export default {
     video: String,
     exerciseName: String,
     exerciseDescription: String,
-    amountRoutines: Number,
     muscles: Array,
     id: String,
   },

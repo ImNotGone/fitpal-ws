@@ -74,7 +74,7 @@
 <script>
 import {useExerciseStore} from "@/stores/ExerciseStore";
 import {Exercise, Video} from "@/api/exercises";
-import {videoExists} from "@/lib/validation";
+import {getYoutubeVideoEmbed} from "@/lib/validation";
 
 export default {
   setup() {
@@ -140,12 +140,13 @@ export default {
       // Button loading animation
       this.loading = true;
 
-      // Check if video exists
-      if (this.video && !await videoExists(this.video)) {
+      // Get youtube video
+      let youtubeEmbed = getYoutubeVideoEmbed(this.video);
+      if (youtubeEmbed === '') {
         this.error = true;
         this.finished = true;
         this.loading = false;
-        this.errorText = 'Video does not exist';
+        this.errorText = 'Link is not a valid youtube video';
         return;
       }
 
@@ -168,7 +169,7 @@ export default {
 
       // Create Video object
       const video = (this.video.length === 0 || this.video === this.initVideo) ? null : new Video(
-          this.video
+          youtubeEmbed
       )
 
       try {
