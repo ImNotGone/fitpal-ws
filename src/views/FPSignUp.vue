@@ -88,8 +88,11 @@
               </v-card-text>
               <v-card-text v-if="verified" class="justify-center ml-n6"> Your account has been verified!</v-card-text>
 
-              <v-btn class="primary pa-5" :loading="loading"
+              <v-btn class="primary pa-5" :loading="verifying"
                      :disabled="loading" @click="verify">Verify
+              </v-btn>
+              <v-btn class="primary ma-5 pa-5" :loading="resending"
+                     :disabled="loading" @click="resend">Resend Code
               </v-btn>
             </v-card>
 
@@ -115,7 +118,7 @@
 <script>
 import TopToolbar from "@/components/TopToolbar";
 import NoLoginFooter from "@/components/NoLoginFooter";
-import {UserApi, RegistrationCredentials, AccountVerify} from "@/api/user";
+import {UserApi, RegistrationCredentials, AccountVerify, ResendVerification} from "@/api/user";
 
 export default {
   name: "FPSignUp",
@@ -139,6 +142,8 @@ export default {
 
     // For button loading
     loading: false,
+    resending: false,
+    verifying: false,
 
     // Form data
     firstName: '',
@@ -194,8 +199,9 @@ export default {
 
     async verify() {
       this.loading = true;
-
+      this.verifying = true;
       this.verificationError = false;
+      this.verificationErrorText = '';
 
       // Verify the code
       try {
@@ -211,12 +217,30 @@ export default {
         } else {
           this.verificationErrorText = 'An error occurred, please try again later';
         }
-
+        this.verifying = false;
         this.loading = false;
         return;
       }
       this.verified = true;
+      this.verifying = false;
       this.loading = false;
+    },
+    async resend() {
+        this.loading = true;
+        this.resending = true;
+
+        this.verificationError = false;
+        this.verificationErrorText = '';
+        try {
+            const resend_verification = new ResendVerification(this.email);
+            await UserApi.resend_verification(resend_verification);
+        } catch(error) {
+            this.verificationError = true;
+            this.verificationErrorText = 'An error ocurred, please try again later';
+        }
+
+        this.resending = false;
+        this.loading = false;
     },
   },
   computed: {

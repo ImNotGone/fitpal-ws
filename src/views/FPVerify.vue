@@ -2,14 +2,33 @@
 <div class="fill-width fill-height accent">
     <div class='verify'>
         <TopToolbar/>
-      <v-card dark class="secondary pa-5">
-        <v-card-title>Verify</v-card-title>
-      </v-card>
-        <!-- if automatic form or normal form are succesfull then show message-->
-
-        <!-- button and form to submit if automatic form is not completed -->
-        <!-- fields should be email and code -->
-        <!-- upon clicking the button it should call verify -->
+        <v-overlay is-absolute :value="loading">
+            <v-progress-circular class="center" color="primary" indeterminate size="200" width="10"/>
+        </v-overlay>
+        <v-container v-show="!loading">
+        <v-card dark class="secondary">
+            <v-card-title v-if="verified">Verified!</v-card-title>
+            <v-card-title v-if="!verified">Verification error... </v-card-title>
+            <!-- Verification Error Message -->
+            <v-col>
+            <p v-if="verificationError" class="error--text align-center mt-n7">
+                {{ verificationErrorText }}
+            </p>
+            <p v-if="!verificationError">
+                Account created succesfully, you may now log in!
+            </p>
+            </v-col>
+            <v-col align="right">
+            <v-btn
+                class="primary mr-4"
+                v-show="verified"
+                to="/login"
+            >
+            Log In
+            </v-btn>
+            </v-col>
+        </v-card>
+        </v-container>
     </div>
 </div>
 </template>
@@ -24,29 +43,35 @@ export default {
     components: { TopToolbar },
     data() {
         return {
-            verified: true,
-            failed: false,
+            loading: false,
+            verified: false,
+            verificationError: false,
+            verificationErrorText: '',
             email: this.$route.query.email,
             code: this.$route.query.code
         }
     },
     methods: {
         async verify() {
+        this.loading = true;
         try {
             const accountVerify = new AccountVerify(this.email, this.code);
             await UserApi.verify_email(accountVerify);
+            this.verified = true;
         } catch(error) {
-            console.log(error);
-            this.failed = true;
+            this.verificationError = true;
+            this.verificationErrorText = `${error.details[0]}`;
         }
-        this.verified = true;
-    },
+
+        this.loading = false;
+
+        },
     },
 
     // autoruns when component is called
     async created() {
         if(!this.code || !this.email) {
-            // replace this with form?
+            this.showDialog = true;
             console.log("missing email or code");
             return;
         }
