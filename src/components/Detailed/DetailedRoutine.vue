@@ -206,7 +206,14 @@ export default {
     },
     series: Number,
     timeBetweenSeries: Number,
-    exercises: Array,
+    sections:{
+      warmup: {
+        series: Number,
+        rest: Number,
+        exercises: Array,
+      },
+
+    },
     routineInformation: String,
     id: String,
   },

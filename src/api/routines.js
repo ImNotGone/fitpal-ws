@@ -32,11 +32,27 @@ class RoutineApi {
     }
 
     static async getSection(routineId, sectionid) {
-        return await Api.fetch(RoutineApi.getUrl(routineId.toString() + '/cycles' + sectionid.toString()), true);
+        return await Api.get(RoutineApi.getUrl(routineId.toString() + '/cycles/' + sectionid.toString()), true);
+    }
+
+    static async getSections(routineId) {
+        return await Api.get(RoutineApi.getUrl(routineId.toString() + '/cycles'), true);
     }
 
     static async getExercisesFromSection(routineId, sectionId) {
-        return await Api.fetch(RoutineApi.getUrl(routineId.toString() + '/cycles' + sectionId.toString() + '/exercises/'), true);
+        return await Api.get(`${Api.baseUrl}` + '/cycles/' + sectionId.toString() + '/exercises', true);
+    }
+
+    static async modifySection(routineId, sectionId, sectionData) {
+        return await Api.put(RoutineApi.getUrl(routineId.toString() + '/cycles/' + sectionId.toString()), true, sectionData);
+    }
+
+    static async modifyExerciseToSection(id, exerciseId, exerciseData) {
+        return await Api.put(RoutineApi.getSectionUrl(id, exerciseId), true, exerciseData);
+    }
+
+    static async deleteSection(routineId, sectionId) {
+        return await Api.delete(`${Api.baseUrl}` + '/routines/' + routineId + '/cycles/' + sectionId, true);
     }
 
     static async getRoutine(id) {
@@ -58,8 +74,6 @@ class RoutineApi {
     static async addRoutineReview(id, review) {
         return await Api.post(RoutineApi.getRewiewsUrl(id), true, review);
     }
-
-
 }
 
 /*

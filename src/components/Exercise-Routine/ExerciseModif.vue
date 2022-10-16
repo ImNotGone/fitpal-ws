@@ -184,7 +184,6 @@ export default {
         this.successText = 'Exercise ' + (this.edit? 'edited' : 'created') + ' successfully';
 
       } catch (e) {
-
         this.error = true;
 
         if (e.code === 2) {
@@ -211,6 +210,7 @@ export default {
     toggleDialog() {
       this.showDialog = !this.showDialog;
     },
+
     async deleteExercise() {
       await this.exerciseStore.deleteExercise(this.id);
       await this.$router.push(this.pathBack);

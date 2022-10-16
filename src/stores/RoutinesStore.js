@@ -17,7 +17,7 @@ export const useRoutinesStore = defineStore('routinesStore', {
             return this.publicRoutines;
         },
         containsRoutineWithId: (state) => (id) => {
-            return state.myRoutines.some(r => r.id === id);
+            return state.myRoutines.content.some(r => r.id === id);
         },
         getRoutinesId: (state) => {
             if(!state.myRoutines.content) {
@@ -30,7 +30,7 @@ export const useRoutinesStore = defineStore('routinesStore', {
             });
             return routinesId;
         },
-        getRoutine: (state) => (id) => state.myRoutines.content.find(r => r.id === id),
+        getRoutine: (state) => (id) => state.myRoutines.content.find(r => r.id.toString() === id.toString()),
         getRoutineName: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.name,
         getRoutineDetail: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.detail,
         getRoutineMetadata: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.metadata,
@@ -38,9 +38,9 @@ export const useRoutinesStore = defineStore('routinesStore', {
         getRoutineImageId: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.image.id,
     },
     actions: {
-        init() {
-            this.retrieveMyRoutines().then(r => console.log(r));
-            this.retrievePublicRoutines().then(r => console.log(r));
+        async init() {
+            await this.retrieveMyRoutines();
+            await this.retrievePublicRoutines();
         },
         async retrieveMyRoutines() {
             this.myRoutines = await UserApi.getUserRoutines();
@@ -50,6 +50,9 @@ export const useRoutinesStore = defineStore('routinesStore', {
         },
         async addRoutine(routineData) {
             return await RoutineApi.addRoutine(routineData);
+        },
+        async editRoutine(routineId, routineData) {
+            return await RoutineApi.modifyRoutine(routineId, routineData);
         },
     }
 })
