@@ -20,6 +20,14 @@
           <!-- Difficulty -->
           <v-select color="#FF8754" label="Difficulty" v-model="createRoutineStore.difficulty" :items="['Rookie', 'Beginner', 'Intermediate', 'Advanced', 'Expert']" :rules="[rules.required]"/>
 
+          <!-- Photo -->
+          <v-text-field
+              color="#FF8754"
+              v-model="createRoutineStore.image"
+              prepend-icon="mdi-camera"
+              label="Preview photo"
+          />
+
           <!-- Public -->
           <v-checkbox color="#FF8754" label="Public" v-model="createRoutineStore.isPublic"/>
 
@@ -110,6 +118,7 @@
 <script>
 import {useCreateRoutineStore} from "@/stores/CreateRoutineStore";
 import ExerciseList from "@/components/ExerciseList";
+import {imageExists} from "@/lib/validation";
 
 export default {
   setup(){
@@ -154,6 +163,15 @@ export default {
 
       // Check if form is valid
       if(!this.$refs.routineForm.validate()) {
+        return;
+      }
+
+      // Check if image exists, if it does not return
+      if (!await imageExists(this.createRoutineStore.photo)) {
+        this.error = true;
+        this.finished = true;
+        this.loading = false;
+        this.errorText = 'Image does not exist';
         return;
       }
 

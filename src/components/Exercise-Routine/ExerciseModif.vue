@@ -140,13 +140,13 @@ export default {
       // Button loading animation
       this.loading = true;
 
-      // Get youtube video
+      // Get YouTube video
       let youtubeEmbed = getYoutubeVideoEmbed(this.video);
       if (youtubeEmbed === '') {
         this.error = true;
         this.finished = true;
         this.loading = false;
-        this.errorText = 'Link is not a valid youtube video';
+        this.errorText = 'Link is not a valid YouTube video';
         return;
       }
 

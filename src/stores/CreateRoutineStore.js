@@ -6,7 +6,7 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
     state:() =>({
         routineName: '',
         desc: '',
-        image: "",
+        image: '',
         isPublic: false,
         difficulty: '',
         sections: [
