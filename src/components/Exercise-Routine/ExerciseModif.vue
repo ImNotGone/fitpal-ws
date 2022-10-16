@@ -191,7 +191,7 @@ export default {
         } else if (e.code === 1) { // Should not happen
           this.errorText = 'Invalid data';
         } else {
-          this.errorText = 'An error occured ,please try again later';
+          this.errorText = 'An error occured, please try again later';
         }
       }
 

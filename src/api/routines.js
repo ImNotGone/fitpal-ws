@@ -1,6 +1,6 @@
 import { Api } from "./api";
 
-export { RoutineApi, RoutineData, Review };
+export { RoutineApi, RoutineData, Review, SectionData, CycleExercise };
 
 class RoutineApi {
     static getUrl(slug) {
@@ -11,12 +11,24 @@ class RoutineApi {
         return `${Api.baseUrl}/reviews${ slug ? `/${slug}` : ""}`;
     }
 
+    static getSectionUrl(cycleId, exerciseId) {
+        return `${Api.baseUrl}/cycles/${cycleId}/exercises/${exerciseId}`;
+    }
+
     static async getRoutines() {
         return await Api.get(RoutineApi.getUrl(), true)
     }
 
     static async addRoutine(routineData) {
         return await Api.post(RoutineApi.getUrl(), true, routineData);
+    }
+
+    static async addSection(id, sectionData) {
+        return await Api.post(RoutineApi.getUrl(id.toString() + '/cycles'), true, sectionData);
+    }
+
+    static async addExerciseToSection(id, exerciseId, exerciseData) {
+        return await Api.post(RoutineApi.getSectionUrl(id, exerciseId), true, exerciseData);
     }
 
     static async getRoutine(id) {
@@ -38,6 +50,8 @@ class RoutineApi {
     static async addRoutineReview(id, review) {
         return await Api.post(RoutineApi.getRewiewsUrl(id), true, review);
     }
+
+
 }
 
 /*
@@ -53,8 +67,31 @@ class RoutineData {
         this.detail = detail;
         this.isPublic = isPublic;
         this.difficulty = difficulty;
-        this.metadata.imageUrl = imageUrl;
-        this.metadata.tags = tags;
+        this.metadata = {
+            imageUrl: imageUrl,
+            tags: tags
+        }
+    }
+}
+
+class SectionData {
+    constructor(name, order, type, repetitions, rest) {
+        this.name = name;
+        this.detail = '';
+        this.type = type;
+        this.order = order;
+        this.repetitions = repetitions;
+        this.metadata = {
+            rest: rest
+        }
+    }
+}
+
+class CycleExercise {
+    constructor(order, type, amount) {
+        this.order = order;
+        this.duration = (type === 'Time (seconds)' ? amount : 0);
+        this.repetitions = (type === 'Reps' ? amount : 0);
     }
 }
 

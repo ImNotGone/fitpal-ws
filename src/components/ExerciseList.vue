@@ -12,7 +12,7 @@
         </v-row>
         <v-list class="secondary">
             <v-list-item v-for="exercise in exerciseStore.getExercisesId"
-                         :key="exerciseStore.getExerciseName(exercise)" @click="submit(exerciseStore.getExerciseName(exercise))">
+                         :key="exerciseStore.getExerciseName(exercise)" @click="submit(exerciseStore.getExerciseName(exercise), exercise)">
               <v-list-item-content>
                 {{exerciseStore.getExerciseName(exercise)}}
               </v-list-item-content>
@@ -37,8 +37,8 @@ export default {
   },
   name: "ExerciseList",
   methods:{
-    submit(title){
-      this.$emit('exerciseAdded', title)
+    submit(title, id){
+      this.$emit('exerciseAdded', {title: title, id: id})
     },
   },
   props: {

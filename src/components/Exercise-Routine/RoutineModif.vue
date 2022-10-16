@@ -10,12 +10,21 @@
         {{ title + ' Routine' }}
       </v-card-title>
       <v-card-text>
-        <v-form class="px-3">
+        <v-form class="px-3" ref="routineForm">
           <!-- Name -->
-          <v-text-field color="#FF8754" label="Routine name" v-model="createRoutineStore.getRoutineName"></v-text-field>
+          <v-text-field color="#FF8754" label="Routine name" v-model="createRoutineStore.routineName" :rules="[rules.required, rules.max(100)]"></v-text-field>
 
           <!-- Description -->
-          <v-textarea color="#FF8754" label="Description" v-model="createRoutineStore.getDesc"></v-textarea>
+          <v-textarea color="#FF8754" label="Description" v-model="createRoutineStore.desc" :rules="[rules.required, rules.max(200)]"></v-textarea>
+
+          <!-- Difficulty -->
+          <v-select color="#FF8754" label="Difficulty" v-model="createRoutineStore.difficulty" :items="['rookie', 'beginner', 'intermediate', 'advanced', 'expert']" :rules="[rules.required]"></v-select>
+
+          <!-- Public -->
+          <v-checkbox color="#FF8754" label="Public" v-model="createRoutineStore.isPublic"></v-checkbox>
+
+          <!-- Exercises title -->
+          <h1 class="mt-2 mb-2">Exercises</h1>
 
           <!-- Add Sections & Exercises -->
           <v-tabs vertical class="pa-5" background-color="secondary" ref="tabs" >
@@ -31,10 +40,10 @@
               <v-container class="accent pa-5">
                 <v-row>
                   <!-- Amount of series -->
-                  <v-text-field color="#FF8754" dark  label="Series" type="number" v-model="section.series"></v-text-field>
+                  <v-text-field color="#FF8754" dark  label="Series" type="number" v-model="section.series" :rules="[rules.required, rules.number(1, 999)]"></v-text-field>
                   <v-spacer/>
                   <!-- Time between series -->
-                  <v-text-field color="#FF8754" dark label="Time between series" type="number" v-model="section.rest"></v-text-field>
+                  <v-text-field color="#FF8754" dark label="Time between series (seconds)" type="number" v-model="section.rest" :rules="[rules.required]"></v-text-field>
                   <v-spacer/>
 
                   <!-- Add exercise Button-->
@@ -42,17 +51,17 @@
                   <v-spacer/>
                 </v-row>
                 <v-list class="accent" v-for="exercise in section.exercises"
-                        :key="section.title + exercise.name + exercise.id">
+                        :key="section.title + exercise.id">
                   <v-list-item-content dark>
                     <v-row class="pa-2">
                       <h3 class="white--text pa-3">{{exercise.name}}</h3>
                       <v-row>
                         <v-spacer/>
                         <!-- Select if using reps or time -->
-                        <v-select dark v-model="exercise.type" :items="['Reps', 'Time (seconds)']"></v-select>
+                        <v-select dark v-model="exercise.type" :items="['Reps', 'Time (seconds)']" :rules="[rules.required]"></v-select>
                         <v-spacer/>
                          <!-- Amount of reps or time -->
-                        <v-text-field dark label="Amount" type="number" v-model="exercise.amount"></v-text-field>
+                        <v-text-field dark label="Amount" type="number" v-model="exercise.amount" :rules="[rules.required]"></v-text-field>
                         <v-spacer/>
                         <v-btn class="primary mr-5 mt-3" @click="createRoutineStore.deleteExercise(section, exercise.id)">
                           <v-icon>mdi-delete</v-icon>
@@ -75,6 +84,22 @@
             </v-btn>
           </v-row>
 
+          <p
+              v-if="finished && error"
+              type="error"
+              class="mt-3 mb-n1 error--text"
+          >
+            {{ errorText }}
+          </p>
+          <p
+              v-else-if="finished"
+              type="success"
+              class="white--text mt-3 mb-n1"
+          >
+            <v-icon class="mr-2" color="primary">mdi-check</v-icon>
+            {{ successText }}
+          </p>
+
           <v-btn flat class="primary mx-0 mt-3" @click="submit">{{ title }}</v-btn>
         </v-form>
       </v-card-text>
@@ -94,10 +119,67 @@ export default {
   name: "RoutineModif",
   components: {ExerciseList},
   data: () => ({
+    // Dialog
     list: false,
+
+    // Form rules
+    rules: {
+      required: value => !!value || 'Required.',
+      max: (max) => (v) => v.length <= max || `Max ${max} characters`,
+      // Converts v to number and checks if it is between min and max
+      number: (min, max) => (v) => {
+        v = Number(v)
+        return v >= min && v <= max || `Must be between ${min} and ${max}`
+      }
+    },
+
+    // For button loading
+    loading: false,
+
+    // Error message
+    finished: false,
+    error: false,
+    errorText: '',
+    successText: '',
   }),
   methods:{
-    submit(){
+    async submit(){
+
+      // Button loading animation
+      this.loading = true;
+
+      // Flags
+      this.finished = false;
+      this.error = false;
+
+      // Check if form is valid
+      if(!this.$refs.routineForm.validate()) {
+        return;
+      }
+
+
+      try {
+        // Submit
+        await this.createRoutineStore.submitRoutine();
+
+        // Success message
+        this.successText = 'Routine created successfully';
+
+        await this.$router.push('/my-routines');
+      } catch (e) {
+        // Error message
+        this.error = true;
+
+        // TODO: Handle errors
+        this.errorText = "An error occurred while creating the routine";
+      }
+
+      // Clear form
+      this.createRoutineStore.clearRoutine();
+
+      // Button loading animation
+      this.loading = false;
+      this.finished = true;
 
     },
   },
