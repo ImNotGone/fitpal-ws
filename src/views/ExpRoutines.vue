@@ -55,7 +55,7 @@
     <v-container class="mx-auto">
       <v-row>
         <v-col
-            v-for="routine in routinesStore.publicRoutines.content"
+            v-for="routine in routinesStore.getPublicRoutines.content.filter(r => !routinesStore.getMyRoutines.content.some(m => m.id === r.id))"
             :key="routine.id"
             cols="12"
             md="4"
@@ -68,6 +68,7 @@
               :tags="routine.metadata.tags"
               :showSaveButton="true"
               :route="`/routine/${routine.id}`"
+              :id = "routine.id"
           />
         </v-col>
       </v-row>
@@ -128,8 +129,8 @@ export default {
     return { routinesStore };
   },
   async beforeMount() {
-    await this.routinesStore.retrievePublicRoutines();
-  }
+    await this.routinesStore.init();
+  },
 }
 </script>
 

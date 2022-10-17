@@ -42,9 +42,17 @@
 
      <!-- Fourth row -->
       <v-row class="pa-5">
-        <!-- Duration Icon, amount, Duration-->
-        <v-icon class="mr-2 ml-n2" color="white">mdi-clock-outline</v-icon>
-        <span>{{ duration }} Minutes</span>
+        <v-rating
+            :value="rating"
+            color="primary"
+            class="ma-auto"
+            background-color="grey"
+            empty-icon="$ratingFull"
+            half-increments
+            hover
+            large
+            readonly
+        />
       </v-row>
     </v-card-text>
   </v-card>
@@ -52,8 +60,15 @@
 </template>
 
 <script>
+import {RoutineApi} from "@/api/routines";
+
 export default {
   name: "RoutineCard",
+  data() {
+    return {
+      rating: 0,
+    }
+  },
   props: {
     routinePicture: {
       type: String,
@@ -64,7 +79,27 @@ export default {
     tags: Array,
     duration: Number,
     route: String,
+    id: Number,
   },
+  methods: {
+    async calcRating() {
+      this.rating = 0;
+      try {
+        const ratings = await RoutineApi.getRoutineRewiews(this.id)
+        ratings.content.forEach(rating => {
+          this.rating += rating.score;
+        });
+        this.rating /= ratings.content.length;
+        this.rating /= 2;
+      } catch (e) {
+        this.rating = 0;
+      }
+    },
+  },
+  async beforeMount() {
+    await this.calcRating()
+
+  }
 }
 </script>
 
