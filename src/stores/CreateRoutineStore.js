@@ -9,6 +9,7 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
         image: '',
         isPublic: false,
         difficulty: '',
+
         sections: [
             {
                 title:'Warmup Section',
@@ -59,12 +60,8 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
             }
         },
         addExercise(exercise){
-            console.log(exercise);
-
             // Find active Section
             let section = this.sections.find(section => section.title === this.activeSection);
-
-            console.log(section.exercises);
 
             // if exercise is in section, return
             if(section.exercises.find(ex => ex.id === exercise.id)){
@@ -82,6 +79,7 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
             console.log(this.activeSection);
             console.log(this.sections);
         },
+
         async submitRoutine(){
             // Add the routine to the database
             let routineData = new RoutineData(
@@ -90,7 +88,8 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
                 this.isPublic,
                 this.difficulty.toLowerCase(),
                 this.image,
-            []
+            [],
+                this.sections.length,
             )
 
             const store = useRoutinesStore();
@@ -161,9 +160,8 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
                     const amount = (type === 'Reps') ? ex.content[j].repetitions : ex.content[j].duration;
                     this.sections[i].exercises.push({name: exercise.name, id: exercise.id, type: type, amount: amount});
                 }
-
             }
-            this.numSect = this.sections.length;
+            this.numSect = this.sections.length - 2;
             this.activeSection = "Warmup Section";
         },
 

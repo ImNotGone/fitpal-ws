@@ -167,7 +167,7 @@ export default {
       }
 
       // Check if image exists, if it does not return
-      if (!await imageExists(this.createRoutineStore.photo)) {
+      if ((typeof this.createRoutineStore.image !== 'undefined') && !await imageExists(this.createRoutineStore.image)) {
         this.error = true;
         this.finished = true;
         this.loading = false;

@@ -1,7 +1,7 @@
 <template>
   <div class="fill-height accent">
     <ToolBar title="Create Routine"/>
-    <RoutineModif title="Create"/>
+    <RoutineModif :edit="false"/>
   </div>
 </template>
 
