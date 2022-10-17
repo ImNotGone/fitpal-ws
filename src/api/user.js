@@ -60,9 +60,9 @@ class UserApi {
             return;
         }
         // load default exercises
-        let defaultExercises = this.getDefaultExercises();
+        let defaultExercises = UserApi.getDefaultExercises();
 
-        defaultExercises.array.forEach(async element => {
+        defaultExercises.forEach(async element => {
             let id = await ExercisesApi.addExercise(element.exercise);
             await ExercisesApi.addVideo(id, element.image);
         });
@@ -71,12 +71,13 @@ class UserApi {
         await UserApi.editCurrentUser(new LoadedExcercises);
     }
 
-    static get getDefaultExercises() {
+    static getDefaultExercises() {
         let defaultExercises = [];
         let exercise = new Exercise(
             "Push Ups",
             "Perfect Pushup",
-            "Biceps");
+            "excercise",
+            {tags: "Biceps"});
         let video = new Video(
             "https://www.youtube.com/watch?v=IODxDxX7oi4"
         )
@@ -106,14 +107,18 @@ class RegistrationCredentials {
         this.email = email;
         this.username = email;
         this.password = password;
-        this.metadata.hasLoggedIn = false;
+        this.metadata = {
+            hasLoggedIn: false,
+        }
         this.avatarUrl = "https://plusvalleyadventure.com/wp-content/uploads/2020/11/default-user-icon-8.jpg";
     }
 }
 
 class LoadedExcercises {
     constructor() {
-        this.metadata.hasLoggedIn = true;
+        this.metadata = {
+            hasLoggedIn: true,
+        }
     }
 }
 
