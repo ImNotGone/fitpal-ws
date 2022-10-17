@@ -93,6 +93,7 @@
           class="white--text"
           x-large
           @click="previousExercise"
+          :disabled="started && !done"
       >
         <v-icon>mdi-arrow-left</v-icon>
         {{ previous }}
@@ -102,7 +103,9 @@
           color="primary"
           class="white--text"
           x-large
-          @click="nextExercise">
+          @click="nextExercise"
+          :disabled="started && !done"
+      >
         {{ next }}
         <v-icon right>mdi-arrow-right</v-icon>
       </v-btn>
