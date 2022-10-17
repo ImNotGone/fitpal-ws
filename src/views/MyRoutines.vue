@@ -7,6 +7,38 @@
       <v-row>
         <h3 class="display-1 pa-5">My Routines</h3>
         <v-spacer/>
+
+        <v-select
+            color="#FF8754"
+            v-model="difficultySelected"
+            :items="difficulty"
+            item-text="state"
+            iterm-value="value"
+            label="Difficulty"
+            class="ma-3"
+            @change="update"
+            />
+        <v-select
+            color="#FF8754"
+            v-model="directionSelected"
+            :items="directions"
+            item-text="state"
+            item-value="value"
+            label="Direction"
+            class="ma-3"
+            @change="update"
+            />
+        <v-select
+              color="#FF8754"
+              v-model="orderSelected"
+              :items="orders"
+              item-text="state"
+              item-value="value"
+              label="Order by"
+              class="ma-3"
+              @change="update"
+          />
+
         <v-col class="pa-5" cols="12" md="4">
           <v-btn
               color="primary"
@@ -49,11 +81,48 @@
 import ToolBar from "@/components/ToolBar";
 import RoutineCard from "@/components/Cards/RoutineCard";
 import { useRoutinesStore } from "@/stores/RoutinesStore";
+import { GetRoutines } from "@/api/routines";
 
 export default {
   components: {
     ToolBar,
     RoutineCard
+  },
+  data() {
+    return {
+        difficultySelected: null,
+        difficulty: [
+        {state:"--",            value:null},
+        {state:"rookie",        value:"rookie"},
+        {state:"beginner",      value:"beginner"},
+        {state:"intermediate",  value:"intermediate"},
+        {state:"advanced",      value:"advanced"},
+        {state:"expert",        value:"expert"}],
+        directionSelected: null,
+        directions:
+        [
+        {state:"--",            value:null},
+        {state:"ascending",     value:"asc"},
+        {state:"descending",    value:"desc"}
+        ],
+        orderSelected: null,
+        orders: [
+        {state:"--",        value:null},
+        {state:"name",      value:"name"},
+        {state:"detail",    value:"detail"},
+        {state:"date",      value:"date"},
+        {state:"score",     value:"score"},
+        {state:"difficulty",value:"difficulty"},
+        {state:"user",      value:"user"},
+        ],
+    }
+  },
+  methods: {
+    async update() {
+        const getRoutines = new GetRoutines( this.orderSelected, this.directionSelected, this.difficultySelected);
+        await this.routinesStore.retrievePublicRoutines(getRoutines);
+        console.log(`${this.directionSelected} - ${this.orderSelected}`);
+    }
   },
   setup () {
     const routinesStore = useRoutinesStore();
