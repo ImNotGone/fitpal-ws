@@ -8,7 +8,7 @@
         <h3 class="display-1 pa-5">My Routines</h3>
         <v-spacer/>
 
-        <v-select
+        <v-select dark
             color="primary"
             v-model="difficultySelected"
             :items="difficulty"
@@ -18,7 +18,7 @@
             class="ma-3"
             @change="update"
             />
-        <v-select
+        <v-select dark
             color="primary"
             v-model="directionSelected"
             :items="directions"
@@ -28,7 +28,7 @@
             class="ma-3"
             @change="update"
             />
-        <v-select
+        <v-select dark
               color="primary"
               v-model="orderSelected"
               :items="orders"
