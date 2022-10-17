@@ -6,30 +6,30 @@
       <ExerciseList v-model="list" @exerciseAdded="createRoutineStore.addExercise($event)"/>
 
       <v-card-title>
-        <v-icon large class="mr-4" color="#FF8754" @click="$router.back()">mdi-chevron-left</v-icon>
+        <v-icon large class="mr-4" color="primary" @click="$router.back()">mdi-chevron-left</v-icon>
         {{ (edit ? 'Edit' : 'Create') + ' Routine' }}
       </v-card-title>
       <v-card-text>
         <v-form class="px-3" ref="routineForm">
           <!-- Name -->
-          <v-text-field color="#FF8754" label="Routine name" v-model="createRoutineStore.routineName" :rules="[rules.required, rules.max(100)]"/>
+          <v-text-field color="primary" label="Routine name" v-model="createRoutineStore.routineName" :rules="[rules.required, rules.max(100)]"/>
 
           <!-- Description -->
-          <v-textarea color="#FF8754" label="Description" v-model="createRoutineStore.desc" :rules="[rules.required, rules.max(200)]"/>
+          <v-textarea color="primary" label="Description" v-model="createRoutineStore.desc" :rules="[rules.required, rules.max(200)]"/>
 
           <!-- Difficulty -->
-          <v-select color="#FF8754" label="Difficulty" v-model="createRoutineStore.difficulty" :items="['Rookie', 'Beginner', 'Intermediate', 'Advanced', 'Expert']" :rules="[rules.required]"/>
+          <v-select color="primary" label="Difficulty" v-model="createRoutineStore.difficulty" :items="['Rookie', 'Beginner', 'Intermediate', 'Advanced', 'Expert']" :rules="[rules.required]"/>
 
           <!-- Photo -->
           <v-text-field
-              color="#FF8754"
+              color="primary"
               v-model="createRoutineStore.image"
               prepend-icon="mdi-camera"
               label="Preview photo"
           />
 
           <!-- Public -->
-          <v-checkbox color="#FF8754" label="Public" v-model="createRoutineStore.isPublic"/>
+          <v-checkbox color="primary" label="Public" v-model="createRoutineStore.isPublic"/>
 
           <!-- Exercises title -->
           <h1 class="mt-2 mb-2">Exercises</h1>
@@ -48,10 +48,10 @@
               <v-container class="accent pa-5">
                 <v-row>
                   <!-- Amount of series -->
-                  <v-text-field color="#FF8754" dark  label="Series" type="number" v-model="section.series" :rules="[rules.required, rules.number(1, 999)]"/>
+                  <v-text-field color="primary" dark  label="Series" type="number" v-model="section.series" :rules="[rules.required, rules.number(1, 999)]"/>
                   <v-spacer/>
                   <!-- Time between series -->
-                  <v-text-field color="#FF8754" dark label="Time between series (seconds)" type="number" v-model="section.rest" :rules="[rules.required]"/>
+                  <v-text-field color="primary" dark label="Time between series (seconds)" type="number" v-model="section.rest" :rules="[rules.required]"/>
                   <v-spacer/>
 
                   <!-- Add exercise Button-->

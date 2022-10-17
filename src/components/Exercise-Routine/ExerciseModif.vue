@@ -2,17 +2,17 @@
   <v-container>
     <v-card dark class="secondary">
       <v-card-title>
-        <v-icon large class="mr-4" color="#FF8754" @click="$router.back()">mdi-chevron-left</v-icon>
+        <v-icon large class="mr-4" color="primary" @click="$router.back()">mdi-chevron-left</v-icon>
         {{ (edit ? 'Edit' : 'Create') + ' Exercise' }}
       </v-card-title>
 
       <v-card-text>
         <v-form class="px-3" ref="form">
-          <v-text-field color="#FF8754" label="Exercise name" v-model="exerciseName"
+          <v-text-field color="primary" label="Exercise name" v-model="exerciseName"
                         :rules="[rules.required, rules.onlyLettersAndSpaces, rules.length(100)]"/>
-          <v-textarea color="#FF8754" label="Description" v-model="desc" :rules="[rules.required, rules.length(200)]"/>
+          <v-textarea color="primary" label="Description" v-model="desc" :rules="[rules.required, rules.length(200)]"/>
           <v-select
-              color="#FF8754"
+              color="primary"
               v-model="tagsSelected"
               :items="tags"
               chips
@@ -20,7 +20,7 @@
               multiple
           ></v-select>
           <v-text-field
-              color="#FF8754"
+              color="primary"
               v-model="video"
               prepend-icon="mdi-video"
               label="Video"
