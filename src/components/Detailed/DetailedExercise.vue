@@ -6,19 +6,9 @@
 <!-- Fifth row is the exercise description -->
 <!-- Sixth row is the muscles used by the exercise and a button to add the exercise to a routine -->
 
-
 <template>
   <v-card class="grey darken-3 white--text">
     <!-- Video of the exercise -->
-    <!--<video
-      class="mx-auto"
-      width="100%"
-      height="auto"
-      controls
-      :src="video"
-    />-->
-    <!--TODO: Replace with video of exercise-->
-
     <iframe
         width="100%"
         height="600"
@@ -26,7 +16,7 @@
         :src="video"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
-    ></iframe>
+    />
 
     <!-- Exercise name -->
     <v-card-title primary-title>
@@ -57,7 +47,6 @@
               <span class="white--text">Works {{ muscle }}</span>
             </v-row>
           </v-col>
-
         </v-col>
       </v-row>
     </v-card-text>
