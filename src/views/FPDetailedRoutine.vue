@@ -4,10 +4,7 @@
     <v-card class="accent pa-5">
       <detailed-routine :routineName="routineName"
                         :routineDescription="routineDescription"
-                        :duration="duration"
                         :muscles="muscles"
-                        :progress="progress"
-                        :exercises="exercises"
                         :sections="sections"
                         :id="this.$route.params.id"
                         :image="image"
