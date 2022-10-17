@@ -76,7 +76,7 @@ class UserApi {
         let exercise = new Exercise(
             "Push Ups",
             "Perfect Pushup",
-            "excercise",
+            "exercise",
             {tags: "Biceps"});
         let video = new Video(
             "https://www.youtube.com/watch?v=IODxDxX7oi4"
