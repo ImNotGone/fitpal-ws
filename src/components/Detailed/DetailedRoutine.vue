@@ -17,14 +17,10 @@
 
           <!-- Routine name, bookmark button -->
           <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-n5">{{ routineName }}</h3>
-            </div>
-            <v-spacer />
-            <v-btn class="primary pa-5" :to="'/edit-routine/' + id">Edit routine</v-btn>
-            <v-btn text class="white--text pa-5 pt-7">
-              <v-icon x-large>mdi-bookmark-multiple-outline</v-icon>
-            </v-btn>
+            <h3 class="headline mb-n5">{{ routineName }}</h3>
+            <v-spacer/>
+            <RatingDialog :id="id"/>
+            <v-btn v-if="canEdit" class="primary pa-5 ml-5" :to="'/edit-routine/' + id">Edit routine</v-btn>
           </v-card-title>
 
           <!-- Routine tags -->
@@ -38,12 +34,21 @@
 
           <!-- Amount of users that used the routine and the routines duration -->
           <!-- Icon amount Routines -->
-          <v-card-text>
-            <v-row>
-              <v-icon class="pr-3 ml-3" color="white">mdi-clock-outline</v-icon>
-              <span class="white--text">{{ duration }} minutes</span>
-            </v-row>
-          </v-card-text>
+          <v-card-title primary-title>
+              <h3 class="headline mb-n3">Rating: </h3>
+          </v-card-title>
+
+          <v-rating
+              :value="rating"
+              color="primary"
+              class="ml-1 mb-2"
+              background-color="grey"
+              empty-icon="$ratingFull"
+              half-increments
+              hover
+              large
+              readonly
+          />
 
           <!-- Routine description -->
           <v-card-title primary-title>
@@ -79,9 +84,10 @@
 </template>
 
 <script>
-
+import RatingDialog from "@/components/RatingDialog";
 
 export default {
+  components: {RatingDialog},
   name: "DetailedRoutine",
   props: {
     image: {
@@ -95,6 +101,8 @@ export default {
     muscles: Array,
     sections: Number,
     id: String,
+    rating: Number,
+    canEdit: Boolean,
   },
 }
 </script>

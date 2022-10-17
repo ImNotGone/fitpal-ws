@@ -28,11 +28,6 @@
 
         <v-spacer/>
 
-        <!-- Show save button if showSaveButton is true -->
-        <v-btn v-if="showSaveButton" text class="white--text pa-5 pt-7">
-            <v-icon large>mdi-bookmark-multiple-outline</v-icon>
-        </v-btn>
-
       </v-row>
       <v-chip-group column>
         <v-chip v-for="tag in tags" :key="tag" color="primary" text-color="white" small>
@@ -68,7 +63,6 @@ export default {
     routineDescription: String,
     tags: Array,
     duration: Number,
-    showSaveButton: Boolean,
     route: String,
   },
 }

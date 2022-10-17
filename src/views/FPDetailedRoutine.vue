@@ -12,6 +12,8 @@
                         :sections="sections"
                         :id="this.$route.params.id"
                         :image="image"
+                        :rating = "rating"
+                        :canEdit = "canEdit"
       />
     </v-card>
   </div>
@@ -29,13 +31,12 @@ export default {
   data: () => ({
     routineName: '',
     routineDescription: '',
-    duration: 0,
     tags: [],
     muscles: [],
-    progress: 0,
     sections: 0,
-    //Name, duration
-    image: ''
+    image: '',
+    rating: 0,
+    canEdit: false,
   }),
 
   async beforeMount() {
@@ -57,6 +58,7 @@ export default {
       await this.$router.push('/my-routines');
     }
 
+    this.canEdit = await store.getMyRoutines.content.some(r => r.id === routineId);
     this.routineName = routine.name;
     this.routineDescription = routine.detail;
 
@@ -66,10 +68,17 @@ export default {
 
     let sections = await RoutineApi.getSections(routineId);
     this.sections = sections.content.length;
+
+    try {
+      const ratings = await RoutineApi.getRoutineRewiews(routineId);
+      ratings.content.forEach(rating => {
+        this.rating += rating.score;
+      });
+      this.rating /= ratings.content.length;
+      this.rating /= 2;
+    }catch (e){
+      this.rating = 0;
+    }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

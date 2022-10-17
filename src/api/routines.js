@@ -119,8 +119,8 @@ class CycleExercise {
 }
 
 class Review {
-    constructor(stars, review) {
-        this.stars = stars;
+    constructor(score, review) {
+        this.score = score;
         this.review = review;
     }
 }

@@ -30,11 +30,9 @@
 
     <!-- Exercise name -->
     <v-card-title primary-title>
-      <div>
-        <h3 class="headline mb-0">{{ exerciseName }}</h3>
-      </div>
+      <h3 class="headline mb-0">{{ exerciseName }}</h3>
       <v-spacer/>
-      <v-btn class="primary pa-5" :to="'/edit-exercise/' + id">Edit exercise</v-btn>
+      <v-btn class="primary pa-5 ml-5" :to="'/edit-exercise/' + id">Edit exercise</v-btn>
     </v-card-title>
 
     <!-- Exercise description -->
@@ -60,20 +58,6 @@
             </v-row>
           </v-col>
 
-        </v-col>
-
-
-        <v-col cols="4" align-self="end">
-
-          <!-- TODO cambiar el css feo -->
-          <v-btn
-            color="primary"
-            depressed
-            class="white--text pa-5"
-            style="float: right"
-          >
-            Add to routine
-          </v-btn>
         </v-col>
       </v-row>
     </v-card-text>
