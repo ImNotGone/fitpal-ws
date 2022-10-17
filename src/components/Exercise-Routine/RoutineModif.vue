@@ -111,10 +111,11 @@
           <v-row class="mt-3 pb-5">
             <v-btn flat class="primary mx-0" @click="submit">{{ (edit ? 'Edit' : 'Create') }}</v-btn>
 
-            <!-- Delete button -->
-            <v-btn flat class="error mx-0" v-if="edit" @click="toggleDialog">Delete</v-btn>
+            <v-spacer/>
 
-            <v-spacer></v-spacer>
+            <!-- Delete button -->
+            <v-btn flat class="error mx-0 " v-if="edit" @click="toggleDialog">Delete</v-btn>
+
 
             <!-- Dialog to confirm deletion -->
             <v-dialog v-model="showDialog" max-width="600">
