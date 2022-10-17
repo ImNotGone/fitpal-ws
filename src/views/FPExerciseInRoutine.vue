@@ -12,6 +12,7 @@
                        @nextExercise="nextExercise()"
                        @previousExercise="previousExercise()"
                        :next="next"
+                       :previous="previous"
     />
     </v-card>
   </div>
@@ -28,26 +29,26 @@ export default {
   components: {ExerciseInRoutine, ToolBar},
   data: () => ({
     // Exercise data
-    exerciseId: 0,
-    exerciseName: "Push-ups",
-    exerciseDescription: "A push-up is a common calisthenics exercise beginning from the prone position. By raising and lowering the body using the arms, push-ups exercise pectoral muscles, triceps, and anterior deltoids, with ancillary benefits to the rest of the deltoids, serratus anterior, coracobrachialis, and the midsection.",
-    muscles: ["Pectoral muscles", "Triceps", "Anterior deltoids"],
-    tags: ["Push-ups", "Cardio", "Strength"],
-    video: "https://www.youtube.com/embed/IODxDxX7oi4",
+    exerciseId: Number,
+    exerciseName: String,
+    exerciseDescription: String,
+    muscles: [],
+    tags: [],
 
     // Exercise data from section
-    amount: 10,
-    type: "reps",
+    amount: Number,
+    type: String,
 
     // Section data
-    sectionName: "Chest day",
-    repsLeft: 0,
+    sectionName: String,
+    repsLeft: Number,
 
     // Routine name
-    routineName: "Chest day",
+    routineName: String,
 
-    // Next information
+    // Next and previous information
     next: String,
+    previous: String,
 
     loading: true,
   }),
@@ -77,10 +78,15 @@ export default {
     this.sectionName = currentRoutineSore.getCurrentSectionName
     this.repsLeft = currentRoutineSore.currentSectionRepsLeft
 
-    // Next information
+    // Next and information
     this.next = currentRoutineSore.willFinishRoutine ? "Finish" :
       currentRoutineSore.willFinishSection ? "Next section" :
       currentRoutineSore.willFinishRepetition ? "Next repetition" : "Next exercise";
+
+    this.previous = currentRoutineSore.startOfRoutine ? "Return" :
+      currentRoutineSore.startOfSection ? "Previous section" :
+      currentRoutineSore.startOfRepetition ? "Previous repetition" : "Previous exercise";
+
 
 
     this.loading = false;
@@ -95,8 +101,12 @@ export default {
       }
     },
     previousExercise() {
-      useCurrentRoutineStore().previousExercise();
-      this.pushAndUpdate();
+      if(useCurrentRoutineStore().startOfRoutine){
+        this.$router.push({name: "detailed-routine", params: {id: this.$route.params.routineId}});
+      } else{
+        useCurrentRoutineStore().previousExercise();
+        this.pushAndUpdate();
+      }
     },
     pushAndUpdate() {
       const currentRoutineStore = useCurrentRoutineStore();
@@ -118,6 +128,10 @@ export default {
       this.next = currentRoutineStore.willFinishRoutine ? "Finish" :
           currentRoutineStore.willFinishSection ? "Next section" :
               currentRoutineStore.willFinishRepetition ? "Next repetition" : "Next exercise";
+
+      this.previous = currentRoutineStore.startOfRoutine ? "Return" :
+          currentRoutineStore.startOfSection ? "Previous section" :
+              currentRoutineStore.startOfRepetition ? "Previous repetition" : "Previous exercise";
 
       this.$router.push({
         name: "exercise-in-routine",

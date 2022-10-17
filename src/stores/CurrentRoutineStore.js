@@ -38,11 +38,20 @@ export const useCurrentRoutineStore = defineStore('currentRoutineStore', {
             return state.currentSection + 1 >= state.currentRoutine.sections.length && state.currentExercise + 1 >= state.currentRoutine.sections[state.currentSection].exercises.length;
         },
         willFinishSection: (state) => {
-            return state.currentSectionRepsLeft + 1 <= 0;
+            return state.currentSectionRepsLeft <= 1 && state.currentExercise + 1 >= state.currentRoutine.sections[state.currentSection].exercises.length;
         },
         willFinishRepetition: (state) => {
             return state.currentExercise + 1 >= state.currentRoutine.sections[state.currentSection].exercises.length;
-        }
+        },
+        startOfRoutine: (state) => {
+            return state.currentSection === 0 && state.currentExercise === 0 && state.currentSectionRepsLeft === state.currentRoutine.sections[state.currentSection].repetitions;
+        },
+        startOfSection: (state) => {
+            return state.currentExercise === 0 && state.currentSectionRepsLeft === state.currentRoutine.sections[state.currentSection].repetitions;
+        },
+        startOfRepetition: (state) => {
+            return state.currentExercise === 0;
+        },
     },
     actions: {
         async init(routineId, sectionOrder, exerciseOrder) {
@@ -62,8 +71,6 @@ export const useCurrentRoutineStore = defineStore('currentRoutineStore', {
             this.currentSection = sectionOrder - 1;
             this.currentSectionRepsLeft = this.currentRoutine.sections[this.currentSection].repetitions;
             this.currentExercise = exerciseOrder - 1;
-
-            console.log(this.currentRoutine);
         },
         async nextExercise() {
             this.currentExercise++;
@@ -72,7 +79,6 @@ export const useCurrentRoutineStore = defineStore('currentRoutineStore', {
             // If there are no more exercises in the section and there are no repetitions left, go to the next section
             // If there are no more sections, finish the routine
             if (this.currentExercise >= this.currentRoutine.sections[this.currentSection].exercises.length) {
-                console.log("Finished repetition");
                 if (this.currentSectionRepsLeft > 1) {
                     this.currentSectionRepsLeft--;
                     this.currentExercise = 0;
@@ -88,10 +94,20 @@ export const useCurrentRoutineStore = defineStore('currentRoutineStore', {
         },
         async previousExercise() {
             this.currentExercise--;
-            if (this.currentExercise <= 0) {
+
+            // Go to the previous section if there are no more exercises in the current section
+            if (this.currentExercise < 0) {
+                if(this.currentSectionRepsLeft <= this.currentRoutine.sections[this.currentSection].repetitions) {
+                    this.currentSectionRepsLeft++;
+                    this.currentExercise = this.currentRoutine.sections[this.currentSection].exercises.length - 1;
+                    return;
+                }
                 this.currentSection--;
-                this.currentSectionRepsLeft = this.currentRoutine.sections[this.currentSection].repetitions;
-                this.currentExercise = this.currentRoutine.sections[this.currentSection].exercises.length;
+                if (this.currentSection < 0) {
+                    return;
+                }
+                this.currentSectionRepsLeft = 1;
+                this.currentExercise = this.currentRoutine.sections[this.currentSection].exercises.length - 1;
             }
         }
     }

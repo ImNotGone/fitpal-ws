@@ -95,7 +95,7 @@
           @click="previousExercise"
       >
         <v-icon>mdi-arrow-left</v-icon>
-        Previous
+        {{ previous }}
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn
@@ -125,6 +125,7 @@ export default {
     amount: Number,
     type: String,
     next: String,
+    previous: String,
   },
   components: {
     CircularTimer
