@@ -63,8 +63,8 @@ class UserApi {
         let defaultExercises = UserApi.getDefaultExercises();
 
         defaultExercises.forEach(async element => {
-            let id = await ExercisesApi.addExercise(element.exercise);
-            await ExercisesApi.addVideo(id, element.image);
+            let ex = await ExercisesApi.addExercise(element.exercise);
+            await ExercisesApi.addVideo(ex.id, element.video);
         });
 
         // edit user flag
