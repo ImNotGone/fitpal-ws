@@ -88,7 +88,7 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
                 this.isPublic,
                 this.difficulty.toLowerCase(),
                 this.image,
-            [],
+                [],
                 this.sections.length,
             )
 
@@ -193,4 +193,4 @@ export const useCreateRoutineStore = defineStore('createRoutineStore',{
             this.activeSection = "Warmup Section";
         }
     }
-    })
+})

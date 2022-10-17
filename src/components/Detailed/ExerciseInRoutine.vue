@@ -24,7 +24,7 @@
                 {{ tag }}
               </v-chip>
             </v-chip-group>
-            <v-btn text class="white--text pa-5" to="/detailed-exercise" >
+            <v-btn text class="white--text pa-5" :to="'/exercise/' + exerciseId">
               | See details |
             </v-btn>
           </v-row>
@@ -43,10 +43,10 @@
 
       <v-col>
         <!-- TODO: centrar el boton -->
-        <v-container  v-if="!done">
+        <v-container v-if="!done && type === 'duration'">
           <CircularTimer
               :elapsed="timeElapsed"
-              :limit="timeLimit"
+              :limit="amount"
           />
           <!-- Pause button or resume button depending on paused variable -->
           <v-card-actions>
@@ -60,7 +60,7 @@
             </v-btn>
           </v-card-actions>
         </v-container>
-        <v-container v-else>
+        <v-container v-else-if="type === 'duration'">
           <v-card-actions>
             <v-icon color="primary" size="500">mdi-check-circle</v-icon>
           </v-card-actions>
@@ -77,6 +77,12 @@
             </v-btn>
           </v-card-actions>
         </v-container>
+        <!-- Show the number of repetitions -->
+        <v-card-title primary-title v-else>
+          <div>
+            <h1 class="mb-0 reps mt-16">x{{ amount }} Reps</h1>
+          </div>
+        </v-card-title>
       </v-col>
     </v-row>
 
@@ -85,7 +91,9 @@
       <v-btn
           color="primary"
           class="white--text"
-          x-large>
+          x-large
+          @click="previousExercise"
+      >
         <v-icon>mdi-arrow-left</v-icon>
         Previous
       </v-btn>
@@ -94,8 +102,8 @@
           color="primary"
           class="white--text"
           x-large
-      >
-        Next exercise
+          @click="nextExercise">
+        {{ next }}
         <v-icon right>mdi-arrow-right</v-icon>
       </v-btn>
     </v-card-actions>
@@ -109,10 +117,14 @@ import CircularTimer from "@/components/CircularTimer";
 export default {
   name: "ExerciseInRoutine.vue",
   props: {
+    exerciseId: Number,
     exerciseName: String,
     tags: Array,
     exerciseDescription: String,
     muscles: Array,
+    amount: Number,
+    type: String,
+    next: String,
   },
   components: {
     CircularTimer
@@ -121,7 +133,6 @@ export default {
     return {
       timeElapsed: 0,
       timerInterval: undefined,
-      timeLimit: 5,
       paused: true,
       done: false,
       started: false,
@@ -132,7 +143,7 @@ export default {
     startTimer() {
       this.timerInterval = setInterval(() => {
         // Stop counting when there is no more time left
-        if (++this.timeElapsed === this.timeLimit) {
+        if (++this.timeElapsed === this.amount) {
           clearInterval(this.timerInterval);
           this.done = true;
         }
@@ -158,10 +169,19 @@ export default {
       this.done = false;
       this.startTimer();
     },
+    nextExercise() {
+      this.$emit("nextExercise");
+    },
+    previousExercise() {
+      this.$emit("previousExercise");
+    },
   },
 }
 </script>
 
 <style scoped>
-
+.reps {
+  font-size: 80px;
+  text-align: center;
+}
 </style>

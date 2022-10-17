@@ -75,7 +75,7 @@
                 x-large
                 color="primary"
                 class="white--text mr-3"
-                to="routine/exercise"
+                :to="'/routine/' + this.$route.params.id + '/section/1/exercise/1'"
             >
               Start Routine
             </v-btn>
