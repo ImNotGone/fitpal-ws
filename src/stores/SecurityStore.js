@@ -83,8 +83,6 @@ export const useSecurityStore = defineStore('security', {
         },
         async updateUser() {
             const user = await UserApi.getCurrentUser();
-            //TODO
-            console.log(user);
             this.setUser(user);
         },
         async getUser() {

@@ -52,7 +52,7 @@ import TopToolbar from "@/components/TopToolbar";
 import NoLoginFooter from "@/components/NoLoginFooter";
 import { useSecurityStore } from "@/stores/SecurityStore";
 import { mapActions } from "pinia";
-import { LoginCredentials } from "@/api/user";
+import { LoginCredentials, UserApi } from "@/api/user";
 import router from "@/router";
 
 export default {
@@ -88,7 +88,6 @@ export default {
 
         // If successful, redirect to the home page
         await useSecurityStore().getUser();
-        await router.replace({path: '/'});
       } catch (e) {
         // If unsuccessful, display an error message
         this.loginError = true;
@@ -100,8 +99,12 @@ export default {
         } else {
           this.loginErrorText = 'An unknown error occurred, please try again later';
         }
+        this.loading = false;
+        return;
       }
 
+      await UserApi.loadDefaultExcercises();
+      await router.replace({path: '/'});
       this.loading = false;
     },
   },
