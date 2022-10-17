@@ -1,4 +1,4 @@
-import { RoutineApi } from "@/api/routines";
+import { GetRoutines, RoutineApi } from "@/api/routines";
 import { UserApi } from "@/api/user";
 import { defineStore } from "pinia";
 
@@ -37,11 +37,11 @@ export const useRoutinesStore = defineStore('routinesStore', {
             await this.retrieveMyRoutines();
             await this.retrievePublicRoutines();
         },
-        async retrieveMyRoutines() {
-            this.myRoutines = await UserApi.getUserRoutines();
+        async retrieveMyRoutines(getRoutines = new GetRoutines()) {
+            this.myRoutines = await UserApi.getUserRoutines(getRoutines);
         },
-        async retrievePublicRoutines() {
-            this.publicRoutines = await RoutineApi.getRoutines();
+        async retrievePublicRoutines(getRoutines = new GetRoutines()) {
+            this.publicRoutines = await RoutineApi.getRoutines(getRoutines);
         },
         async addRoutine(routineData) {
             return await RoutineApi.addRoutine(routineData);

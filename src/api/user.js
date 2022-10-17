@@ -1,6 +1,7 @@
 import { useSecurityStore } from '@/stores/SecurityStore.js';
 import { Api } from './api.js'
-import { Exercise, ExercisesApi } from './exercises.js';
+import { Exercise, ExercisesApi, Video } from './exercises.js';
+import { GetRoutines } from './routines.js';
 
 export { UserApi, LoginCredentials, RegistrationCredentials, ResendVerification, AccountVerify, AccountEdit};
 
@@ -25,8 +26,8 @@ class UserApi {
         return await Api.get(UserApi.getUrl('current'), true);
     }
 
-    static async getUserRoutines() {
-        return await Api.get(`${UserApi.getUrl('current/routines')}`,true);
+    static async getUserRoutines(getRoutines = new GetRoutines()) {
+        return await Api.get(`${UserApi.getUrl('current/routines')}`,true, getRoutines);
     }
 
     static async editCurrentUser(accountEdit) {
@@ -55,7 +56,7 @@ class UserApi {
 
         defaultExercises.array.forEach(async element => {
             let id = await ExercisesApi.addExercise(element.exercise);
-            await ExercisesApi.addImage(id, element.image);
+            await ExercisesApi.addVideo(id, element.image);
         });
 
         // edit user flag
@@ -65,19 +66,19 @@ class UserApi {
     static get getDefaultExercises() {
         let defaultExercises = [];
         let exercise = new Exercise(
-            "Abs workout",
-            "",
-            "abs");
-        let image = new Image(
-            // abs workout image
-            // TODO: Change image
-            "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YWJkb21lbnxlbnwwfHwwfHw%3D&w=1000&q=80"
+            "Push Ups",
+            "Perfect Pushup",
+            "Biceps");
+        let video = new Video(
+            "https://www.youtube.com/watch?v=IODxDxX7oi4"
         )
-        defaultExercises.push({"exercise": exercise, "image":image});
-        // <-- mas ejercicios >
-        //exercise = new Exercise();
-        //image = new Image();
-        //defaultExercises.push({"exercise": exercise, "image":image});
+        defaultExercises.push({"exercise": exercise, "video": video});
+
+        //exercise = new Exercise(
+        //""
+        //);
+        //video = new Video();
+        //defaultExercises.push({"exercise": exercise, "video": video});
         return defaultExercises;
     }
 }

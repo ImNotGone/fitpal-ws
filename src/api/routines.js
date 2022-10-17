@@ -1,6 +1,6 @@
 import { Api } from "./api";
 
-export { RoutineApi, RoutineData, Review, SectionData, CycleExercise };
+export { RoutineApi, RoutineData, Review, SectionData, CycleExercise, GetRoutines };
 
 class RoutineApi {
     static getUrl(slug) {
@@ -15,8 +15,16 @@ class RoutineApi {
         return `${Api.baseUrl}/cycles/${cycleId}/exercises/${exerciseId}`;
     }
 
-    static async getRoutines() {
-        return await Api.get(RoutineApi.getUrl(), true)
+    static async getRoutines(getRoutines = new GetRoutines()) {
+        let gR = getRoutines;
+        let url = `${RoutineApi.getUrl()}?page=${gR.page}&size=${gR.size}`
+        if(gR.orderBy)
+            url += `&orderBy=${gR.orderBy}`
+        if(gR.direction)
+            url += `&direction=${gR.direction}`
+        if(gR.difficulty)
+            url += `&difficulty=${gR.difficulty}`
+        return await Api.get(url, true);
     }
 
     static async addRoutine(routineData) {
@@ -115,6 +123,16 @@ class CycleExercise {
         this.order = order;
         this.duration = (type === 'Time (seconds)' ? amount : 0);
         this.repetitions = (type === 'Reps' ? amount : 0);
+    }
+}
+
+class GetRoutines {
+    constructor(orderBy=null, direction=null, difficulty=null) {
+        this.page = 0;
+        this.size = 200;
+        this.orderBy = orderBy;
+        this.direction = direction;
+        this.difficulty = difficulty;
     }
 }
 
