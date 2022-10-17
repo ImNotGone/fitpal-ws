@@ -119,9 +119,8 @@ export default {
   },
   methods: {
     async update() {
-        const getRoutines = new GetRoutines( this.orderSelected, this.directionSelected, this.difficultySelected);
-        await this.routinesStore.retrievePublicRoutines(getRoutines);
-        console.log(`${this.directionSelected} - ${this.orderSelected}`);
+        const getRoutines = new GetRoutines(this.orderSelected, this.directionSelected, this.difficultySelected);
+        await this.routinesStore.retrieveMyRoutines(getRoutines);
     }
   },
   setup () {

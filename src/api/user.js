@@ -27,7 +27,15 @@ class UserApi {
     }
 
     static async getUserRoutines(getRoutines = new GetRoutines()) {
-        return await Api.get(`${UserApi.getUrl('current/routines')}`,true, getRoutines);
+        let gR = getRoutines;
+        let url = `${UserApi.getUrl('current/routines')}?page=${gR.page}&size=${gR.size}`
+        if(gR.orderBy)
+            url += `&orderBy=${gR.orderBy}`
+        if(gR.direction)
+            url += `&direction=${gR.direction}`
+        if(gR.difficulty)
+            url += `&difficulty=${gR.difficulty}`
+        return await Api.get(url,true);
     }
 
     static async editCurrentUser(accountEdit) {
