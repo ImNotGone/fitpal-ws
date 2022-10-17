@@ -61,7 +61,7 @@ export default {
   name: "FPMyExercises",
   async beforeMount() {
     await this.exerciseStore.updateExercises();
-
+    console.log(this.exerciseStore.getExercises);
     this.exercises = this.exerciseStore.getExercisesId;
   }
 }

@@ -1,7 +1,8 @@
 import { useSecurityStore } from '@/stores/SecurityStore.js';
 import { Api } from './api.js'
-import { Exercise, ExercisesApi, Video } from './exercises.js';
+import {Exercise, ExercisesApi, Video} from './exercises.js';
 import { GetRoutines } from './routines.js';
+import {getYoutubeVideoEmbed} from "@/lib/validation";
 
 export { UserApi, LoginCredentials, RegistrationCredentials, ResendVerification, AccountVerify, AccountEdit};
 
@@ -63,8 +64,11 @@ class UserApi {
         let defaultExercises = UserApi.getDefaultExercises();
 
         defaultExercises.forEach(async element => {
-            let id = await ExercisesApi.addExercise(element.exercise);
-            await ExercisesApi.addVideo(id, element.image);
+            const resp = await ExercisesApi.addExercise(element.exercise);
+
+            // Add the image to the exercise
+            resp.image = element.video;
+            await ExercisesApi.addImage(resp.id, resp.image);
         });
 
         // edit user flag
@@ -77,17 +81,14 @@ class UserApi {
             "Push Ups",
             "Perfect Pushup",
             "exercise",
-            {tags: "Biceps"});
-        let video = new Video(
-            "https://www.youtube.com/watch?v=IODxDxX7oi4"
+            {tags: ["Biceps"]});
+
+        let youtubeEmbed = getYoutubeVideoEmbed("https://www.youtube.com/watch?v=IODxDxX7oi4");
+
+        const video = new Video(youtubeEmbed
         )
         defaultExercises.push({"exercise": exercise, "video": video});
 
-        //exercise = new Exercise(
-        //""
-        //);
-        //video = new Video();
-        //defaultExercises.push({"exercise": exercise, "video": video});
         return defaultExercises;
     }
 }
