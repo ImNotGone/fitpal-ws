@@ -5,7 +5,6 @@
       <detailed-routine :routineName="routineName"
                         :routineDescription="routineDescription"
                         :duration="duration"
-                        :tags="tags"
                         :muscles="muscles"
                         :progress="progress"
                         :exercises="exercises"
@@ -31,7 +30,6 @@ export default {
   data: () => ({
     routineName: '',
     routineDescription: '',
-    tags: [],
     muscles: [],
     sections: 0,
     image: '',
@@ -61,8 +59,6 @@ export default {
     this.canEdit = await store.getMyRoutines.content.some(r => r.id === routineId);
     this.routineName = routine.name;
     this.routineDescription = routine.detail;
-
-    this.tags = routine.metadata.tags;
 
     this.image = routine.metadata.imageUrl;
 

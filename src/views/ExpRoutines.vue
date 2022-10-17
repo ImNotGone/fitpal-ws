@@ -68,7 +68,6 @@
               :routineName="routine.name"
               :routineDescription="routine.detail"
               :duration="routine.duration"
-              :tags="routine.metadata.tags"
               :showSaveButton="true"
               :route="`/routine/${routine.id}`"
               :id = "routine.id"
