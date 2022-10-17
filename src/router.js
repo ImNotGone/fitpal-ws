@@ -95,7 +95,7 @@ const router = new Router({
             component: FPDetailedRoutine
         },
         {
-            path: '/routine/exercise',
+            path: '/routine/:routineId/section/:sectionOrder/exercise/:exerciseOrder',
             name: 'exercise-in-routine',
             component: FPExerciseInRoutine
         },

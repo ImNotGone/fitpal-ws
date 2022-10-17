@@ -34,7 +34,7 @@ export const useRoutinesStore = defineStore('routinesStore', {
         getRoutineName: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.name,
         getRoutineDetail: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.detail,
         getRoutineMetadata: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.metadata,
-        getRoutineImage: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.image.url,
+        getRoutineImage: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.metadata.imageUrl,
         getRoutineImageId: (state) => (id) => state.myRoutines.content.find(r => r.id === id)?.image.id,
     },
     actions: {

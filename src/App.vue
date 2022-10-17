@@ -16,7 +16,6 @@
 <script>
 import NavBar from '@/components/NavBar';
 import { useSecurityStore } from './stores/SecurityStore';
-
 export default {
   name: 'App',
 
@@ -39,6 +38,7 @@ export default {
   created() {
     window.addEventListener('online', this.updateOnlineStatus);
     window.addEventListener('offline', this.updateOnlineStatus);
+
   },
   props: {
     hideNavbar: Boolean,

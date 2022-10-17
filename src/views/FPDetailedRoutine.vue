@@ -4,17 +4,16 @@
     <v-card class="accent pa-5">
       <detailed-routine :routineName="routineName"
                         :routineDescription="routineDescription"
-                        :amountUsers="amountUsers"
                         :duration="duration"
                         :tags="tags"
                         :muscles="muscles"
                         :progress="progress"
                         :exercises="exercises"
-                        :series="series"
-                        :timeBetweenSeries="timeBetweenSeries"
-                        :routineInformation="routineInformation"
+                        :sections="sections"
                         :id="this.$route.params.id"
                         :image="image"
+                        :rating = "rating"
+                        :canEdit = "canEdit"
       />
     </v-card>
   </div>
@@ -32,17 +31,12 @@ export default {
   data: () => ({
     routineName: '',
     routineDescription: '',
-    amountUsers: 0,
-    duration: 0,
     tags: [],
     muscles: [],
-    progress: 0,
-    series: 0,
-    timeBetweenSeries: 0,
-    //Name, duration
-    sections: [],
-    routineInformation: '',
-    image: ''
+    sections: 0,
+    image: '',
+    rating: 0,
+    canEdit: false,
   }),
 
   async beforeMount() {
@@ -56,39 +50,35 @@ export default {
     if (isNaN(routineId))
       await this.$router.push('/my-routines');
 
-    // await store.updateRoutines();
+    let routine;
 
-    // If routine doesn't exist, redirect to my routines
-    if (!store.containsRoutineWithId(routineId))
+    try{
+      routine = await RoutineApi.getRoutine(routineId);
+    }catch (e){
       await this.$router.push('/my-routines');
+    }
 
+    this.canEdit = await store.getMyRoutines.content.some(r => r.id === routineId);
+    this.routineName = routine.name;
+    this.routineDescription = routine.detail;
 
-    this.routineName = store.getRoutineName(routineId);
-    this.routineDescription = store.getRoutineDetail(routineId);
+    this.tags = routine.metadata.tags;
 
-    // this.tags = store.getRoutineMetadata(routineId)?.tags;
-
-    this.muscles = store.getRoutineMetadata(routineId)?.tags;
-    this.image = store.getRoutineImage(routineId);
+    this.image = routine.metadata.imageUrl;
 
     let sections = await RoutineApi.getSections(routineId);
-    this.sections= [];
-    for (let i = 0; i < sections.content.length; i++){
-      let section = sections.content[i];
-      this.sections.push({title: section.name, series: section.repetitions, rest: section.metadata.rest, exercises: []});
-      let ex = await RoutineApi.getExercisesFromSection(routineId, section.id);
+    this.sections = sections.content.length;
 
-      for (let j = 0; j < ex.content.length; j++){
-        const exercise = ex.content[j].exercise;
-        const type = (ex.content[j].duration === 0) ? 'Reps' : 'Time (seconds)';
-        const amount = (type === 'Reps') ? ex.content[j].repetitions : ex.content[j].duration;
-        this.sections[i].exercises.push({name: exercise.name, id: exercise.id, type: type, amount: amount});
-      }
+    try {
+      const ratings = await RoutineApi.getRoutineRewiews(routineId);
+      ratings.content.forEach(rating => {
+        this.rating += rating.score;
+      });
+      this.rating /= ratings.content.length;
+      this.rating /= 2;
+    }catch (e){
+      this.rating = 0;
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

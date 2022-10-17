@@ -46,6 +46,7 @@
                 (edit ? 'Edit' : 'Create')
               }}
             </v-btn>
+
             <v-spacer></v-spacer>
 
             <!-- Delete button -->
@@ -64,7 +65,6 @@
               </v-card>
             </v-dialog>
           </v-row>
-
         </v-form>
       </v-card-text>
     </v-card>

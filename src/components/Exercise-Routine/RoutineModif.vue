@@ -108,7 +108,28 @@
             {{ successText }}
           </p>
 
-          <v-btn flat class="primary mx-2 mt-6" @click="submit">{{ (edit ? 'Edit' : 'Create') }}</v-btn>
+          <v-row class="mt-3 pb-5">
+            <v-btn flat class="primary mx-0" @click="submit">{{ (edit ? 'Edit' : 'Create') }}</v-btn>
+
+            <v-spacer/>
+
+            <!-- Delete button -->
+            <v-btn flat class="error mx-0 " v-if="edit" @click="toggleDialog">Delete</v-btn>
+
+
+            <!-- Dialog to confirm deletion -->
+            <v-dialog v-model="showDialog" max-width="600">
+              <v-card dark class="secondary">
+                <v-card-title class="headline">Are you sure you want to delete this routine?</v-card-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="primary" text @click="() => this.showDialog = false">Cancel</v-btn>
+                  <v-btn color="error" @click="deleteRoutine">Delete</v-btn>
+                  <v-spacer></v-spacer>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
         </v-form>
       </v-card-text>
     </v-card>
@@ -130,6 +151,7 @@ export default {
   data: () => ({
     // Dialog
     list: false,
+    showDialog: false,
 
     // Form rules
     rules: {
@@ -167,7 +189,7 @@ export default {
       }
 
       // Check if image exists, if it does not return
-      if (!await imageExists(this.createRoutineStore.photo)) {
+      if ((typeof this.createRoutineStore.image !== 'undefined') && !await imageExists(this.createRoutineStore.image)) {
         this.error = true;
         this.finished = true;
         this.loading = false;
@@ -197,6 +219,13 @@ export default {
       // Button loading animation
       this.loading = false;
       this.finished = true;
+    },
+    async deleteRoutine() {
+      await this.createRoutineStore.deleteRoutine(this.id);
+      await this.$router.push(this.pathBack);
+    },
+    toggleDialog() {
+      this.showDialog = !this.showDialog;
     },
   },
   props: {
