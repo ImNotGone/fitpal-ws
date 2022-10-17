@@ -9,17 +9,17 @@
         <v-spacer/>
 
         <v-select
-            color="#FF8754"
+            color="primary"
             v-model="difficultySelected"
             :items="difficulty"
             item-text="state"
-            iterm-value="value"
+            item-value="value"
             label="Difficulty"
             class="ma-3"
             @change="update"
             />
         <v-select
-            color="#FF8754"
+            color="primary"
             v-model="directionSelected"
             :items="directions"
             item-text="state"
@@ -29,7 +29,7 @@
             @change="update"
             />
         <v-select
-              color="#FF8754"
+              color="primary"
               v-model="orderSelected"
               :items="orders"
               item-text="state"
