@@ -41,16 +41,6 @@
               class="ma-3"
               @change="update"
           />
-        <v-col class="pa-5" cols="12" md="4">
-          <v-btn
-              color="primary"
-              class="white--text rounded-lg"
-              block
-              to="/create-routine"
-          >
-            Create New Routine
-          </v-btn>
-        </v-col>
       </v-row>
     </v-container>
 
